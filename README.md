@@ -7,14 +7,23 @@ Following workflow is for processing raw data from RADseq libraries. Two "sets" 
 ## Step 1: de-multiplexing
 
 ######1.1. De-multiplex each library individually
-If too many libraries, find a way to automate with a for loop to run within each directory at the same time.
+De-multiplexing was done with program [process_radtags](http://creskolab.uoregon.edu/stacks/comp/process_radtags.php) individually for each library within its directory, and renamed with sample names within Stacks ([here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/barcodes-1933.txt) is an example barcodes file). 
 
-######1.2. Re-name files for adding individual IDs, populations, etc.  
-First change file terminations to add the extra "-" required in python script. Then run python script [rename_barcodes_fixed.py](https://github.com/pesalerno/Chimanta-genomics/blob/master/rename_barcodes_fixed.py) within each demultiplexing directory. 
+- Commands for process_radtags for the two Paired-end libraries were:
+
+		process_radtags -P -p ./PE-lib-1610/ -b barcodes-1610.txt -i gzfastq - \
+		o ./processed-1610/ -e sbfI -c -q -r -D
+	(example for library #1610 for *Xanthusia*)
+- Commands for process_radtags for all the other single-end libraries were:
+
+		process_radtags -p ./SR-lib5-1994/ -b barcodes-1994.txt -i gzfastq \ 
+		-o ./processed-1994/ -e sbfI -c -q -r -D
+	(example for library #1994 for shared *Xanthusia* and *Pseudacris*)
+
 
 ######1.3. Merge all libraries into single directory
 
-Copy all renamed libraries for all individuals into their "species" directories (at this point we have *Xanthusia* and *Pseudacris* mixed in the same libraries)
+Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where *Xanthusia* and *Pseudacris* were mixed together - library #1994)
 Make a ls > list-of-files.txt file for generating input for [denovo_map](http://creskolab.uoregon.edu/stacks/comp/denovo_map.php) 
 
 ######1.4. Run denovo_map for more in-depth sequences.
