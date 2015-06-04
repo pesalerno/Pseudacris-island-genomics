@@ -24,18 +24,21 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 ######1.3. Merge all libraries into single directory
 
 Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where *Xanthusia* and *Pseudacris* were mixed together - library #1994)
-Make a ls > list-of-files.txt file for generating input for [denovo_map](http://creskolab.uoregon.edu/stacks/comp/denovo_map.php) 
-
-######1.4. Run denovo_map for more in-depth sequences.
-
-Run in Stacks the script denovo_map.pl with libraries with higher depth of coverage and paired-end reads for creating the reference genome:
-
-	> denovo_map.pl enter-rest-of-script
 
 
-##Step 2: create reference genome in bwa
 
-######2.1. Transform consensus sequence to fasta format.
+
+##Step 2: create reference genome with PE reads
+
+######2.1. Run denovo_map program for paired-end reads
+
+Run in Stacks the script [denovo_map](http://creskolab.uoregon.edu/stacks/comp/denovo_map.php) with libraries with higher depth of coverage and paired-end reads for creating the reference genome. I'm trying to be highly conservative about the flag parameters. 
+
+	> denovo_map.pl -m 3 -M 1 -n 0 -T 16 -b 1 -t -S -o ./denovo-1/ \
+
+
+---> May want to run [exec_velvet.pl](http://catchenlab.life.illinois.edu/stacks/comp/exec_velvet.php) to generate collated fasta file for reference genome.
+
 Use the output consensus sequence file from denovo_map (*"catalogs.tags.tsv"*) and transform to fasta format for input into [bwa](http://bio-bwa.sourceforge.net/bwa.shtml), using Kelly's R script (need to modify once I run it):
 
 	
