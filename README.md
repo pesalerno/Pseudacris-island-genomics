@@ -56,7 +56,7 @@ More from Hohenlohe et al. 2013: *"We assembled the reads in each file separatel
 
 ######1. check to see which files are repeats in different libraries, or else when moving them to do denovo_map they will be rewritten/lost.
 
-Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), and so on. Remaming all files at once using the following code:
+Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), -3.fq.gz to library 3 (1835), -4.fq.gz to library 4 (1994), and -5.fq.gz to library 5 (1995). Renaming all files at once using the following code:
 
 	rename .fq.gz -1.fq.gz *.fq.gz
 	
@@ -66,14 +66,13 @@ Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Libra
 
 I need to run the perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl). When I try to run it on Dan's server, it says the following error message:
 
-	> purge_PCR_duplicates.pl requires the CPAN module Parallel::ForkManager. Please install this package and add it 
-	> to your Perl library path.
+	> purge_PCR_duplicates.pl requires the CPAN module Parallel::ForkManager. Please install this package and add it to your Perl library path.
 
 I need to install the module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) but the website manual is not very easy to understand.... need to figure this out. ---> probably needs intalling in root, already emailed Dan
 
 ######3. Merge fasta files for library duplicates
 
-After being renamed, move all files back to the SR-denovo-prelim folder and there I merge the fasta files. I merge with the following [code](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis):
+After being renamed, move all files back to the SR-denovo-prelim folder and there I merge the fasta files. I merge following guidelines (from this [source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
 
 *To merge several files use the SHELL, go to your folder where the files are and use the cat command. E.g. to merge seqfile001.fasta, seqfile002.fasta and seqfile003.fasta type*
 
@@ -94,6 +93,15 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 #
 
 #
+
+#
+
+#
+
+#
+
+#
+
 
 
 
