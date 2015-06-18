@@ -66,11 +66,21 @@ Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Libra
 
 ######2. purge PCR duplicates from within each file
 
-I need to run the perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl). When I try to run it on Dan's server, it says the following error message:
+OK: after doing everything.... this script only runs with PE reads (use this for PE reads!!) However, I can use [clone_filter](http://catchenlab.life.illinois.edu/stacks/comp/clone_filter.php) from Stacks to purge PCR duplicates, and hopefully doesn't need PE reads. The difference between the stacks script and the purge_PCR_duplicates script (below) is that the second one retains quality data and the first doesn't.
 
-	> purge_PCR_duplicates.pl requires the CPAN module Parallel::ForkManager. Please install this package and add it to your Perl library path.
+----------------------------------
 
-I need to install the module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) but the website manual is not very easy to understand.... need to figure this out. ---> probably needs intalling in root, already emailed Dan
+I need to run the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized, which Dan Sloan installed for me on the server's root.
+
+For the program to run, files need to be unzipped (.fq) and end with either
+\"fq_1\" for the SE file or \"fq_2\" for the PE file. Example: XXX.fq_1 and XXX.fq_2. Use above script to rename all files to add -1 termination.
+
+For usage, type:
+
+	./purge_PCR_duplicates.pl [options] > logfile
+
+Having all files to be purged within the same directory as the script.
+
 
 ######3. Merge fasta files for library duplicates
 
