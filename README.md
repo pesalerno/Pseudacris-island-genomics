@@ -50,7 +50,9 @@ More from Hohenlohe et al. 2013: *"We assembled the reads in each file separatel
 
 #
 
-#
+----------------------------------------------
+----------------------------------------------
+
 
 ###Intermediate step: get a quick SNP matrix only with SR sequences for Chris' report
 
@@ -83,6 +85,10 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 
 	cat *.fasta > seqcombined.fasta
 
+----------------------------------------------
+----------------------------------------------
+----------------------------------------------
+----------------------------------------------
 
 
 
