@@ -66,7 +66,7 @@ Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Libra
 
 ######2. purge PCR duplicates from within each file
 
-OK: after doing everything.... this script only runs with PE reads (use this for PE reads!!) However, I can use [clone_filter](http://catchenlab.life.illinois.edu/stacks/comp/clone_filter.php) from Stacks to purge PCR duplicates, and hopefully doesn't need PE reads. The difference between the stacks script and the purge_PCR_duplicates script (below) is that the second one retains quality data and the first doesn't.
+OK: after doing everything.... this script only runs with PE reads (use this for PE reads!!) However, I can use [clone_filter](http://catchenlab.life.illinois.edu/stacks/comp/clone_filter.php) from Stacks to purge PCR duplicates, and hopefully doesn't need PE reads. The difference between the stacks script and the purge_PCR_duplicates script (below) is that the second one retains quality data and the first doesn't. **NEVER MIND!!!!** only PE reads as well.... moving on to next step and skipping this....
 
 ----------------------------------
 
@@ -94,6 +94,21 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 *or if you have more files use*
 
 	cat *.fasta > seqcombined.fasta
+
+
+The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. 
+
+######4. Running denovo_map for SR reads
+
+The code used for running denovo_map for only the SR reads was:
+
+	denovo_map.pl -m 3 -M 2 -n 1 -T 16 -b 1 -t -S -o ./denovo-1/ \
+
+started denovo_map Saturday at 2pm ... 
+
+
+
+
 
 ----------------------------------------------
 ----------------------------------------------
