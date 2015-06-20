@@ -81,6 +81,8 @@ For usage, type:
 
 Having all files to be purged within the same directory as the script.
 
+------------------------------------
+
 
 ######3. Merge fasta files for library duplicates
 
