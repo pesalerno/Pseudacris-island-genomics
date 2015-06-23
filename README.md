@@ -26,7 +26,95 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where *Xanthusia* and *Pseudacris* were mixed together - library #1994)
 
 
+######2. purge PCR duplicates from within each file
 
+I can use [clone_filter](http://catchenlab.life.illinois.edu/stacks/comp/clone_filter.php) from Stacks to purge PCR duplicates. The difference between the stacks script and the purge_PCR_duplicates script (below) is that the second one retains quality data and the first doesn't. 
+
+----------------------------------
+
+I need to run the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized, which Dan Sloan installed for me on the server's root.
+
+For the program to run, files need to be unzipped (.fq) and end with either
+\"fq_1\" for the SE file or \"fq_2\" for the PE file. Example: XXX.fq_1 and XXX.fq_2. Use above script to rename all files to add -1 termination.
+
+For usage, type:
+
+	./purge_PCR_duplicates.pl [options] > logfile
+
+Having all files to be purged within the same directory as the script.
+
+
+----------------------------------------------
+----------------------------------------------
+
+
+###Intermediate step: get a quick SNP matrix only with SR sequences for Chris' report
+
+######1. check to see which files are repeats in different libraries, or else when moving them to do denovo_map they will be rewritten/lost.
+
+Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), -3.fq.gz to library 3 (1835), -4.fq.gz to library 4 (1994), and -5.fq.gz to library 5 (1995). Renaming all files at once using the following code:
+
+	rename .fq.gz -1.fq.gz *.fq.gz
+	
+	
+
+
+------------------------------------
+
+
+######2. Merge fasta files for library duplicates
+
+After being renamed, move all files back to the SR-denovo-prelim folder and there I merge the fasta files. I merge following these guidelines (from this [source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
+
+*To merge several files use the SHELL, go to your folder where the files are and use the cat command. E.g. to merge seqfile001.fasta, seqfile002.fasta and seqfile003.fasta type*
+
+	cat seqfile001.fasta seqfile002.fasta seqfile003.fasta > seqcombined.fasta
+
+
+*or if you have more files use*
+
+	cat *.fasta > seqcombined.fasta
+
+
+The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xanthusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
+
+------------------------------------
+
+
+######3. Running denovo_map for SR reads
+
+The code used for running denovo_map for only the SR reads was:
+
+	denovo_map.pl -m 3 -M 2 -n 1 -T 16 -b 1 -t -S -o ./denovo-1/ \
+
+
+
+------------------------------------
+
+
+######4. running program populations for exporting SNP matrix
+
+I'm running populations with the filters for keeping SNPs that are present in all populations for ***Xanthusia***, and in xx/xx populations for ***Pseudacris*** (to avoid losing too many SNPs with mainland species). Here is the popmap for [*Xanthusia*]() and the popmap for [*Pseudacris*](). 
+
+The script for populations for ***Xanthusia*** was:
+
+	populations 
+
+The script for populations for ***Pseudacris*** was:
+
+	populations 
+
+
+----------------------------------------------
+----------------------------------------------
+----------------------------------------------
+----------------------------------------------
+
+
+
+#
+
+#
 
 ##Step 2: create reference genome with PE reads
 
@@ -45,79 +133,6 @@ More from Hohenlohe et al. 2013: *"We assembled the reads in each file separatel
 
 
 #
-
-#
-
-#
-
-----------------------------------------------
-----------------------------------------------
-
-
-###Intermediate step: get a quick SNP matrix only with SR sequences for Chris' report
-
-######1. check to see which files are repeats in different libraries, or else when moving them to do denovo_map they will be rewritten/lost.
-
-Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), -3.fq.gz to library 3 (1835), -4.fq.gz to library 4 (1994), and -5.fq.gz to library 5 (1995). Renaming all files at once using the following code:
-
-	rename .fq.gz -1.fq.gz *.fq.gz
-	
-	
-
-######2. purge PCR duplicates from within each file
-
-OK: after doing everything.... this script only runs with PE reads (use this for PE reads!!) However, I can use [clone_filter](http://catchenlab.life.illinois.edu/stacks/comp/clone_filter.php) from Stacks to purge PCR duplicates, and hopefully doesn't need PE reads. The difference between the stacks script and the purge_PCR_duplicates script (below) is that the second one retains quality data and the first doesn't. **NEVER MIND!!!!** only PE reads as well.... moving on to next step and skipping this....
-
-----------------------------------
-
-I need to run the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized, which Dan Sloan installed for me on the server's root.
-
-For the program to run, files need to be unzipped (.fq) and end with either
-\"fq_1\" for the SE file or \"fq_2\" for the PE file. Example: XXX.fq_1 and XXX.fq_2. Use above script to rename all files to add -1 termination.
-
-For usage, type:
-
-	./purge_PCR_duplicates.pl [options] > logfile
-
-Having all files to be purged within the same directory as the script.
-
-------------------------------------
-
-
-######3. Merge fasta files for library duplicates
-
-After being renamed, move all files back to the SR-denovo-prelim folder and there I merge the fasta files. I merge following guidelines (from this [source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
-
-*To merge several files use the SHELL, go to your folder where the files are and use the cat command. E.g. to merge seqfile001.fasta, seqfile002.fasta and seqfile003.fasta type*
-
-	cat seqfile001.fasta seqfile002.fasta seqfile003.fasta > seqcombined.fasta
-
-
-*or if you have more files use*
-
-	cat *.fasta > seqcombined.fasta
-
-
-The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. 
-
-######4. Running denovo_map for SR reads
-
-The code used for running denovo_map for only the SR reads was:
-
-	denovo_map.pl -m 3 -M 2 -n 1 -T 16 -b 1 -t -S -o ./denovo-1/ \
-
-started denovo_map Saturday at 2pm ... 
-
-
-
-
-
-----------------------------------------------
-----------------------------------------------
-----------------------------------------------
-----------------------------------------------
-
-
 
 #
 
