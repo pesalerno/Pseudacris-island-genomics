@@ -13,17 +13,17 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 
 		process_radtags -P -p ./PE-lib-1610/ -b barcodes-1610.txt -i gzfastq - \
 		o ./processed-1610/ -e sbfI -c -q -r -D
-	(example for library #1610 for *Xanthusia*)
+	(example for library #1610 for *Xantusia*)
 - Commands for process_radtags for all the other single-end libraries were:
 
 		process_radtags -p ./SR-lib5-1994/ -b barcodes-1994.txt -i gzfastq \ 
 		-o ./processed-1994/ -e sbfI -c -q -r -D
-	(example for library #1994 for shared *Xanthusia* and *Pseudacris*)
+	(example for library #1994 for shared *Xantusia* and *Pseudacris*)
 
 
 ######1.3. Merge all libraries into single directory
 
-Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where *Xanthusia* and *Pseudacris* were mixed together - library #1994)
+Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where ***Xantusia*** and ***Pseudacris*** were mixed together - library #1994)
 
 
 ######2. purge PCR duplicates from within each file
@@ -52,7 +52,7 @@ Having all files to be purged within the same directory as the script.
 
 ######1. check to see which files are repeats in different libraries, or else when moving them to do denovo_map they will be rewritten/lost.
 
-Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), -3.fq.gz to library 3 (1835), -4.fq.gz to library 4 (1994), and -5.fq.gz to library 5 (1995). Renaming all files at once using the following code:
+Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So for ***Xantusia***, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), -3.fq.gz to library 3 (1835), -4.fq.gz to library 4 (1994), and -5.fq.gz to library 5 (1995). Renaming all files at once using the following code:
 
 	rename .fq.gz -1.fq.gz *.fq.gz
 	
@@ -76,7 +76,7 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 	cat *.fasta > seqcombined.fasta
 
 
-The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xanthusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
+The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
 
 ------------------------------------
 
@@ -94,11 +94,13 @@ The code used for running denovo_map for only the SR reads was:
 
 ######4. running program populations for exporting SNP matrix
 
-I'm running populations with the filters for keeping SNPs that are present in all populations for ***Xanthusia***, and in xx/xx populations for ***Pseudacris*** (to avoid losing too many SNPs with mainland species). Here is the popmap for [*Xanthusia*]() and the popmap for [*Pseudacris*](). 
+I'm running populations with the filters for keeping SNPs that are present in all populations for ***Xantusia***, and in xx/xx populations for ***Pseudacris*** (to avoid losing too many SNPs with mainland species). Here is the popmap for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/popmap_Xari.txt) and the popmap for [*Pseudacris*](). 
 
-The script for populations for ***Xanthusia*** was:
+The script for populations for ***Xantusia*** was:
 
-	populations 
+	populations -b 1 -P ./denovo-1 -M ./popmap_Xari.txt  -t 36 -p 6 -r 0.5 --write_random_snp --structure --genepop --vcf
+
+I ran this twice, first with 6/7 populations (-p 6), and second with all populations (-p 7).I tried to run the filter of minor allele frequency (**--min_maf**) and it kept failing, maybe I need to upgrade version of Stacks, or maybe I don't know how to set it! This is why I saved it in **--vcf** format so that it can be viewed and filtered in [**GATK**](https://www.broadinstitute.org/gatk/).
 
 The script for populations for ***Pseudacris*** was:
 
