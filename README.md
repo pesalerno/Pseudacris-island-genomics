@@ -100,14 +100,14 @@ The script for populations for ***Xantusia*** and for **Pseudacris** was:
 
 	populations -b 1 -P ./denovo-1 -M ./popmap_Xari.txt  -t 36 -p 6 -r 0.5 --write_random_snp --structure --genepop --vcf
 
-I ran this twice, first with 6/7 populations (-p 6), and second with all populations (-p 7).I tried to run the filter of minor allele frequency (**--min_maf**) and it kept failing, maybe I need to upgrade version of Stacks, or maybe I don't know how to set it! This is why I saved it in **--vcf** format so that it can be viewed and filtered in [**GATK**](https://www.broadinstitute.org/gatk/).
+I ran this twice, first with 6/7 populations (-p 6), and second with all populations (-p 7).I tried to run the filter of minor allele frequency (**--min_maf**) and it kept failing, maybe I need to upgrade version of Stacks, or maybe I don't know how to set it! This is why I saved it in **--vcf** format so that it can be viewed and filtered in [**GATK**](https://www.broadinstitute.org/gatk/) easily (or other variant callign format software).
 
 The total number of SNPs were:
 
 
-- ***Xantusia*** p=6 => 
+- ***Xantusia*** p=6 => 7739 snps
 	
-- ***Xantusia*** p=7 =>
+- ***Xantusia*** p=7 => 1319 snps 
 
 - ***Pseudacris*** p=6 => 
 
