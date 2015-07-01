@@ -94,13 +94,13 @@ The code used for running denovo_map for only the SR reads was:
 
 ######4. running program populations for exporting SNP matrix
 
-I'm running populations with the filters for keeping SNPs that are present in all populations for ***Xantusia***, and in xx/xx populations for ***Pseudacris*** (to avoid losing too many SNPs with mainland species). Here is the popmap for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/popmap_Xari.txt) and the popmap for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/popmap-Pseu.txt). 
+I'm running populations with the filters for keeping 50% of SNPs that are present in each populations and with two settings for numbers of populations kept. Here is the popmap for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/popmap_Xari.txt) and the popmap for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/popmap-Pseu.txt). 
 
 The script for populations for ***Xantusia*** and for **Pseudacris** was:
 
 	populations -b 1 -P ./denovo-1 -M ./popmap_Xari.txt  -t 36 -p 6 -r 0.5 --write_random_snp --structure --genepop --vcf
 
-I ran this twice, first with 6/7 populations (-p 6), and second with all populations (-p 7).I tried to run the filter of minor allele frequency (**--min_maf**) and it kept failing, maybe I need to upgrade version of Stacks, or maybe I don't know how to set it! This is why I saved it in **--vcf** format so that it can be viewed and filtered in [**GATK**](https://www.broadinstitute.org/gatk/) easily (or other variant callign format software).
+I ran this twice, first with 6/7 populations (-p 6), and second with all populations (-p 7).I tried to run the filter of minor allele frequency (**--min_maf**) and it kept failing, maybe I need to upgrade version of Stacks, or maybe I don't know how to set it! This is why I saved it in **--vcf** format so that it can be viewed and filtered in [GATK](https://www.broadinstitute.org/gatk/) easily (or other variant calling format software).
 
 The total number of SNPs were:
 
@@ -109,9 +109,17 @@ The total number of SNPs were:
 	
 - ***Xantusia*** p=7 => 1319 snps 
 
-- ***Pseudacris*** p=6 => 
+- ***Pseudacris*** p=6 => 36921 snps
 
-- ***Pseudacris*** p=7 =>
+- ***Pseudacris*** p=7 => 36921 snps (did I make a mistake in the previous one? this one's correct according to script). it's just odd they're identical.... 
+
+
+Just out of curiosity, running ***Pseudacris*** again with a much more stringent setting of r=0.8 to see how many SNPs are still kept. 
+
+Based on number of SNPs, it's already suggesting that ***Xantusia*** has a much higher divergence among populations.... 
+
+-> When doing -p7 -r 0.7 for ***Xantusia*** you get ZERO SNPs.... which means that there is either a huge amount of missing data, or that the mainland population is too divergent for this constraint.... 
+
 
 
 
