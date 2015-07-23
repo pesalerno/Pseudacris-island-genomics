@@ -1,10 +1,10 @@
-# Pseudacris-island-genomics
+# Pseudacris/Xantusia-island-genomics
 Following workflow is for processing raw data from RADseq libraries. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads will be used for generating a reference genome. Thus, this pipeline actually runs Stacks three separate times:
 - First: denovo_map for paired-end reads (Step 1.4)
 - Second: ref_map for single-end reads (Step 3)
 - Third: rxstacks for fixing genotyping errors with population statistics (Step 4). 
 
-## Step 1: de-multiplexing
+##Step 1: de-multiplexing
 
 ######1.1. De-multiplex each library individually
 De-multiplexing was done with program [process_radtags](http://creskolab.uoregon.edu/stacks/comp/process_radtags.php) individually for each library within its directory, and renamed with sample names within Stacks ([here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/barcodes-1933.txt) is an example barcodes file). 
@@ -26,23 +26,38 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where ***Xantusia*** and ***Pseudacris*** were mixed together - library #1994)
 
 
-######2. purge PCR duplicates from within each file
+##Step 2: purge PCR duplicates of PE reads
 
-I can use [clone_filter](http://catchenlab.life.illinois.edu/stacks/comp/clone_filter.php) from Stacks to purge PCR duplicates. The difference between the stacks script and the purge_PCR_duplicates script (below) is that the second one retains quality data and the first doesn't. 
 
-----------------------------------
-
-I need to run the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized, which Dan Sloan installed for me on the server's root.
+I ran the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized, which Dan Sloan installed for me on the server's root.
 
 For the program to run, files need to be unzipped (.fq) and end with either
-\"fq_1\" for the SE file or \"fq_2\" for the PE file. Example: XXX.fq_1 and XXX.fq_2. Use above script to rename all files to add -1 termination.
+\"fq_1\" for the SE file or \"fq_2\" for the PE file. Example: XXX.fq_1 and XXX.fq_2. Use rename script to rename all files to add -1 termination.
 
-For usage, type:
+For usage, I typed:
 
-	./purge_PCR_duplicates.pl [options] > logfile
+	perl purge_PCR_duplicates.pl > logfile
 
-Having all files to be purged within the same directory as the script.
+while having all files to be purged within the same directory as the script. The script does not overwrite original files, but outputs new files that have been purged (and adds "purged" to file names).
 
+
+##Step 3: denovo map for PE reads
+
+Setting up experiments (permutations) in Stacks for testing which parameters combinations are better for retrieving a higher number of "good" loci that have decent coverage within and among populations. Because we have decently high coverage, I'm varying the -m parameter (# reads required to form a stack) from 3-7, skipping even numbers (just to have a bigger range initially). Also, I'm not at all using -n 0 or 1, since they are biologically unrealistic given these datasets, and likely to eliminate and oversplit loci among individuals/populations with higher divergence. 
+
+Permutations | -m | -M | -n | --max_locus_stacks 
+------------ | ------------- | ------------
+a | 3 | 2 | 2 | 3 | 
+b | 5 | 2 | 2 | 3 |
+c | 7 | 2 | 2 | 3 | 
+d | 3 | 3 | 2 | 3 |
+e | 3 | 4 | 2 | 3 |
+f | 3 | 5 | 2 | 3 |
+g | 3 | 2 | 3 | 3 |
+h | 3 | 2 | 4 | 3 |
+i | 3 | 2 | 5 | 3 |
+j | 3 | 2 | 2 | 4 |
+k | 3 | 2 | 2 | 5 |
 
 ----------------------------------------------
 ----------------------------------------------
