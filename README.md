@@ -46,7 +46,7 @@ while having all files to be purged within the same directory as the script. The
 Setting up experiments (permutations) in Stacks for testing which parameters combinations are better for retrieving a higher number of "good" loci that have decent coverage within and among populations. Because we have decently high coverage, I'm varying the -m parameter (# reads required to form a stack) from 3-7, skipping even numbers (just to have a bigger range initially). Also, I'm not at all using -n 0 or 1, since they are biologically unrealistic given these datasets, and likely to eliminate and oversplit loci among individuals/populations with higher divergence. 
 
 Permutations | -m | -M | -n | --max_locus_stacks 
------------- | ------------- | ------------
+------------ | ------------- | ------------ | ------------- | ------------ |
 a | 3 | 2 | 2 | 3 | 
 b | 5 | 2 | 2 | 3 |
 c | 7 | 2 | 2 | 3 | 
