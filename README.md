@@ -44,22 +44,22 @@ The reads per individual pre and post purging of PCR duplicates, and the percent
 
 Individual | initial reads | porst-purge reads | percent purged |
 ------------ | ------------- | ------------ | ------------- | 
-Pr_SCI_03	|	6703487	|	1871919	|	72	|
-Pr_SCI_04	|	2159994	|	589841	|	73	|
-Pr_SCI_05	|	2960879	|	818600	|	72	|
-Pr_SCI_06	|	4413774	|	1193235	|	73	|
-Pr_SRI_02	|	7572368	|	2094594	|	72	|
-Pr_SRI_03	|	1298586	|	353847	|	73	|
-Pr_SRI_04	|	2636033	|	720639	|	73	|
-Pr_SRI_05	|	2145094	|	591698	|	72	|
-Xr_SBI_03	|	1727677	|	987327	|	43	|
-Xr_SBI_04	|	2582799	|	1475626	|	43	|
-Xr_SCL_27	|	1368256	|	769389	|	44	|
-Xr_SCL_28	|	1646492	|	922189	|	44	|
-Xr_SNI_27	|	1109304	|	632239	|	43	|
-Xr_SNI_28	|	3094797	|	1766134	|	43	|
-Xv_JTS_03	|	1650289	|	938941	|	43	|
-Xv_JTS_04	|	3754638	|	2124663	|	43	|
+Pr_SCI_03	|	6,703,487	|	1,871,919	|	72	|
+Pr_SCI_04	|	2,159,994	|	589,841	|	73	|
+Pr_SCI_05	|	2,960,879	|	818,600	|	72	|
+Pr_SCI_06	|	4,413,774	|	1,193,235	|	73	|
+Pr_SRI_02	|	7,572,368	|	2,094,594	|	72	|
+Pr_SRI_03	|	1,298,586	|	353,847	|	73	|
+Pr_SRI_04	|	2,636,033	|	720,639	|	73	|
+Pr_SRI_05	|	2,145,094	|	591,698	|	72	|
+Xr_SBI_03	|	1,727,677	|	987,327	|	43	|
+Xr_SBI_04	|	2,582,799	|	1,475,626	|	43	|
+Xr_SCL_27	|	1,368,256	|	769,389	|	44	|
+Xr_SCL_28	|	1,646,492	|	922,189	|	44	|
+Xr_SNI_27	|	1,109,304	|	632,239	|	43	|
+Xr_SNI_28	|	3,094,797	|	1,766,134	|	43	|
+Xv_JTS_03	|	1,650,289	|	938,941	|	43	|
+Xv_JTS_04	|	3,754,638	|	2,124,663	|	43	|
 
 
 
@@ -118,8 +118,18 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
 
 ------------------------------------
-#####How many reads for each individual?? 
-![read counts](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/read-counts-SR.png)
+#####How many reads on average for each species?? 
+![read counts](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/figures-reads/read-counts-SR.png)
+
+/
+
+Histogram of reads per individual for Pseudacris:
+![PSeu-reads](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/figures-reads/Pseudacris-reads.png)
+/
+
+Histogram of reads per individual for Xantusia:
+![Xari-reads](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/figures-reads/Xantusia-reads.png)
+/
 
 ######4.3. Genotyping with pyrad
 /
