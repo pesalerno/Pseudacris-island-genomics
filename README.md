@@ -123,12 +123,14 @@ The duplicated files are sorted into a separate folder before merging, just to k
 
 /
 
-Histogram of reads per individual for Pseudacris:
+Histogram of reads per individual for ***Pseudacris***:
 ![PSeu-reads](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/figures-reads/Pseudacris-reads.png)
+
 /
 
-Histogram of reads per individual for Xantusia:
+Histogram of reads per individual for ***Xantusia***:
 ![Xari-reads](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/figures-reads/Xantusia-reads.png)
+
 /
 
 ######4.3. Genotyping with pyrad
