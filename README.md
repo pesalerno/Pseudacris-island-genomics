@@ -40,8 +40,32 @@ For usage, I typed:
 
 while having all files to be purged within the same directory as the script. The script does not overwrite original files, but outputs new files that have been purged (and adds "purged" to file names).
 
+The reads per individual pre and post purging of PCR duplicates, and the percent purged, were:
 
-##Step 3: denovo map for PE reads
+Individual | initial reads | porst-purge reads | percent purged |
+------------ | ------------- | ------------ | ------------- | 
+Pr_SCI_03	|	6703487	|	1871919	|	72	|
+Pr_SCI_04	|	2159994	|	589841	|	73	|
+Pr_SCI_05	|	2960879	|	818600	|	72	|
+Pr_SCI_06	|	4413774	|	1193235	|	73	|
+Pr_SRI_02	|	7572368	|	2094594	|	72	|
+Pr_SRI_03	|	1298586	|	353847	|	73	|
+Pr_SRI_04	|	2636033	|	720639	|	73	|
+Pr_SRI_05	|	2145094	|	591698	|	72	|
+Xr_SBI_03	|	1727677	|	987327	|	43	|
+Xr_SBI_04	|	2582799	|	1475626	|	43	|
+Xr_SCL_27	|	1368256	|	769389	|	44	|
+Xr_SCL_28	|	1646492	|	922189	|	44	|
+Xr_SNI_27	|	1109304	|	632239	|	43	|
+Xr_SNI_28	|	3094797	|	1766134	|	43	|
+Xv_JTS_03	|	1650289	|	938941	|	43	|
+Xv_JTS_04	|	3754638	|	2124663	|	43	|
+
+
+
+##Step 3: Generate reference contigs from PE reads
+
+====> **RE-WRITE** THIS SECTION FOLLOWING RECENT CHANGES IN PIPELINE
 
 Setting up experiments (permutations) in Stacks for testing which parameters combinations are better for retrieving a higher number of "good" loci that have decent coverage within and among populations. Because we have decently high coverage, I'm varying the -m parameter (# reads required to form a stack) from 3-7, skipping even numbers (just to have a bigger range initially). Also, I'm not at all using -n 0 or 1, since they are biologically unrealistic given these datasets, and likely to eliminate and oversplit loci among individuals/populations with higher divergence. 
 
@@ -63,9 +87,9 @@ k | 3 | 2 | 2 | 5 |
 ----------------------------------------------
 
 
-###Intermediate step: get a quick SNP matrix only with SR sequences for Chris' report
+##Step 4: Genotyping of SR reads based on PE contigs
 
-######1. check to see which files are repeats in different libraries, or else when moving them to do denovo_map they will be rewritten/lost.
+######4.1. Check for among-library repeats.
 
 Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So for ***Xantusia***, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), -3.fq.gz to library 3 (1835), -4.fq.gz to library 4 (1994), and -5.fq.gz to library 5 (1995). Renaming all files at once using the following code:
 
@@ -77,7 +101,7 @@ Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Libra
 ------------------------------------
 
 
-######2. Merge fasta files for library duplicates
+######4.2. Merge fasta files for library duplicates
 
 After being renamed, move all files back to the SR-denovo-prelim folder and there I merge the fasta files. I merge following these guidelines (from this [source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
 
@@ -94,9 +118,20 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
 
 ------------------------------------
+#####How many reads for each individual?? 
+![read counts](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/read-counts-SR.png)
+
+######4.3. Genotyping with pyrad
+/
+
+/
+
+/
+
+/
 
 
-######3. Running denovo_map for SR reads
+In this step, all forward reads are used, including the ones from the initial Paired-end libaries. 
 
 The code used for running denovo_map for only the SR reads was:
 
