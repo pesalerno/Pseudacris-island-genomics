@@ -65,7 +65,70 @@ Xv_JTS_04	|	3,754,638	|	2,124,663	|	43	|
 
 ##Step 3: Generate reference contigs from PE reads
 
+
+I initally genotyped and created reference contigs with STACKS, but now I am re-doing the analysis with pyrad to account for the high divergence across islands, particularly for *Xantusia riversiana/vigilis*. 
+
+
+#####3.1. Merge paired-reads
+Because in RADseq reads for the same loci can be of different lengths, and most will be overlapping segments (as in, R1 and R2 will overlap) then we will merge the reads following flow-cell information so that they are processed together when making the stacks (greatly reduces computational time, and also prevents a messy analysis). We have to merge the reads with the program [PEAR](https://github.com/xflouris/PEAR).
+
+=>The first thing we have to do is unzip the reads if they are gzipped
+
+
+From the Manual:
+
+-----------
+***How to use:** PEAR  can  robustly  assemble most of the data sets with default parameters. The basic command to run PEAR is:*
+
+		./pear -f forward_read.fastq -r reverse_read.fastq -o output_prefix
+	
+*The forward_read file usually has "R1" in the name, and the reverse_read file usually has "R2" in the name.*
+
+***How to cite:** Zhang, J., K. Kobert, T. Flouri, A. Stamatakis. PEAR: A fast and accurate Illumina Paired-End reAd mergeR. Bioinformatics 30(5): 614-620, 2014.*
+
+I renamed files with:
+
+	rename -1.fq_1 _R1.fq *fq*
+	
+Then I used the following for loop script from Deren Eaton (within folder with sequences):
+
+	for gfile in *.fq;
+    do pear -f $gfile \
+            -r ${gfile/_R1.fq/_R2.fq} \
+            -o ${gfile/_R1.fq/} \
+            -n 33 \
+            -t 33 \
+            -q 10 \
+            -j 20  >> pear.log 2>&1;
+	done
+
+Then I transferred only the *assembled* on ran step#3, changing line # 11 (data type) to ***merged***:
+
+	
+And also changed the path to the files so that it only picks files that have *assembled* in the name. 
+
+
+
+
+\
+
+\
+
+\
+
+\
+
+\
+
+
+
 ====> **RE-WRITE** THIS SECTION FOLLOWING RECENT CHANGES IN PIPELINE
+
+
+
+
+
+
 
 Setting up experiments (permutations) in Stacks for testing which parameters combinations are better for retrieving a higher number of "good" loci that have decent coverage within and among populations. Because we have decently high coverage, I'm varying the -m parameter (# reads required to form a stack) from 3-7, skipping even numbers (just to have a bigger range initially). Also, I'm not at all using -n 0 or 1, since they are biologically unrealistic given these datasets, and likely to eliminate and oversplit loci among individuals/populations with higher divergence. 
 
@@ -134,7 +197,8 @@ Histogram of reads per individual for ***Xantusia***:
 /
 
 ######4.3. Genotyping with pyrad
-/
+***===>folders ready to go for genotyping of all single-end illumina reads.***
+
 
 /
 
