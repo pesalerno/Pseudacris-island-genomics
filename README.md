@@ -68,7 +68,7 @@ Xv_JTS_04	|	3,754,638	|	2,124,663	|	43	|
 I initally genotyped and created reference contigs with STACKS, but now I am re-doing the analysis with pyrad to account for the high divergence across islands, particularly for *Xantusia riversiana/vigilis*. 
 
 
-#####3.1. Merge paired-reads
+######3.1. Merge paired-reads
 Because in RADseq reads for the same loci can be of different lengths, and most will be overlapping segments (as in, R1 and R2 will overlap) then we will merge the reads following flow-cell information so that they are processed together when making the stacks (greatly reduces computational time, and also prevents a messy analysis). We have to merge the reads with the program [PEAR](https://github.com/xflouris/PEAR).
 
 =>The first thing we have to do is unzip the reads if they are gzipped
@@ -108,7 +108,7 @@ Then I used the following for loop script from Deren Eaton (within folder with s
 
 Then I transferred only the *assembled* to the ***'/edits/'*** folder.
 
-#####3.1. Run pyrad: *within-sample clustering* (step 3)
+######3.2. Run pyrad: *within-sample clustering* (step 3)
 
 I started the pyrad pipeline on step#3, making sure that line # 11 (data type) is set to ***merged***:
 
@@ -116,12 +116,24 @@ I started the pyrad pipeline on step#3, making sure that line # 11 (data type) i
 
 
 
-See [full parameters](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/params-file.py) file for the rest of the specifications. 
+See [*Pseudacris* parameters](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-params-PE.txt) and [*Xantusia* parameters](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-params-PE.txt) file for the rest of the specifications of parameters files for the paired end reference contigs. 
 
 pyrad was called as follows:
 
 	pyrad -p Pr-params-d.txt -s 3
-	
+
+correns .sh file was set up as follows:
+
+	#!/bin/bash
+	#
+	#SBATCH --time=100:00:00
+	#SBATCH --job-name=pyrad-Xr-step3-t1
+	#SBATCH --mail-user=patriciasalerno@gmail.com
+	#SBATCH --error=stderr-pyrad-Xr-step3-t1
+	#SBATCH --output=stdout-pyrad-Xr-step3-t1
+
+	/opt/software/Python-2.7.10/python
+	pyrad -p /home/salerno/Xantusia/pyrad/Xr-params-t1.txt -s 3
 
 
 \
@@ -171,7 +183,18 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
 
 ------------------------------------
-#####How many reads on average for each species?? 
+######=>How many reads on average for each species?? 
+
+
+We counted reads for each individual using the unzipped files and with the following script:
+
+	echo -e 'SAMPLE_ID_FULL\tNUM_READS'
+	for file in ~/path/to/denovo-map/*.fq ##edit your path!!
+	do
+	echo -n $(basename $file .fq)$'\t'
+	cat $file | grep '^@.*' | wc -l
+	done
+
 ![read counts](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/figures-reads/read-counts-SR.png)
 
 /
@@ -187,7 +210,7 @@ Histogram of reads per individual for ***Xantusia***:
 /
 
 ######4.3. Genotyping with pyrad
-***===>folders ready to go for genotyping of all single-end illumina reads.***
+***===>folders ready to go for genotyping of all single-end illumina reads.*** In this step, all forward reads are used, including the ones from the initial Paired-end libaries. So they all need to be merged into one directory.
 
 
 /
@@ -197,5 +220,5 @@ Histogram of reads per individual for ***Xantusia***:
 /
 
 
-In this step, all forward reads are used, including the ones from the initial Paired-end libaries. 
+ 
 
