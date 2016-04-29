@@ -1,8 +1,7 @@
-# Pseudacris/Xantusia-island-genomics
-Following workflow is for processing raw data from RADseq libraries. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads will be used for generating a reference genome. Thus, this pipeline actually runs Stacks three separate times:
-- First: denovo_map for paired-end reads (Step 1.4)
-- Second: ref_map for single-end reads (Step 3)
-- Third: rxstacks for fixing genotyping errors with population statistics (Step 4). 
+# ***Pseudacris/Xantusia***-island-genomics
+Following workflow is for processing raw data from several RADseq libraries from species *Pseudacris regilla* and *Xantusia riversiana*. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads will be used for generating reference contigs. Then all of the forward reads (including initial higher coverage individuals) are mapped onto reference contigs for genotyping. The main pipelineused for genotyping is pyrad. 
+
+
 
 ##Step 1: de-multiplexing
 
@@ -29,7 +28,7 @@ Copy all renamed libraries for all individuals into their "species" directories 
 ##Step 2: purge PCR duplicates of PE reads
 
 
-I ran the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized, which Dan Sloan installed for me on the server's root.
+I ran the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized.
 
 For the program to run, files need to be unzipped (.fq) and end with either
 \"fq_1\" for the SE file or \"fq_2\" for the PE file. Example: XXX.fq_1 and XXX.fq_2. Use rename script to rename all files to add -1 termination.
@@ -78,6 +77,8 @@ Because in RADseq reads for the same loci can be of different lengths, and most 
 From the Manual:
 
 -----------
+-----------
+
 ***How to use:** PEAR  can  robustly  assemble most of the data sets with default parameters. The basic command to run PEAR is:*
 
 		./pear -f forward_read.fastq -r reverse_read.fastq -o output_prefix
@@ -85,6 +86,9 @@ From the Manual:
 *The forward_read file usually has "R1" in the name, and the reverse_read file usually has "R2" in the name.*
 
 ***How to cite:** Zhang, J., K. Kobert, T. Flouri, A. Stamatakis. PEAR: A fast and accurate Illumina Paired-End reAd mergeR. Bioinformatics 30(5): 614-620, 2014.*
+
+-----------
+-----------
 
 I renamed files with:
 
@@ -102,13 +106,23 @@ Then I used the following for loop script from Deren Eaton (within folder with s
             -j 20  >> pear.log 2>&1;
 	done
 
-Then I transferred only the *assembled* to the ***'/edits/'*** folder ran step#3, changing line # 11 (data type) to ***merged***:
+Then I transferred only the *assembled* to the ***'/edits/'*** folder.
+
+#####3.1. Run pyrad: *within-sample clustering* (step 3)
+
+I started the pyrad pipeline on step#3, making sure that line # 11 (data type) is set to ***merged***:
 
 	merged       ## 11. Datatype: rad,gbs,pairgbs,pairddrad,(others:see docs)(all)
 
 
 
 See [full parameters](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/params-file.py) file for the rest of the specifications. 
+
+pyrad was called as follows:
+
+	pyrad -p Pr-params-d.txt -s 3
+	
+
 
 \
 
