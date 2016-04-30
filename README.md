@@ -135,10 +135,62 @@ correns .sh file was set up as follows:
 	/opt/software/Python-2.7.10/python
 	pyrad -p /home/salerno/Xantusia/pyrad/Xr-params-t1.txt -s 3
 
+The full output for the within-sample clustering can be found here for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-within-clusters-s3.txt) and for [*Pseudacris*](). The summary of coverage per loci within sample is:
 
-\
 
-\
+taxa	|	total	|	mean-depth	|	std-dev	|	total_d>9	|	mean_d>9	|	std-dev_d>9
+----------------- | ------------- | ------------ |------------ | ------------- |
+Xr_SBI_03	|	417666	|	1.499	|	1.38	|	1394	|	14.249	|	8.826
+Xr_SBI_04	|	581256	|	1.555	|	1.734	|	4692	|	13.598	|	8.596
+Xr_SCL_27	|	112121	|	3.059	|	3.52	|	4680	|	13.343	|	9.422
+Xr_SCL_28	|	108005	|	3.682	|	4.244	|	9479	|	13.951	|	6.378
+Xr_SNI_27	|	274638	|	1.463	|	1.168	|	439	|	15.59	|	9.477
+Xr_SNI_28	|	599975	|	1.689	|	2.169	|	9527	|	13.911	|	7.323
+Xv_JTS_03	|	303511	|	1.791	|	2.087	|	3701	|	13.357	|	8.52
+Xv_JTS_04	|	174084	|	4.967	|	6.667	|	29066	|	16.529	|	8.921
+
+
+######3.2. Run pyrad: *error rate and heterozygosity estimation* (step 4):
+
+	pyrad -p Pr-params-d.txt -s 4
+
+The result of this step for both species is:
+
+Individual | heterozygosity | error	|
+------------ | ------------- | ------------ |
+Xr_SCL_27-PE	|	0.00798693	|	0.00233735	|
+Xr_SCL_28-PE	|	0.00524442	|	0.00178935	|
+Xr_SNI_27-PE	|	0.03099332	|	0.01102511	|
+Xv_JTS_04-PE	|	0.00605539	|	0.00147974	|
+Xv_JTS_03-PE	|	0.01107941	|	0.00316072	|
+Xr_SBI_03-PE	|	0.01819725	|	0.00687464	|
+Xr_SBI_04-PE	|	0.00845829	|	0.00365785	|
+Xr_SNI_28-PE	|	0.00587565	|	0.00232468	|
+
+
+######3.4. Run pyrad: *within-sample consensus sequences* (step5):
+This analysis uses the error rate and heterozygosity estimations/corrections from step 4. For example, for ***Xantusia***:
+
+	pyrad -p Xr-params-t1.txt -s 5
+	
+	     ------------------------------------------------------------
+      pyRAD : RADseq for phylogenetics & introgression analyses
+     ------------------------------------------------------------
+
+
+	step 5: creating consensus seqs for 8 samples, using H=0.01174 E=0.00408
+
+And for ***Pseudacris***:
+
+	pyrad -p Pr-params... -s 5
+	
+**From the [manual](http://nbviewer.jupyter.org/gist/dereneaton/af9548ea0e94bff99aa0/pyRAD_v.3.0.ipynb):** *"create consensus sequences. Using the mean error rate and heterozygosity estimated in step 4, this step creates consensus sequences for each cluster. Those which have less than the minimum coverage, more than the maximum number of undetermined sites, or more than the maximum number of heterozygous sites, or more than the allowed number of alleles, are discarded. In diploid data if two alleles are present the phase of heterozygous sites are retained in the consensus sequences"*
+
+######3.5. Run pyrad: *among-sample clustering* (step6)
+
+**From the manual**: *"Consensus sequences are clustered across samples using the same settings as in step 3. If heterozygous, one allele is randomly sampled and used in this step, although both alleles are retained in the final data set."*
+
+
 
 \
 
