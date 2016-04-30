@@ -1,0 +1,158 @@
+[salerno@correns stats]$ cat s3.clusters.txt 
+
+taxa	total	dpt.me	dpt.sd	d>9.tot	d>9.me	d>9.sd	badpairs
+Xr_SBI_03-PE_purged.assembled.fastq	417666	1.499	1.38	1394	14.249	8.826	0
+Xr_SBI_04-PE_purged.assembled.fastq	581256	1.555	1.734	4692	13.598	8.596	0
+Xr_SCL_27-PE_purged.assembled.fastq	112121	3.059	3.52	4680	13.343	9.422	0
+Xr_SCL_28-PE_purged.assembled.fastq	108005	3.682	4.244	9479	13.951	6.378	0
+Xr_SNI_27-PE_purged.assembled.fastq	274638	1.463	1.168	439	15.59	9.477	0
+Xr_SNI_28-PE_purged.assembled.fastq	599975	1.689	2.169	9527	13.911	7.323	0
+Xv_JTS_03-PE_purged.assembled.fastq	303511	1.791	2.087	3701	13.357	8.52	0
+Xv_JTS_04-PE_purged.assembled.fastq	174084	4.967	6.667	29066	16.529	8.921	0
+
+    ## total = total number of clusters, including singletons
+    ## dpt.me = mean depth of clusters
+    ## dpt.sd = standard deviation of cluster depth
+    ## >N.tot = number of clusters with depth greater than N
+    ## >N.me = mean depth of clusters with depth greater than N
+    ## >N.sd = standard deviation of cluster depth for clusters with depth greater than N
+    ## badpairs = mismatched 1st & 2nd reads (only for paired ddRAD data)
+
+HISTOGRAMS
+
+    
+sample: Xr_SBI_03-PE_purged.assembled.fastq
+bins	depth_histogram	cnts
+   :	0------------50-------------100%
+0 	******************************      404404
+5 	**                                  11868
+10 	*                                   1081
+15 	*                                   144
+20 	*                                   64
+25 	*                                   41
+30 	*                                   21
+35 	*                                   11
+40 	*                                   15
+50 	*                                   16
+100 	*                                   1
+250 	                                    0
+500 	                                    0
+
+sample: Xr_SBI_04-PE_purged.assembled.fastq
+bins	depth_histogram	cnts
+   :	0------------50-------------100%
+0 	******************************      558302
+5 	**                                  18262
+10 	*                                   3726
+15 	*                                   640
+20 	*                                   164
+25 	*                                   53
+30 	*                                   33
+35 	*                                   14
+40 	*                                   20
+50 	*                                   31
+100 	*                                   11
+250 	                                    0
+500 	                                    0
+
+sample: Xr_SCL_27-PE_purged.assembled.fastq
+bins	depth_histogram	cnts
+   :	0------------50-------------100%
+0 	*************************           88490
+5 	******                              18951
+10 	**                                  3847
+15 	*                                   578
+20 	*                                   114
+25 	*                                   39
+30 	*                                   23
+35 	*                                   15
+40 	*                                   22
+50 	*                                   31
+100 	*                                   10
+250 	*                                   1
+500 	                                    0
+
+sample: Xr_SCL_28-PE_purged.assembled.fastq
+bins	depth_histogram	cnts
+   :	0------------50-------------100%
+0 	***********************             79740
+5 	******                              18786
+10 	***                                 6622
+15 	**                                  2090
+20 	*                                   514
+25 	*                                   123
+30 	*                                   42
+35 	*                                   17
+40 	*                                   21
+50 	*                                   43
+100 	*                                   7
+250 	                                    0
+500 	                                    0
+
+sample: Xr_SNI_27-PE_purged.assembled.fastq
+bins	depth_histogram	cnts
+   :	0------------50-------------100%
+0 	******************************      268435
+5 	**                                  5764
+10 	*                                   306
+15 	*                                   51
+20 	*                                   29
+25 	*                                   19
+30 	*                                   13
+35 	*                                   8
+40 	*                                   6
+50 	*                                   7
+100 	                                    0
+250 	                                    0
+500 	                                    0
+
+sample: Xr_SNI_28-PE_purged.assembled.fastq
+bins	depth_histogram	cnts
+   :	0------------50-------------100%
+0 	*****************************       567695
+5 	**                                  22753
+10 	*                                   6921
+15 	*                                   1838
+20 	*                                   457
+25 	*                                   136
+30 	*                                   45
+35 	*                                   29
+40 	*                                   41
+50 	*                                   48
+100 	*                                   12
+250 	                                    0
+500 	                                    0
+
+sample: Xv_JTS_03-PE_purged.assembled.fastq
+bins	depth_histogram	cnts
+   :	0------------50-------------100%
+0 	*****************************       283865
+5 	***                                 15945
+10 	*                                   2973
+15 	*                                   513
+20 	*                                   98
+25 	*                                   50
+30 	*                                   13
+35 	*                                   12
+40 	*                                   13
+50 	*                                   24
+100 	*                                   5
+250 	                                    0
+500 	                                    0
+
+sample: Xv_JTS_04-PE_purged.assembled.fastq
+bins	depth_histogram	cnts
+   :	0------------50-------------100%
+0 	*********************               116242
+5 	******                              28776
+10 	****                                14596
+15 	**                                  7677
+20 	**                                  3847
+25 	*                                   1709
+30 	*                                   694
+35 	*                                   234
+40 	*                                   147
+50 	*                                   112
+100 	*                                   48
+250 	*                                   2
+500 	                                    0
