@@ -135,20 +135,27 @@ correns .sh file was set up as follows:
 	/opt/software/Python-2.7.10/python
 	pyrad -p /home/salerno/Xantusia/pyrad/Xr-params-t1.txt -s 3
 
-The full output for the within-sample clustering can be found here for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-within-clusters-s3.txt) and for [*Pseudacris*](). The summary of coverage per loci within sample is:
+The full output for the within-sample clustering can be found here for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-within-clusters-s3.txt) and for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-within-clusters-s3.txt). The summary of coverage per loci within sample is:
 
 
 taxa	|	total	|	mean-depth	|	std-dev	|	total_d>9	|	mean_d>9	|	std-dev_d>9
 ----------------- | ------------- | ------------ |------------ | ------------- |------------ | ------------- |
-Xr_SBI_03	|	417666	|	1.499	|	1.38	|	1394	|	14.249	|	8.826
-Xr_SBI_04	|	581256	|	1.555	|	1.734	|	4692	|	13.598	|	8.596
-Xr_SCL_27	|	112121	|	3.059	|	3.52	|	4680	|	13.343	|	9.422
-Xr_SCL_28	|	108005	|	3.682	|	4.244	|	9479	|	13.951	|	6.378
-Xr_SNI_27	|	274638	|	1.463	|	1.168	|	439	|	15.59	|	9.477
-Xr_SNI_28	|	599975	|	1.689	|	2.169	|	9527	|	13.911	|	7.323
-Xv_JTS_03	|	303511	|	1.791	|	2.087	|	3701	|	13.357	|	8.52
-Xv_JTS_04	|	174084	|	4.967	|	6.667	|	29066	|	16.529	|	8.921
-
+Xr_SBI_03-PE	|	417666	|	1.499	|	1.38	|	1394	|	14.249	|	8.826
+Xr_SBI_04-PE	|	581256	|	1.555	|	1.734	|	4692	|	13.598	|	8.596
+Xr_SCL_27-PE	|	112121	|	3.059	|	3.52	|	4680	|	13.343	|	9.422
+Xr_SCL_28-PE	|	108005	|	3.682	|	4.244	|	9479	|	13.951	|	6.378
+Xr_SNI_27-PE	|	274638	|	1.463	|	1.168	|	439	|	15.59	|	9.477
+Xr_SNI_28-PE	|	599975	|	1.689	|	2.169	|	9527	|	13.911	|	7.323
+Xv_JTS_03-PE	|	303511	|	1.791	|	2.087	|	3701	|	13.357	|	8.52
+Xv_JTS_04-PE	|	174084	|	4.967	|	6.667	|	29066	|	16.529	|	8.921
+Pr_SCI_03-PE	|	193208	|	13.856	|	18.895	|	99915	|	22.382	|	23.092
+Pr_SCI_04-PE	|	109581	|	9.339	|	12.522	|	39358	|	17.557	|	17.87
+Pr_SCI_05-PE	|	130115	|	10.226	|	13.523	|	51999	|	18.417	|	18.323
+Pr_SCI_06-PE	|	163965	|	11.35	|	16.678	|	72843	|	19.553	|	22.283
+Pr_SRI_02-PE	|	193637	|	15.231	|	21.232	|	106953	|	23.762	|	25.451
+Pr_SRI_03-PE	|	76988	|	8.387	|	10.075	|	24117	|	16.538	|	14.595
+Pr_SRI_04-PE	|	121641	|	9.903	|	12.471	|	47253	|	17.998	|	16.814
+Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
 
 ######3.2. Run pyrad: *error rate and heterozygosity estimation* (step 4):
 
