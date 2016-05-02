@@ -190,8 +190,14 @@ And for ***Pseudacris***:
 
 **From the manual**: *"Consensus sequences are clustered across samples using the same settings as in step 3. If heterozygous, one allele is randomly sampled and used in this step, although both alleles are retained in the final data set."*
 
+\
+
+\
+
+\
 
 
+Step 7: Alignment, filtering for paralogs, and output of human readable fasta-like file (.loci). A large number of alternative formats are also available (see output formats). Final assembly statistics are written to the stats/ directory in the .stats file. This step is relatively fast, and can be repeated with different values for options 12,13,14,16,17,etc. to create different data sets that are optimized in coverage for different samples
 \
 
 \
