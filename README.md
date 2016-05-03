@@ -210,6 +210,37 @@ And for ***Pseudacris***:
 	
 **From the [manual](http://nbviewer.jupyter.org/gist/dereneaton/af9548ea0e94bff99aa0/pyRAD_v.3.0.ipynb):** *"create consensus sequences. Using the mean error rate and heterozygosity estimated in step 4, this step creates consensus sequences for each cluster. Those which have less than the minimum coverage, more than the maximum number of undetermined sites, or more than the maximum number of heterozygous sites, or more than the allowed number of alleles, are discarded. In diploid data if two alleles are present the phase of heterozygous sites are retained in the consensus sequences"*
 
+The results from this step are:
+
+Individual | nloci | f1loci	 | f2loci | nsites | npoly | poly |
+------------ | ------------- | ------------ |------------ | ------------- | ------------ |------------ | 
+Xr_SBI_04-PE	|	581256	|	4692	|	4026	|	667573	|	1115	|	0.0016702
+Xr_SBI_03-PE	|	417666	|	1394	|	1002	|	156595	|	616	|	0.0039337
+Xr_SNI_28-PE	|	599975	|	9527	|	8685	|	1526160	|	1663	|	0.0010897
+Xv_JTS_03-PE	|	303511	|	3701	|	3193	|	538514	|	1807	|	0.0033555
+Xr_SNI_27-PE	|	274638	|	439	|	232	|	33780	|	306	|	0.0090586
+Xr_SCL_28-PE	|	108005	|	9479	|	8907	|	1625061	|	1972	|	0.0012135
+Xr_SCL_27-PE	|	112121	|	4680	|	4220	|	747718	|	1099	|	0.0014698
+Xv_JTS_04-PE	|	174084	|	29066	|	27573	|	5216308	|	14625	|	0.0028037
+Pr_SCI_03-PEq	|	193208	|	99881	|	92219	|	19120806	|	22398	|	0.0011714
+Pr_SRI_02-PEq	|	193637	|	106908	|	99310	|	20631482	|	19323	|	0.0009366
+Pr_SCI_05-PEq	|	130115	|	51993	|	47994	|	9955953	|	9521	|	0.0009563
+Pr_SCI_06-PEq	|	163965	|	72826	|	67459	|	14022674	|	14215	|	0.0010137
+Pr_SRI_04-PEq	|	121641	|	47250	|	43775	|	9092347	|	6878	|	0.0007565
+Pr_SCI_04-PEq	|	109581	|	39350	|	36340	|	7479041	|	6557	|	0.0008767
+Pr_SRI_03-PEq	|	76988	|	24117	|	22158	|	4585386	|	3087	|	0.0006732
+Pr_SRI_05-PEq	|	107048	|	38552	|	35732	|	7412961	|	5491	|	0.0007407
+
+Where:
+
+	## nloci = number of loci
+    ## f1loci = number of loci with >N depth coverage
+    ## f2loci = number of loci with >N depth and passed paralog filter
+    ## nsites = number of sites across f loci
+    ## npoly = number of polymorphic sites in nsites
+    ## poly = frequency of polymorphic sites
+
+
 ######3.5. Run pyrad: *among-sample clustering* (step6)
 
 **From the manual**: *"Consensus sequences are clustered across samples using the same settings as in step 3. If heterozygous, one allele is randomly sampled and used in this step, although both alleles are retained in the final data set."*
