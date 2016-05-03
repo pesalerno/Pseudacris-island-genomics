@@ -157,6 +157,9 @@ Pr_SRI_03-PE	|	76988	|	8.387	|	10.075	|	24117	|	16.538	|	14.595
 Pr_SRI_04-PE	|	121641	|	9.903	|	12.471	|	47253	|	17.998	|	16.814
 Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
 
+***NOTE:*** we actually set the clustering threshold differently for *Xantusia* (N>0.90) and for *Pseudacris* (N>0.93) to account for the difference in coverage of the two libraries. 
+
+
 ######3.2. Run pyrad: *error rate and heterozygosity estimation* (step 4):
 
 	pyrad -p Pr-params-d.txt -s 4
@@ -173,7 +176,14 @@ Xv_JTS_03-PE	|	0.01107941	|	0.00316072	|
 Xr_SBI_03-PE	|	0.01819725	|	0.00687464	|
 Xr_SBI_04-PE	|	0.00845829	|	0.00365785	|
 Xr_SNI_28-PE	|	0.00587565	|	0.00232468	|
-
+Pr_SRI_03-PE	|	0.00511534	|	0.00127006	|
+Pr_SRI_05-PE	|	0.00462439	|	0.00121035	|
+Pr_SCI_04-PE	|	0.00491929	|	0.00126408	|
+Pr_SRI_04-PE	|	0.0046619	|	0.00124301	|
+Pr_SCI_05-PE	|	0.0050002	|	0.00127653	|
+Pr_SCI_06-PE	|	0.00490685	|	0.00114311	|
+Pr_SCI_03-PE	|	0.00516595	|	0.00118411	|
+Pr_SRI_02-PE	|	0.00466262	|	0.00117116	|
 
 ######3.4. Run pyrad: *within-sample consensus sequences* (step5):
 This analysis uses the error rate and heterozygosity estimations/corrections from step 4. For example, for ***Xantusia***:
@@ -190,6 +200,13 @@ This analysis uses the error rate and heterozygosity estimations/corrections fro
 And for ***Pseudacris***:
 
 	pyrad -p Pr-params... -s 5
+	
+	     ------------------------------------------------------------
+      pyRAD : RADseq for phylogenetics & introgression analyses
+     ------------------------------------------------------------
+
+
+	step 5: creating consensus seqs for 8 samples, using H=0.00488 E=0.00122
 	
 **From the [manual](http://nbviewer.jupyter.org/gist/dereneaton/af9548ea0e94bff99aa0/pyRAD_v.3.0.ipynb):** *"create consensus sequences. Using the mean error rate and heterozygosity estimated in step 4, this step creates consensus sequences for each cluster. Those which have less than the minimum coverage, more than the maximum number of undetermined sites, or more than the maximum number of heterozygous sites, or more than the allowed number of alleles, are discarded. In diploid data if two alleles are present the phase of heterozygous sites are retained in the consensus sequences"*
 
