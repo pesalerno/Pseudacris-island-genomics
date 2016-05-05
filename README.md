@@ -160,7 +160,7 @@ Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
 ***NOTE:*** we actually set the clustering threshold differently for *Xantusia* (N>0.90) and for *Pseudacris* (N>0.93) to account for the difference in coverage of the two libraries. 
 
 
-######3.2. Run pyrad: *error rate and heterozygosity estimation* (step 4):
+######3.3. Run pyrad: *error rate and heterozygosity estimation* (step 4):
 
 	pyrad -p Pr-params-d.txt -s 4
 
@@ -245,20 +245,28 @@ Where:
 
 **From the manual**: *"Consensus sequences are clustered across samples using the same settings as in step 3. If heterozygous, one allele is randomly sampled and used in this step, although both alleles are retained in the final data set."*
 
-\
+Here the output file that we seem to be interested in for creating the reference genome is :
+	
+	> cat.consens_.gz
 
-\
-
-\
+Which is found within the **/clust.90/** folder. However, we may also just need the loci or alleles files 
 
 
-Step 7: Alignment, filtering for paralogs, and output of human readable fasta-like file (.loci). A large number of alternative formats are also available (see output formats). Final assembly statistics are written to the stats/ directory in the .stats file. This step is relatively fast, and can be repeated with different values for options 12,13,14,16,17,etc. to create different data sets that are optimized in coverage for different samples
-\
 
-\
 
-\
 
+######3.6. Run pyrad: *among-sample clustering* (step6)
+I ran this step because I am thinking I may also (or instead) need a final alingment file from step 7 for the reference contigs. 
+
+
+**From the manual**: Alignment, filtering for paralogs, and output of human readable fasta-like file (.loci). A large number of alternative formats are also available (see output formats). 
+
+
+The full output from step 7 post-genotyping and filtering can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-step7-output.txt) and [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-step7-output.txt).
+
+
+
+######3.7. Generate reference genome with....
 
 
 ----------------------------------------------
@@ -322,8 +330,8 @@ Histogram of reads per individual for ***Xantusia***:
 
 /
 
-######4.3. Genotyping with pyrad
-***===>folders ready to go for genotyping of all single-end illumina reads.*** In this step, all forward reads are used, including the ones from the initial Paired-end libaries. So they all need to be merged into one directory.
+######4.3. Genotyping with STACKS
+***===>folders ready to go for genotyping of all single-end illumina reads.*** In this step, all forward reads are used, including the ones from the initial Paired-end libaries. So they all need to be merged into one directory. We are not doing ***denovo_map*** since we have the reference contigs assembled in pyrad. 
 
 
 /
