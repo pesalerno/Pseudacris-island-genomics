@@ -266,7 +266,29 @@ The full output from step 7 post-genotyping and filtering can be found here for 
 
 
 
-######3.7. Generate reference genome with....
+######3.7. Generate reference genome with bwa/samtools/picard
+
+From a [gatk help blog](http://gatkforums.broadinstitute.org/wdl/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk), the requirements are bwa, samtools, and picard, which I need to install on the cluster. 
+
+The steps to generating a reference genome are:
+
+1. Generate bwa index
+2. Generate the FASTA file index
+3. Generate the seuqence dictonary
+
+The input file formats allowed in stacks for a reference genome are sam and bam, so I will try to do sam format which I think is more straightforward. 
+
+
+First, we generate the bwa index:
+
+	bwa index -a bwtsw Pr-output-b.loci.fa
+
+where the flag -a is to specify that we want to handle a large genome. 
+
+Then we align the sequences using multiple threads (in this example, 4 CPUs). 
+
+	bwa aln -t 4 Pr-output-b.loci.fa ~/Pseudacris/SR-denovo-prelim/demultiplexed-reads/Pr_* > align-bwa-Pr-1
+
 
 
 ----------------------------------------------
