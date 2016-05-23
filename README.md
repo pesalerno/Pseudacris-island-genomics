@@ -270,24 +270,70 @@ The full output from step 7 post-genotyping and filtering can be found here for 
 
 From a [gatk help blog](http://gatkforums.broadinstitute.org/wdl/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk), the requirements are bwa, samtools, and picard, which I need to install on the cluster. 
 
-The steps to generating a reference genome are:
+The steps to generating the input reads for ref_map in STACKS is:
 
-1. Generate bwa index
-2. Generate the FASTA file index
-3. Generate the seuqence dictonary
+1. Generate bwa index with fasta contigs
+2. Align sequences to index
+3. Transform align to sam input format
 
-The input file formats allowed in stacks for a reference genome are sam and bam, so I will try to do sam format which I think is more straightforward. 
+The input file formats allowed in stacks for a reference genome are .sam and .bam, so I will try to do sam format which seems to be more straightforward. 
 
 
-First, we generate the bwa index:
+->Before anything, we need to transform the /loci output from pyrad into .fasta for generating the reference genome. Becca Tarvin helped me creating this program in pythong to transform the files:
 
-	bwa index -a bwtsw Pr-output-b.loci.fa
+	import sys
+
+	def convert_to_fasta(file,file_out): ## def defines function, followed by 	"function_name(args):"
+		## load in file
+		with open(file,'r') as f:  # indented once
+			lines = f.readlines()
+	
+	## initiate arbitrary locus number
+	locus_num=0
+	
+	## open new file
+	
+	# 	prefix=file.split('.')[0]
+	# 	file_out = prefix+'.fasta'
+		with open(file_out,'w') as new_f:
+			for line in lines:
+				if line[0] == '>':
+					new_f.write(line.split()[0]+'_'+str(locus_num)+'\n')
+					new_f.write(line.split()[1]+'\n')
+				elif line[0] == '/':
+					locus_num += 1
+					new_f.write('\n')
+
+	## convention in python is to call functions from main() clause
+	def main():	
+	# 	print sys.argv  ## prints what you typed to command line
+		file = sys.argv[1]
+		file_out = sys.argv[2]
+		convert_to_fasta(file,file_out)
+	
+	## don't forget to execute main()
+	main()
+
+
+
+Using the output fasta file we just generated with the previous python script, we can now generate the bwa index:
+
+	./bwa index -a bwtsw Pr-output-c.fasta
 
 where the flag -a is to specify that we want to handle a large genome. 
 
 Then we align the sequences using multiple threads (in this example, 4 CPUs). 
 
-	bwa aln -t 4 Pr-output-b.loci.fa ~/Pseudacris/SR-denovo-prelim/demultiplexed-reads/Pr_* > align-bwa-Pr-1
+	./bwa aln -t 4 Pr-output-b.loci.fa ~/Pseudacris/SR-denovo-prelim/demultiplexed-reads/Pr_* > align-bwa-Pr-1
+
+
+Then you transform the file which is currenty in *.sai* format to *'.sam'* format using the ***samse*** command (***sampe*** for paired-end reads):
+
+	./bwa samse Pr-output-c.fasta align-bwa-Pr-2 /home/salerno/Pseudacris/SR-denovo-prelim/demultiplexed-reads/edits/Pr_SCA_29-4.fq.gz.edit > align-bwa-2.sam
+
+This needs to be done for **EACH** sequence file that will go into ref_map.pl. Better to write a recursive script for this. 
+
+
 
 
 
@@ -297,7 +343,9 @@ Then we align the sequences using multiple threads (in this example, 4 CPUs).
 
 ##Step 4: Genotyping of SR reads based on PE contigs
 
-######4.1. Check for among-library repeats.
+
+#####4.1. Prep files for genotyping and check for raw read numbers
+######4.1.1. Check for among-library repeats.
 
 Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So for ***Xantusia***, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), -3.fq.gz to library 3 (1835), -4.fq.gz to library 4 (1994), and -5.fq.gz to library 5 (1995). Renaming all files at once using the following code:
 
@@ -309,7 +357,7 @@ Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Libra
 ------------------------------------
 
 
-######4.2. Merge fasta files for library duplicates
+######4.1.2. Merge fasta files for library duplicates
 
 After being renamed, move all files back to the SR-denovo-prelim folder and there I merge the fasta files. I merge following these guidelines (from this [source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
 
@@ -352,7 +400,8 @@ Histogram of reads per individual for ***Xantusia***:
 
 /
 
-######4.3. Genotyping with STACKS
+#####4.2. GGenotyping with ref_map.pl in STACKS
+
 ***===>folders ready to go for genotyping of all single-end illumina reads.*** In this step, all forward reads are used, including the ones from the initial Paired-end libaries. So they all need to be merged into one directory. We are not doing ***denovo_map*** since we have the reference contigs assembled in pyrad. 
 
 
