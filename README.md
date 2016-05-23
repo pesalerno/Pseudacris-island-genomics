@@ -388,11 +388,17 @@ Histogram of reads per individual for ***Pseudacris***:
 Histogram of reads per individual for ***Xantusia***:
 ![Xari-reads](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/figures-reads/Xantusia-reads.png)
 
-/
 
-#####4.2. GGenotyping with ref_map.pl in STACKS
+#####4.2. Genotyping with [ref_map.pl](http://catchenlab.life.illinois.edu/stacks/comp/ref_map.php) in STACKS
 
-***===>folders ready to go for genotyping of all single-end illumina reads.*** In this step, all forward reads are used, including the ones from the initial Paired-end libaries. So they all need to be merged into one directory. We are not doing ***denovo_map*** since we have the reference contigs assembled in pyrad. 
+######4.3.1. Generate list of sequences in sam format to be used for the input for ref_map.pl. 
+In this step, all forward reads are used, including the ones from the initial Paired-end libraries. So they all need to be merged into one directory. 
+
+######4.3.2. Map in STACKS!
+
+Need to edit the code once I run it but should be something like:
+
+	ref_map.pl -m 3 -b 1 -o ./stacks -O ./treestudy_popmap --samples ./samples -X "populations:--fstats"
 
 
 /
