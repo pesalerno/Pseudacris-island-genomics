@@ -245,16 +245,6 @@ Where:
 
 **From the manual**: *"Consensus sequences are clustered across samples using the same settings as in step 3. If heterozygous, one allele is randomly sampled and used in this step, although both alleles are retained in the final data set."*
 
-Here the output file that we seem to be interested in for creating the reference genome is :
-	
-	> cat.consens_.gz
-
-Which is found within the **/clust.90/** folder. However, we may also just need the loci or alleles files 
-
-
-
-
-
 ######3.6. Run pyrad: *among-sample clustering* (step6)
 I ran this step because I am thinking I may also (or instead) need a final alingment file from step 7 for the reference contigs. 
 
