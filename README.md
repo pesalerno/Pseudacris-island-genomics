@@ -269,7 +269,7 @@ The steps to generating the input reads for ref_map in STACKS is:
 The input file formats allowed in stacks for a reference genome are .sam and .bam, so I will try to do sam format which seems to be more straightforward. 
 
 
-->Before anything, we need to transform the /loci output from pyrad into .fasta for generating the reference genome. Becca Tarvin helped me creating this program in pythong to transform the files:
+->Before anything, we need to transform the /loci output from pyrad into .fasta for generating the reference genome. Becca Tarvin helped me creating this program in python to transform the files:
 
 	import sys
 
@@ -314,7 +314,7 @@ where the flag -a is to specify that we want to handle a large genome.
 
 Then we align the sequences using multiple threads (in this example, 4 CPUs). 
 
-	./bwa aln -t 4 Pr-output-b.loci.fa ~/Pseudacris/SR-denovo-prelim/demultiplexed-reads/Pr_* > align-bwa-Pr-1
+	./bwa aln -t 4 Pr-output-b.loci.fa ~/Pseudacris/SR-denovo-prelim/demultiplexed-reads/Pr_1 > align-bwa-Pr-1
 
 
 Then you transform the file which is currenty in *.sai* format to *'.sam'* format using the ***samse*** command (***sampe*** for paired-end reads):
@@ -400,6 +400,8 @@ Need to edit the code once I run it but should be something like:
 
 	ref_map.pl -m 3 -b 1 -o ./stacks -O ./treestudy_popmap --samples ./samples -X "populations:--fstats"
 
+
+form [ref-map](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8) 
 
 /
 
