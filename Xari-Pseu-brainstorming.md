@@ -43,6 +43,16 @@ They also have another script, for obtaining reliable estimates of heterozygosit
 
 
 
+######Landscape analyses
+
+Summarize ideas between the Wang et al 2012 and the Bradburd et al 2013 papers. How are these two approaches different? Are the programs themselves easily compared, in terms of ease of analyses? 
+
+#####*"Flexible and scalable genotyping-by-sequencing strategies for population studies"* - BMC Genomics
+
+
+
+
+
 
 
 
