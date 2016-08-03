@@ -424,12 +424,12 @@ To see the number of clusters and coverage per individual see [attached](https:/
 
 To see the results for the error and heterozygosity estimates, see [attached](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Pseudacris/Pi_E_estimate.txt). 
 
-**Step5**:*"creating consensus seqs for 140 samples, using H=0.02735 E=0.00652"*
+**Step5**: *"creating consensus seqs for 140 samples, using H=0.02735 E=0.00652"*
 
 To see full resuts of the consensus sequences, see [attached](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Pseudacris/s5.consens.txt).
 
 
-**Step6**:clustering across 140 samples at '.90' similarity 
+**Step6**: *clustering across 140 samples at '.90' similarity* 
 
 	Reading file /home/salerno/Pseudacris/SR-denovo-prelim/demultiplexed-reads/clust.90/cat.haplos_ 100%
 	202357374 nt in 2069325 seqs, min 80, max 148, avg 98
