@@ -403,6 +403,39 @@ Need to edit the code once I run it but should be something like:
 
 form [ref-map](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8) 
 
+#Step4B: *de novo* genotyping in stacks and pyrad
+
+We performed denovo genotyping in stacks, and also in pyrad, using the longer reads only as forward reads (as in, without generating any references with the initial 16 individual higher coverage paired-end data). 
+
+####pyRAD denovo genotyping
+
+For pyrad, stats per step, starting from step 2 (since demultiplexing was done in stacks) were:
+
+######***Pseudacris***: all 140 individuals were used for this analysis
+
+
+**Step3**: *"within-sample clustering of 69 samples at 
+	        '.90' similarity. Running 2 parallel jobs
+	 		with up to 6 threads per job."*
+
+To see the number of clusters and coverage per individual see [attached](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Pseudacris/s3.clusters.txt).  
+
+**Step4**:
+
+To see the results for the error and heterozygosity estimates, see [attached](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Pseudacris/Pi_E_estimate.txt). 
+
+**Step5**:*"creating consensus seqs for 140 samples, using H=0.02735 E=0.00652"*
+
+To see full resuts of the consensus sequences, see [attached](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Pseudacris/s5.consens.txt).
+
+
+**Step6**:clustering across 140 samples at '.90' similarity 
+
+	Reading file /home/salerno/Pseudacris/SR-denovo-prelim/demultiplexed-reads/clust.90/cat.haplos_ 100%
+	202357374 nt in 2069325 seqs, min 80, max 148, avg 98
+	Counting unique k-mers 100%
+
+
 /
 
 /
