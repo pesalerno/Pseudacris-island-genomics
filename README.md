@@ -312,16 +312,21 @@ Using the output fasta file we just generated with the previous python script, w
 
 where the flag -a is to specify that we want to handle a large genome. 
 
-Then we align the sequences using multiple threads (in this example, 4 CPUs). 
+Then we aligned the sequences using multiple threads (in this example, 4 CPUs). 
 
 	./bwa aln -t 4 Pr-output-b.loci.fa ~/Pseudacris/SR-denovo-prelim/demultiplexed-reads/Pr_1 > align-bwa-Pr-1
 
+**NOTE:**The alignment needs to be done for **EACH** sequence file that will go into ref_map.pl. Write a recursive script or a find/replace text file of all commands in sequence. 
+ 
+We also aligned the sequences changing the default of -n 4 to -n 8 to see effect of lower threshold in sequence differences:
+
+	./bwa aln -t 4 -n 0.08 Xr-input-bwa.fasta ~/Xantusia/SR-denovo-prelim/demultiplexed-sequences/edits/Xr_SNI_26.fq.gz.edit > Xr_SNI_26.sai
 
 Then you transform the file which is currenty in *.sai* format to *'.sam'* format using the ***samse*** command (***sampe*** for paired-end reads):
 
 	./bwa samse Pr-output-c.fasta align-bwa-Pr-2 /home/salerno/Pseudacris/SR-denovo-prelim/demultiplexed-reads/edits/Pr_SCA_29-4.fq.gz.edit > align-bwa-2.sam
 
-This needs to be done for **EACH** sequence file that will go into ref_map.pl. Better to write a recursive script for this. 
+
 
 
 
