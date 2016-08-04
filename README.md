@@ -159,7 +159,7 @@ Pr_SRI_03-PE	|	76988	|	8.387	|	10.075	|	24117	|	16.538	|	14.595
 Pr_SRI_04-PE	|	121641	|	9.903	|	12.471	|	47253	|	17.998	|	16.814
 Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
 
-***NOTE:*** we actually set the clustering threshold differently for *Xantusia* (N>0.90) and for *Pseudacris* (N>0.93) to account for the difference in coverage of the two libraries. 
+***NOTE:*** we actually set the clustering threshold differently for *Xantusia* (N>0.90) and for *Pseudacris* (N>0.93) to account for the difference in depth of seuqencing for the two libraries. 
 
 
 ######3.3. Run pyrad: *error rate and heterozygosity estimation* (step 4):
@@ -403,9 +403,9 @@ Need to edit the code once I run it but should be something like:
 
 form [ref-map](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8) 
 
-#Step4B: *de novo* genotyping in stacks and pyrad
+#Step4B: *de novo* genotyping in STACKS and pyRAD
 
-We performed denovo genotyping in stacks, and also in pyrad, using the longer reads only as forward reads (as in, without generating any references with the initial 16 individual higher coverage paired-end data). 
+We performed denovo genotyping both in stacks and pyrad, using the longer reads only as forward reads (as in, without generating any references with the initial 16 individual higher coverage paired-end data). 
 
 ####pyRAD denovo genotyping
 
