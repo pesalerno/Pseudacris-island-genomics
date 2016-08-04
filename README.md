@@ -1,5 +1,7 @@
 # ***Pseudacris/Xantusia***-island-genomics
-Following workflow is for processing raw data from several RADseq libraries from species *Pseudacris regilla* and *Xantusia riversiana*. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads will be used for generating reference contigs. Then all of the forward reads (including initial higher coverage individuals) are mapped onto reference contigs for genotyping. The main pipelineused for genotyping is pyrad. 
+Following workflow is for processing raw data from several RADseq libraries from species *Pseudacris regilla* and *Xantusia riversiana*. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads were used for generating reference contigs. Then all of the forward reads (including initial higher coverage individuals) were mapped onto reference contigs for genotyping. The main pipelines used in this workflow are STACKS (demultiplexing, denovo mapping, and reference mapping) and pyRAD (denovo mapping and building reference contigs). 
+
+Following is a step-by-step of the workflow, from raw data to many of the final analyses. 
 
 
 
@@ -245,11 +247,9 @@ Where:
 
 **From the manual**: *"Consensus sequences are clustered across samples using the same settings as in step 3. If heterozygous, one allele is randomly sampled and used in this step, although both alleles are retained in the final data set."*
 
-######3.6. Run pyrad: *among-sample clustering* (step6)
-I ran this step because I am thinking I may also (or instead) need a final alingment file from step 7 for the reference contigs. 
+######3.6. Run pyrad: *among-sample clustering* (step7)
 
-
-**From the manual**: Alignment, filtering for paralogs, and output of human readable fasta-like file (.loci). A large number of alternative formats are also available (see output formats). 
+**From the manual**: *"Alignment, filtering for paralogs, and output of human readable fasta-like file (.loci). A large number of alternative formats are also available."*
 
 
 The full output from step 7 post-genotyping and filtering can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-step7-output.txt) and [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-step7-output.txt).
@@ -414,7 +414,7 @@ For pyrad, stats per step, starting from step 2 (since demultiplexing was done i
 ######***Pseudacris***: all 140 individuals were used for this analysis
 
 
-**Step3**: *"within-sample clustering of 69 samples at 
+**Step3**: *"within-sample clustering of 140 samples at 
 	        '.90' similarity. Running 2 parallel jobs
 	 		with up to 6 threads per job."*
 
@@ -431,9 +431,49 @@ To see full resuts of the consensus sequences, see [attached](https://github.com
 
 **Step6**: *clustering across 140 samples at '.90' similarity* 
 
+		step 6: clustering across 140 samples at '.90' similarity 
+
 	Reading file /home/salerno/Pseudacris/SR-denovo-prelim/demultiplexed-reads/clust.90/cat.haplos_ 100%
 	202357374 nt in 2069325 seqs, min 80, max 148, avg 98
 	Counting unique k-mers 100%
+	Clustering 100%
+	Sorting clusters 100%
+	Writing clusters 100%
+	Clusters: 196531 Size min 1, max 572, avg 10.5
+	Singletons: 43820, 2.1% of seqs, 22.3% of clusters
+	
+######***Xantusia***: all 149 individuals were used for this analysis
+
+
+**Step3**: *"within-sample clustering of 141 samples at 
+	        '.90' similarity. Running 2 parallel jobs
+	 	with up to 6 threads per job. If needed, 
+		adjust to avoid CPU and MEM limits"*
+
+To see the number of clusters and coverage per individual see [attached](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Xantusia/s3.clusters.txt).  
+
+**Step4**:
+
+To see the results for the error and heterozygosity estimates, see [attached](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Xantusia/Pi_E_estimate.txt). 
+
+**Step5**: *"creating consensus seqs for 149 samples, using H=0.01605 E=0.00518"*
+
+To see full resuts of the consensus sequences, see [attached](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Xantusia/s5.consens.txt).
+
+
+**Step6**: *clustering across 149 samples at '.90' similarity* 
+
+		step 6: clustering across 149 samples at '.90' similarity 
+
+	Reading file /home/salerno/Xantusia/SR-denovo-prelim/demultiplexed-sequences/clust.90/cat.haplos_ 100%
+	324798892 nt in 3316590 seqs, min 80, max 148, avg 98
+	Counting unique k-mers 100%
+	Clustering 100%
+	Sorting clusters 100%
+	Writing clusters 100%
+	Clusters: 411718 Size min 1, max 179, avg 8.1
+	Singletons: 292073, 8.8% of seqs, 70.9% of clusters
+
 
 
 /
