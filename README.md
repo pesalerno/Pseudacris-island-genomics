@@ -318,7 +318,7 @@ Then we aligned the sequences using multiple threads (in this example, 4 CPUs).
 
 **NOTE:**The alignment needs to be done for **EACH** sequence file that will go into ref_map.pl. Write a recursive script or a find/replace text file of all commands in sequence. 
  
-We also aligned the sequences changing the default of -n 4 to -n 8 to see effect of lower threshold in sequence differences:
+We also aligned the sequences changing the default of -n 0.04 to -n 0.08 – *the default being of 4% threshold of seq. diff.* – to see effect of a lower threshold:
 
 	./bwa aln -t 4 -n 0.08 Xr-input-bwa.fasta ~/Xantusia/SR-denovo-prelim/demultiplexed-sequences/edits/Xr_SNI_26.fq.gz.edit > Xr_SNI_26.sai
 
@@ -401,12 +401,29 @@ In this step, all forward reads are used, including the ones from the initial Pa
 
 ######4.3.2. Map in STACKS!
 
-Need to edit the code once I run it but should be something like:
+Initially I ran [ref-map](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8)  in stacks as follows:
 
-	ref_map.pl -m 3 -b 1 -o ./stacks -O ./treestudy_popmap --samples ./samples -X "populations:--fstats"
+	mkdir ./Pr-ref-1/
 
 
-form [ref-map](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8) 
+	ref_map.pl -m 5 -T 15 -m 3 -b 1 -S -o ./Pr-ref-1/ -X "populations:--fstats" \
+		-s ./samples/Pr_SCA_29-4.sam \
+
+
+ However, I had a low number of loci that resulted from -n 0.04 default in bwa and from this combination of parameters, so I changed the parameters to: 
+ 
+ 	add new params and changes to stacks
+ 
+ and also combined these two sets of parameters with the bwa settings of 0.04% versus 0.08% difference in sequence as threshold for mapping. 
+ 
+-> When running ref_map.pl with the *initial* STACKS settings and the bwa setting of *0.04%* difference, we got [these results]().
+ 
+-> When running ref_map.pl with the *new* STACKS settings and the bwa setting of *0.04%* difference, we got [these results]().
+ 
+-> When running ref_map.pl with the *initial* STACKS settings and the bwa setting of *0.08%* difference, we got [these results]().
+ 
+-> When running ref_map.pl with the *new* STACKS settings and the bwa setting of *0.08%* difference, we got [these results]().
+
 
 #Step4B: *de novo* genotyping in STACKS and pyRAD
 
