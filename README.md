@@ -399,30 +399,52 @@ Histogram of reads per individual for ***Xantusia***:
 ######4.3.1. Generate list of sequences in sam format to be used for the input for ref_map.pl. 
 In this step, all forward reads are used, including the ones from the initial Paired-end libraries. So they all need to be merged into one directory. 
 
-######4.3.2. Map in STACKS!
+####4.3.2. Map in STACKS!
 
-Initially I ran [ref-map](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8)  in stacks as follows:
+I ran [ref-map](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8) with two sets of parameters and with the two settings in bwa.
 
-	mkdir ./Pr-ref-1/
+######a. ***Pseudacris regilla***
+-> When running **ref_map.pl** with the *-m 3* STACKS setting and the bwa setting of *0.04%* difference:
+
+	mkdir ./Pr-ref-m3-n04/
 
 
-	ref_map.pl -m 5 -T 15 -m 3 -b 1 -S -o ./Pr-ref-1/ -X "populations:--fstats" \
+	ref_map.pl -m 3 -T 15 -B Pr_refmap_radtags -b 1 --create_db -D "ref aligned Pseudacris populations, align 0.04, m 3" -o ./Pr-ref-m3-n04/ -O ./Pr-popmap.txt -X "populations:--fstats" \
 		-s ./samples/Pr_SCA_29-4.sam \
 
+  we got [these results]().
+  
+ 
+-> When running **ref_map.pl** with the *-m 5* STACKS settings and the bwa setting of *0.04%* difference:
 
- However, I had a low number of loci that resulted from -n 0.04 default in bwa and from this combination of parameters, so I changed the parameters to: 
+	mkdir ./Pr-ref-m5-n04/
+
+
+	ref_map.pl -m 5 -T 15 -B Pr_refmap_radtags -b 1 --create_db -D "ref aligned Pseudacris populations, align 0.04, m 5" -o ./Pr-ref-m5-n04/ -O ./Pr-popmap.txt -X "populations:--fstats" \
+		-s ./samples/Pr_SCA_29-4.sam \
  
- 	add new params and changes to stacks
+we got [these results]().
+
+-> When running **ref_map.pl** with the *-m 3* STACKS settings and the bwa setting of *0.08%* difference:
  
- and also combined these two sets of parameters with the bwa settings of 0.04% versus 0.08% difference in sequence as threshold for mapping. 
+ 	mkdir ./Pr-ref-m3-n08/
+
+	ref_map.pl -m 3 -T 15 -B Pr_refmap_radtags -b 1 --create_db -D "ref aligned Pseudacris populations, align 0.08, m 3" -o ./Pr-ref-m3-n08/ -O ./Pr-popmap.txt -X "populations:--fstats" \
+		-s ./samples/Pr_SCA_29-4.sam \
  
--> When running ref_map.pl with the *initial* STACKS settings and the bwa setting of *0.04%* difference, we got [these results]().
+we got [these results]().
  
--> When running ref_map.pl with the *new* STACKS settings and the bwa setting of *0.04%* difference, we got [these results]().
- 
--> When running ref_map.pl with the *initial* STACKS settings and the bwa setting of *0.08%* difference, we got [these results]().
- 
--> When running ref_map.pl with the *new* STACKS settings and the bwa setting of *0.08%* difference, we got [these results]().
+-> When running **ref_map.pl** with the *-m 5* STACKS settings and the bwa setting of *0.08%* difference: 
+
+	mkdir ./Pr-ref-m5-n08/
+
+	ref_map.pl -m 5 -T 15 -B Pr_refmap_radtags -b 1 --create_db -D "ref aligned Pseudacris populations, align 0.08, m 5" -o ./Pr-ref-m5-n08/ -O ./Pr-popmap.txt -X "populations:--fstats" \
+		-s ./samples/Pr_SCA_29-4.sam \
+
+we got [these results]().
+
+######b. ***Xantusia riversiana***
+
 
 
 #Step4B: *de novo* genotyping in STACKS and pyRAD
