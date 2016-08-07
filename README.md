@@ -314,7 +314,7 @@ where the flag -a is to specify that we want to handle a large genome.
 
 Then we aligned the sequences using multiple threads (in this example, 4 CPUs). 
 
-	./bwa aln -t 4 Pr-output-b.loci.fa ~/Pseudacris/SR-denovo-prelim/demultiplexed-reads/Pr_1 > align-bwa-Pr-1
+	./bwa aln -t 4 Pr-output-c.fasta ~/scratch_dir/Pseudacris/SR-denovo-prelim/demultiplexed-reads/Pr_1 > align-bwa-Pr-1
 
 **NOTE:**The alignment needs to be done for **EACH** sequence file that will go into ref_map.pl. Write a recursive script or a find/replace text file of all commands in sequence. 
  
