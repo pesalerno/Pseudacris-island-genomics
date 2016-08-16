@@ -430,13 +430,13 @@ a.4. ***n 0.08, m=5:*** 445 loci; see full outputs for [ref_map.log](https://git
 
 #####b. *Xantusia riversiana*:
 
-a.1. ***n 0.04, m=3:*** xxxxx loci; see full outputs for [ref_map.log]() and [populations]().
+a.1. ***n 0.04, m=3:*** 441 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m3.log) and [populations]().
 
-a.2. ***n 0.04, m=5:*** xxxxx loci; see full outputs for [ref_map.log]() and [populations]().
+a.2. ***n 0.04, m=5:*** 180 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m5.log) and [populations]().
 
-a.3. ***n 0.08, m=3:*** xxxxx loci; see full outputs for [ref_map.log]() and [populations]().
+a.3. ***n 0.08, m=3:*** 441 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m3.log) and [populations]().
 
-a.4. ***n 0.08, m=5:*** xxxxx loci; see full outputs for [ref_map.log]() and [populations]().
+a.4. ***n 0.08, m=5:*** 180 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m5.log) and [populations]().
 
 
  
