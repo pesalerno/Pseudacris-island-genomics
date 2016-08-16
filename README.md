@@ -420,23 +420,23 @@ The results obtained for each analysis are:
 
 #####a. *Pseudacris regilla*:
 
-a.1. ***n 0.04, m=3:*** xxxxx loci; full output [here]().
+a.1. ***n 0.04, m=3:*** 1044 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m3.log) and [populations]().
 
-a.2. ***n 0.04, m=5:*** xxxxx loci; full output [here]().
+a.2. ***n 0.04, m=5:*** 557 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m5.log) and [populations]().
 
-a.3. ***n 0.08, m=3:*** xxxxx loci; full output [here]().
+a.3. ***n 0.08, m=3:*** 817 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m3.log) and [populations]().
 
-a.4. ***n 0.08, m=5:*** xxxxx loci; full output [here]().
+a.4. ***n 0.08, m=5:*** 445 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m5.log) and [populations]().
 
 #####b. *Xantusia riversiana*:
 
-a.1. ***n 0.04, m=3:*** xxxxx loci; full output [here]().
+a.1. ***n 0.04, m=3:*** xxxxx loci; see full outputs for [ref_map.log]() and [populations]().
 
-a.2. ***n 0.04, m=5:*** xxxxx loci; full output [here]().
+a.2. ***n 0.04, m=5:*** xxxxx loci; see full outputs for [ref_map.log]() and [populations]().
 
-a.3. ***n 0.08, m=3:*** xxxxx loci; full output [here]().
+a.3. ***n 0.08, m=3:*** xxxxx loci; see full outputs for [ref_map.log]() and [populations]().
 
-a.4. ***n 0.08, m=5:*** xxxxx loci; full output [here]().
+a.4. ***n 0.08, m=5:*** xxxxx loci; see full outputs for [ref_map.log]() and [populations]().
 
 
  
