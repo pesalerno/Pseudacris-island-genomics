@@ -339,7 +339,7 @@ Then you transform the file which is currenty in *.sai* format to *'.sam'* forma
 ##Step 4: Genotyping of SR reads based on PE contigs
 
 
-#####4.1. Prep files for genotyping and check for raw read numbers
+####4.1. Prep files for genotyping and check for raw read numbers
 ######4.1.1. Check for among-library repeats.
 
 Libraries #1612 and #1835 are essentially duplicates, with few exceptions. Library #1834 is mostly unique with a few that are repeats from #1612. So for ***Xantusia***, I'm renaming all sequence files and adding a -1.fq.gz to library #1 (1612), -2.fq.gz to library 2 (1834), -3.fq.gz to library 3 (1835), -4.fq.gz to library 4 (1994), and -5.fq.gz to library 5 (1995). Renaming all files at once using the following code:
@@ -369,7 +369,7 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
 
 ------------------------------------
-######=>How many reads on average for each species?? 
+######4.1.3. How many reads on average for each species?? 
 
 
 We counted reads for each individual using the unzipped files and with the following script:
@@ -394,18 +394,13 @@ Histogram of reads per individual for ***Xantusia***:
 ![Xari-reads](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/figures-reads/Xantusia-reads.png)
 
 
-#####4.2. Genotyping with [ref_map.pl](http://catchenlab.life.illinois.edu/stacks/comp/ref_map.php) in STACKS
+####4.2 Prep input files for ref_map.pl 
+Generate list of sequences in sam format to be used for the input for ref_map.pl. In this step, all forward reads are used, including the ones from the initial Paired-end libraries. So they all need to be merged into one directory. 
 
-######4.3.1. Generate list of sequences in sam format to be used for the input for ref_map.pl. 
-In this step, all forward reads are used, including the ones from the initial Paired-end libraries. So they all need to be merged into one directory. 
-
-####4.3.2. Map in STACKS!
-
-I ran  with two sets of parameters and with the two settings in bwa.
+####4.3. Run ref_map.pl in STACKS
 
 
-
--> We ran [**ref_map.pl**](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8) using two settings for *-m* (3 and 5) combined with the two settings in *bwa* (0.04% and 0.08% sequence difference), for a total of four reference mapping analyses for each species. The general code for running **ref_map.pl** was:
+-> We ran [**ref_map.pl**](http://catchenlab.life.illinois.edu/stacks/comp/ref_map.php) using two settings for *-m* (3 and 5) combined with the two settings in *bwa* (0.04% and 0.08% sequence difference), for a total of four reference mapping analyses for each species. The general code for running **ref_map.pl** was:
 
 
 	mkdir ./Pr-ref-m3-n04/
@@ -415,28 +410,33 @@ I ran  with two sets of parameters and with the two settings in bwa.
 		
 --> in this example, we used *-m 3* in STACKS and *0.04%* in bwa.
  
+
+We ran populations for all eight ref_map.pl analyses using this general code: 
+
+	populations -P ./Xr-refmap-n08-m5/ -M ./popmap_Xari.txt -b 4 -t 16 -r 0.4 -p 5 -m 5 -k \
+	--plink --phylip --vcf --genepop --structure --fasta --fstats --write_random_snp 
  
 The results obtained for each analysis are:
 
 #####a. *Pseudacris regilla*:
 
-a.1. ***n 0.04, m=3:*** 1044 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m3.log) and [populations]().
+a.1. ***n 0.04, m=3:*** 1044 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m3.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m3.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m3-FST.tsv).
 
-a.2. ***n 0.04, m=5:*** 557 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m5.log) and [populations]().
+a.2. ***n 0.04, m=5:*** 557 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m5.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m5.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m5-FST.tsv).
 
-a.3. ***n 0.08, m=3:*** 817 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m3.log) and [populations]().
+a.3. ***n 0.08, m=3:*** 817 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m3.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m3.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m3-FST.tsv).
 
-a.4. ***n 0.08, m=5:*** 445 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m5.log) and [populations]().
+a.4. ***n 0.08, m=5:*** 445 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m5.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m5.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m5-FST.tsv).
 
 #####b. *Xantusia riversiana*:
 
-a.1. ***n 0.04, m=3:*** 441 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m3.log) and [populations]().
+a.1. ***n 0.04, m=3:*** 441 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m3.log), [Structure output]() and [populations Fst]().
 
-a.2. ***n 0.04, m=5:*** 180 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m5.log) and [populations]().
+a.2. ***n 0.04, m=5:*** 180 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m5.log). No loci resulted from running populations (none passed filters).
 
 a.3. ***n 0.08, m=3:*** 441 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m3.log) and [populations]().
 
-a.4. ***n 0.08, m=5:*** 180 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m5.log) and [populations]().
+a.4. ***n 0.08, m=5:*** 180 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m5.log). No loci resulted from running populations (none passed filters).
 
 
  
@@ -446,7 +446,7 @@ a.4. ***n 0.08, m=5:*** 180 loci; see full outputs for [ref_map.log](https://git
 
 
 
-#Step4B: *de novo* genotyping in STACKS and pyRAD
+##Step 5: *de novo* genotyping in pyRAD
 
 We performed denovo genotyping both in stacks and pyrad, using the longer reads only as forward reads (as in, without generating any references with the initial 16 individual higher coverage paired-end data). 
 
@@ -525,6 +525,6 @@ To see full resuts of the consensus sequences, see [attached](https://github.com
 
 /
 
-
+##Step 6: *de novo* genotyping in STACKS
  
 
