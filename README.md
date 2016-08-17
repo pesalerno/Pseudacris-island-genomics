@@ -527,4 +527,25 @@ To see full resuts of the consensus sequences, see [attached](https://github.com
 
 ##Step 6: *de novo* genotyping in STACKS
  
+We performed **denovo_map.pl** using the following general code: 
 
+	mkdir denovo-1
+	denovo_map.pl -m 3 -M 2 -n 1 -T 16 -b 1 -t -S -o ./denovo-1/ \
+	-s ./Pr_SCA_29-4.fq.gz \
+
+And ran the program **populations** using the following general code:
+
+	populations -b 1 -P ./denovo-1/PARALELL-populations-p7-r5 -M ./popmap-Pseu-b.txt  -t 36 -p 6 -r 0.5 --fstats --write_random_snp --structure --genepop --vcf
+	
+The results for each time populations was run is: 
+
+a. p7r7: 69 SNPS, [structure]() and [Fst]() from STACKS. 
+
+b. p7r5: 
+
+c. p6r5:  
+/
+
+/
+
+/
