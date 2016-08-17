@@ -539,12 +539,24 @@ And ran the program **populations** using the following general code:
 	
 The results for each time populations was run is: 
 
+####*1. Pseudacris regilla*
+
 a. p7r7: 69 SNPS, [structure]() and [Fst]() from STACKS. 
 
-b. p7r5: 
+b. p7r5: XX SNPs, [structure]() and [Fst]() from STACKS.
 
-c. p6r5:  
-/
+c. p6r5:  8,942 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.FST.tsv) from STACKS.
+
+
+
+####*2. Xantusia riversiana/vigilis*
+
+a. p7r7: XX SNPS, [structure]() and [Fst]() from STACKS. 
+
+b. p7r5: XX SNPs, [structure]() and [Fst]() from STACKS.
+
+c. p6r5:  XX SNPs, [structure]() and [Fst]() from STACKS.
+
 
 /
 
