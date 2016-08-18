@@ -541,7 +541,7 @@ The results for each time populations was run is:
 
 ####*1. Pseudacris regilla*
 
-a. p7r7: 69 SNPS, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r7.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r7-FST.tsv) from STACKS. 
+a. p7r7: 68 SNPS, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r7.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r7-FST.tsv) from STACKS. 
 
 b. p7r5: 2,589 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5-FST.tsv) from STACKS.
 
@@ -551,11 +551,11 @@ c. p6r5:  8,942 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island
 
 ####*2. Xantusia riversiana/vigilis*
 
-a. p7r7: XX SNPS, [structure]() and [Fst]() from STACKS. 
+a. p7r7: O SNPS, [populations error file](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/stderr-pops-Xr-p7-r7) from STACKS. 
 
-b. p7r5: XX SNPs, [structure]() and [Fst]() from STACKS.
+b. p7r5: XX SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5-FST.tsv) from STACKS.
 
-c. p6r5:  XX SNPs, [structure]() and [Fst]() from STACKS.
+c. p6r5:  XX SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) from STACKS.
 
 
 /
