@@ -543,7 +543,7 @@ The results for each time populations was run is:
 
 a. p7r7: 69 SNPS, [structure]() and [Fst]() from STACKS. 
 
-b. p7r5: XX SNPs, [structure]() and [Fst]() from STACKS.
+b. p7r5: 2,589 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5-FST.tsv) from STACKS.
 
 c. p6r5:  8,942 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.FST.tsv) from STACKS.
 
