@@ -27,7 +27,11 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where ***Xantusia*** and ***Pseudacris*** were mixed together - library #1994)
 
 
-##Step 2: purge PCR duplicates of PE reads
+##Step 2: Generate PE reference contigs
+In order to generate references contigs with the PE reads, we first need to purge PCR duplicates and then merge the PE reads. 
+
+
+####2.1. Purge PCR duplicates of PE reads
 
 
 I ran the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized.
@@ -64,13 +68,9 @@ Xv_JTS_04	|	3,754,638	|	2,124,663	|	43	|
 
 
 
-##Step 3: Generate reference contigs from PE reads
+####2.2. Merge matching PE reads
 
 
-I initally genotyped and created reference contigs with STACKS, but now I am re-doing the analysis with pyrad to account for the high divergence across islands, particularly for *Xantusia riversiana/vigilis*. 
-
-
-######3.1. Merge paired-reads
 Because in RADseq reads for the same loci can be of different lengths, and most will be overlapping segments (as in, R1 and R2 will overlap) then we will merge the reads following flow-cell information so that they are processed together when making the stacks (greatly reduces computational time, and also prevents a messy analysis). We have to merge the reads with the program [PEAR](https://github.com/xflouris/PEAR).
 
 =>The first thing we have to do is unzip the reads if they are gzipped
@@ -110,7 +110,9 @@ Then I used the following for loop script from Deren Eaton (within folder with s
 
 Then I transferred only the *assembled* to the ***'/edits/'*** folder.
 
-######3.2. Run pyrad: *within-sample clustering* (step 3)
+####3.3. Runing pyrad steps 3–7
+
+######3.3.1. *within-sample clustering* (step 3)
 
 I started the pyrad pipeline on step#3, making sure that line # 11 (data type) is set to ***merged***:
 
@@ -162,7 +164,7 @@ Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
 ***NOTE:*** we actually set the clustering threshold differently for *Xantusia* (N>0.90) and for *Pseudacris* (N>0.93) to account for the difference in depth of seuqencing for the two libraries. 
 
 
-######3.3. Run pyrad: *error rate and heterozygosity estimation* (step 4):
+######3.3.2. *error rate and heterozygosity estimation* (step 4):
 
 	pyrad -p Pr-params-d.txt -s 4
 
@@ -187,7 +189,7 @@ Pr_SCI_06-PE	|	0.00490685	|	0.00114311	|
 Pr_SCI_03-PE	|	0.00516595	|	0.00118411	|
 Pr_SRI_02-PE	|	0.00466262	|	0.00117116	|
 
-######3.4. Run pyrad: *within-sample consensus sequences* (step5):
+######3.3.3. *within-sample consensus sequences* (step5):
 This analysis uses the error rate and heterozygosity estimations/corrections from step 4. For example, for ***Xantusia***:
 
 	pyrad -p Xr-params-t1.txt -s 5
@@ -243,20 +245,19 @@ Where:
     ## poly = frequency of polymorphic sites
 
 
-######3.5. Run pyrad: *among-sample clustering* (step6)
+######3.3.4. *among-sample clustering* (step6)
 
 **From the manual**: *"Consensus sequences are clustered across samples using the same settings as in step 3. If heterozygous, one allele is randomly sampled and used in this step, although both alleles are retained in the final data set."*
 
-######3.6. Run pyrad: *among-sample clustering* (step7)
+######3.3.5. *alignment and paralog filters* (step7)
 
-**From the manual**: *"Alignment, filtering for paralogs, and output of human readable fasta-like file (.loci). A large number of alternative formats are also available."*
 
 
 The full output from step 7 post-genotyping and filtering can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-step7-output.txt) and [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-step7-output.txt).
 
 
 
-######3.7. Generate reference genome with bwa/samtools/picard
+####3.4 Generate reference genome with bwa/samtools/picard
 
 From a [gatk help blog](http://gatkforums.broadinstitute.org/wdl/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk), the requirements are bwa, samtools, and picard, which I need to install on the cluster. 
 
@@ -266,7 +267,6 @@ The steps to generating the input reads for ref_map in STACKS is:
 2. Align sequences to index
 3. Transform align to sam input format
 
-The input file formats allowed in stacks for a reference genome are .sam and .bam, so I will try to do sam format which seems to be more straightforward. 
 
 
 ->Before anything, we need to transform the /loci output from pyrad into .fasta for generating the reference genome. Becca Tarvin helped me creating this program in python to transform the files:
@@ -336,7 +336,7 @@ Then you transform the file which is currenty in *.sai* format to *'.sam'* forma
 ----------------------------------------------
 
 
-##Step 4: Genotyping of SR reads based on PE contigs
+##Step 4: STACKS ref_map with SR reads based on PE reference contigs
 
 
 ####4.1. Prep files for genotyping and check for raw read numbers
@@ -366,7 +366,7 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 	cat *.fasta > seqcombined.fasta
 
 
-The duplicated files are sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files are sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
+The duplicated files were sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files were sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
 
 ------------------------------------
 ######4.1.3. How many reads on average for each species?? 
@@ -553,9 +553,9 @@ c. p6r5:  8,942 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island
 
 a. p7r7: O SNPS, [populations error file](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/stderr-pops-Xr-p7-r7) from STACKS. 
 
-b. p7r5: XX SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5-FST.tsv) from STACKS.
+b. p7r5: 1039 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5-FST.tsv) from STACKS.
 
-c. p6r5:  XX SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) from STACKS.
+c. p6r5:  7461 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) from STACKS.
 
 
 /
