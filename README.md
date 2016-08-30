@@ -561,3 +561,36 @@ c. p6r5:  7461 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-
 /
 
 /
+
+
+##Step 7: plink filters and statistics for STACKS outputs
+We obtained plink input files from STACKS (in populations)for the matrices to be used for downstream analyses.
+
+For ***Pseudacris regilla*** we used:
+
+1. denovo, p=7, r=0.5
+2. ref_map, n=0.04, m=3
+3. ref_map, n=0.08, m=3
+
+For ***Xantusia riversiana*** we used:
+
+1. denovo with *X. vigilis*, p=7, r=0.5
+2. denovo with *X. vigilis*, p=6, r=0.5
+3. denovo without *X. vigilis*, p=6, r=0.5
+
+Plink was installed on local computer. The commands used for plink were the same for all files:
+
+-->(I think plink will have to be run many times in sequence...)
+
+	./plink --ped filename.plink.ped --map filename.plink.map --maf 0.05 --mind 0.5 --missing --hardy --freq 
+	
+Linkage disequilibrium pruning:
+
+	plink --file data --indep 50 5 2 
+	
+	###this creates files:
+	>plink.prune.in
+	>plink.prune.out
+
+They are simple lists of SNP IDs, which can then be used as argument for --extract or --exclude commands in plink.
+
