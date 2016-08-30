@@ -586,7 +586,7 @@ Plink was installed on local computer. The commands used for plink were the same
 	
 Linkage disequilibrium pruning:
 
-	plink --file data --indep 50 5 2 
+	plink --file data --indep-pairwise 50 5 0.5 
 	
 	###this creates files:
 	>plink.prune.in
