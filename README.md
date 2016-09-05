@@ -557,32 +557,46 @@ b. p7r5: 1039 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-g
 
 c. p6r5:  7461 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) from STACKS.
 
+d. n=2, p6r5: 
+
+
+####*2. Xantusia riversiana* (no *X. vigilis*)
+
+a. n=1, p6r5:  7461 SNPs,[structure]() and [Fst]() from STACKS.
+
+b. n=2, p6r5: 
+
 
 /
 
 /
 
 
-##Step 7: plink filters and statistics for STACKS outputs
+##Step 7: plink filters and statistics for STACKS and ipyRAD outputs
 We obtained plink input files from STACKS (in populations)for the matrices to be used for downstream analyses.
 
 For ***Pseudacris regilla*** we used:
 
-1. denovo, p=7, r=0.5
+1. denovo, p=7, r=0.5, n=2
 2. ref_map, n=0.04, m=3
 3. ref_map, n=0.08, m=3
 
 For ***Xantusia riversiana*** we used:
 
-1. denovo with *X. vigilis*, p=7, r=0.5
-2. denovo with *X. vigilis*, p=6, r=0.5
+1. denovo with *X. vigilis*, p=6, r=0.5
 3. denovo without *X. vigilis*, p=6, r=0.5
 
 Plink was installed on local computer. The commands used for plink were the same for all files:
 
--->(I think plink will have to be run many times in sequence...)
+First, we make a list of the loci/individuals that are filtered due to 
 
-	./plink --ped filename.plink.ped --map filename.plink.map --maf 0.05 --mind 0.5 --missing --hardy --freq 
+	./plink --ped filename.plink.ped --map filename.plink.map --maf 0.01
+	
+
+	
+	./plink --ped filename.plink.ped --map filename.plink.map
+	
+	 --mind 0.5 --missing --hardy --freq 
 	
 Linkage disequilibrium pruning:
 
@@ -593,4 +607,11 @@ Linkage disequilibrium pruning:
 	>plink.prune.out
 
 They are simple lists of SNP IDs, which can then be used as argument for --extract or --exclude commands in plink.
+
+
+Results from first filters are:
+
+Pseudacris regilla:
+
+1. denovo, p=7, r=0.5 - 1773/2589 SNPs filtered - 24/132 individuals filtered
 
