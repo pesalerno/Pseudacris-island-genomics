@@ -580,21 +580,29 @@ For ***Pseudacris regilla*** we used:
 For ***Xantusia riversiana*** we used:
 
 1. denovo with *X. vigilis*, p=6, r=0.5
-3. denovo without *X. vigilis*, p=6, r=0.5
+2. denovo without *X. vigilis*, p=6, r=0.5
 
 Plink was installed on local computer. The commands used for plink were the same for all files:
 
-First, we make a list of the loci/individuals that are filtered due to 
+First, we make a new file with filtered SNPs based on MAF < 0.01 and individuals with more than 50% missing genotypes:  
 
-	./plink --ped filename.plink.ped --map filename.plink.map --maf 0.01
+	./plink --ped filename.plink.ped --map filename.plink.map --maf 0.01 --mind 0.5 --recode --out filename.filtered 
 	
+	
+	##if you want a list of the SNPs that were excluded and a list of the individuals that were excluded, run this instead:
+	
+	./plink --ped filename.plink.ped --map filename.plink.map --maf 0.01 --mind 0.5 --write-snplist
+
+
+Then, we use this new file to generate some stats:
+
+	./plink --ped filename.filtered.plink.ped --map filename.filtered.plink.map --missing --freq --hardy --het --fisher --out "outputfilename"
+
 
 	
-	./plink --ped filename.plink.ped --map filename.plink.map
+	###other plink commands maybe to use###
 	
-	 --mind 0.5 --missing --hardy --freq 
-	
-Linkage disequilibrium pruning:
+	#######Linkage disequilibrium pruning#########
 
 	plink --file data --indep-pairwise 50 5 0.5 
 	
@@ -602,12 +610,31 @@ Linkage disequilibrium pruning:
 	>plink.prune.in
 	>plink.prune.out
 
-They are simple lists of SNP IDs, which can then be used as argument for --extract or --exclude commands in plink.
+	They are simple lists of SNP IDs, which can then be used as argument for --extract or --exclude commands in plink.
 
 
 Results from first filters are:
 
-Pseudacris regilla:
+***Pseudacris regilla:***
 
-1. denovo, p=7, r=0.5 - 1773/2589 SNPs filtered - 24/132 individuals filtered
+1. STACKS-refmap, bwa n=0.04: filtered 31/132 individuals and 29/99 SNPs. FINAL: 70 SNPs.
 
+2. STACKS-refmap, bwa n=0.08: filtered 51/132 individuals and 34/100 SNPs. FINAL: 66 SNPs.
+
+3. STACKS-denovo, n=2: 
+
+4. ipyRAD: 
+
+
+***Xantusia:***
+
+1. STACKS-denovo, with *X. vigilis*, n=2: filtered 54/141 individuals, 3419/4694 SNPs. [Final file:]() 1275 SNPs 
+
+2. STACKS-denovo, without viligis, n=2: filtered 18/119 individuals, 1927/3087 SNPs. FINAL: 1160 SNPs. 
+
+3. ipyRAD with *X. vigilis*: 
+
+4. ipyRAD without vigilis:
+
+
+==> I converted these files from **.ped** format to **.stru** format for use in adegenet and structure using the program PGDSpider. 
