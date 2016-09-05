@@ -518,12 +518,15 @@ To see full resuts of the consensus sequences, see [attached](https://github.com
 	Singletons: 292073, 8.8% of seqs, 70.9% of clusters
 
 
+////
 
-/
+////
 
-/
+==>pyRAD still not finished.... about to install ipyRAD on cluster
 
-/
+////
+
+////
 
 ##Step 6: *de novo* genotyping in STACKS
  
@@ -541,35 +544,28 @@ The results for each time populations was run is:
 
 ####*1. Pseudacris regilla*
 
-a. p7r7: 68 SNPS, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r7.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r7-FST.tsv) from STACKS. 
+a. n=1, p7r5: 2,589 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5-FST.tsv) summary from STACKS.
 
-b. p7r5: 2,589 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5-FST.tsv) from STACKS.
+c. n=1, p6r5:  8,942 SNPs, and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.FST.tsv) summary from STACKS.
 
-c. p6r5:  8,942 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.FST.tsv) from STACKS.
-
-
+d. n=2, p6r5: SNPs, [Fst]() summary from STACKS.
 
 ####*2. Xantusia riversiana/vigilis*
 
-a. p7r7: O SNPS, [populations error file](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/stderr-pops-Xr-p7-r7) from STACKS. 
+a. n=1, p7r5: 1039 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5-FST.tsv) summary from STACKS.
 
-b. p7r5: 1039 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5-FST.tsv) from STACKS.
+c. n=1, p6r5:  7461 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) summary from STACKS.
 
-c. p6r5:  7461 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5.stru) and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) from STACKS.
-
-d. n=2, p6r5: 
+d. n=2, p6r5: SNPs, [Fst]() summary from STACKS.
 
 
 ####*2. Xantusia riversiana* (no *X. vigilis*)
 
-a. n=1, p6r5:  7461 SNPs,[structure]() and [Fst]() from STACKS.
+a. n=1, p6r5:  7461 SNPs,[Fst]() summary from STACKS.
 
-b. n=2, p6r5: 
+b. n=2, p6r5: SNPs, [Fst]() summary from STACKS.
 
 
-/
-
-/
 
 
 ##Step 7: plink filters and statistics for STACKS and ipyRAD outputs
