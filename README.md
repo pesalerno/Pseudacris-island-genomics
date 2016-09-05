@@ -561,9 +561,9 @@ d. n=2, p6r5: SNPs, [Fst]() summary from STACKS.
 
 ####*2. Xantusia riversiana* (no *X. vigilis*)
 
-a. n=1, p6r5:  7461 SNPs,[Fst]() summary from STACKS.
+a. n=1, p6r5:  7461 SNPs,[structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo_noXv-p6r5.stru) output, and [Fst]() summary from STACKS.
 
-b. n=2, p6r5: SNPs, [Fst]() summary from STACKS.
+b. n=2, p6r5: SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-noXv-n2.stru) output, and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-noXv-n2-FST.tsv) summary from STACKS.
 
 
 
