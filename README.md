@@ -617,9 +617,9 @@ Results from first filters are:
 
 ***Pseudacris regilla:***
 
-1. STACKS-refmap, bwa n=0.04: filtered 31/132 individuals and 29/99 SNPs. FINAL: 70 SNPs.
+1. STACKS-refmap, bwa n=0.04: filtered 31/132 individuals and 29/99 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Pr-n04.stru) 70 SNPs.
 
-2. STACKS-refmap, bwa n=0.08: filtered 51/132 individuals and 34/100 SNPs. FINAL: 66 SNPs.
+2. STACKS-refmap, bwa n=0.08: filtered 51/132 individuals and 34/100 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Pr-n08.stru) 66 SNPs.
 
 3. STACKS-denovo, n=2: 
 
@@ -628,9 +628,9 @@ Results from first filters are:
 
 ***Xantusia:***
 
-1. STACKS-denovo, with *X. vigilis*, n=2: filtered 54/141 individuals, 3419/4694 SNPs. [Final file:]() 1275 SNPs 
+1. STACKS-denovo, with *X. vigilis*, n=2: filtered 54/141 individuals, 3419/4694 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Xr-Xv.stru) 1275 SNPs 
 
-2. STACKS-denovo, without viligis, n=2: filtered 18/119 individuals, 1927/3087 SNPs. FINAL: 1160 SNPs. 
+2. STACKS-denovo, without viligis, n=2: filtered 18/119 individuals, 1927/3087 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Xr.stru) 1160 SNPs. 
 
 3. ipyRAD with *X. vigilis*: 
 
@@ -638,3 +638,5 @@ Results from first filters are:
 
 
 ==> I converted these files from **.ped** format to **.stru** format for use in adegenet and structure using the program PGDSpider. 
+
+
