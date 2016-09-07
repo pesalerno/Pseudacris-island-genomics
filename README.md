@@ -559,7 +559,7 @@ c. n=1, p6r5:  7461 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-g
 d. n=2, p6r5: SNPs, [Fst]() summary from STACKS.
 
 
-####*2. Xantusia riversiana* (no *X. vigilis*)
+####*3. Xantusia riversiana* (no *X. vigilis*)
 
 a. n=1, p6r5:  7461 SNPs,[structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo_noXv-p6r5.stru) output, and [Fst]() summary from STACKS.
 
@@ -639,4 +639,8 @@ Results from first filters are:
 
 ==> I converted these files from **.ped** format to **.stru** format for use in adegenet and structure using the program PGDSpider. 
 
+
+#downstream analyses
+###1. adegenet
+The [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia.R) used is still in progress, but in general we estimate Fst, Heterozygosity, PCA, DAPC, neighbor-joining tree, compoplot, SPCA, and other population measure using various packages. 
 
