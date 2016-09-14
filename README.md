@@ -546,30 +546,30 @@ The results for each time populations was run is:
 
 a. n=1, p7r5: 2,589 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5-FST.tsv) summary from STACKS.
 
-c. n=1, p6r5:  8,942 SNPs, and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.FST.tsv) summary from STACKS.
+c. n=1, p6r5:  8,942 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.FST.tsv) summary from STACKS.
 
-d. n=2, p6r5: SNPs, [Fst]() summary from STACKS.
+d. n=2, p6r5: 1,995 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-n2-p6r5-FST.tsv) summary from STACKS.
 
 ####*2. Xantusia riversiana/vigilis*
 
-a. n=1, p7r5: 1039 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5-FST.tsv) summary from STACKS.
+a. n=1, p7r5: 1,039 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5-FST.tsv) summary from STACKS.
 
-c. n=1, p6r5:  7461 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) summary from STACKS.
+c. n=1, p6r5:  7,461 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) summary from STACKS.
 
-d. n=2, p6r5: SNPs, [Fst]() summary from STACKS.
+d. n=2, p6r5: 5,566 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/Xr-Xv-Fst.tsv) summary,  and [logfile](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/Xr-Xv-denovo.log) from STACKS.
 
 
 ####*3. Xantusia riversiana* (no *X. vigilis*)
 
-a. n=1, p6r5:  7461 SNPs,[structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo_noXv-p6r5.stru) output, and [Fst]() summary from STACKS.
+a. n=1, p6r5:  7,461 SNPs,[structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo_noXv-p6r5.stru) output from STACKS.
 
-b. n=2, p6r5: SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-noXv-n2.stru) output, and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-noXv-n2-FST.tsv) summary from STACKS.
-
-
+b. n=2, p6r5: 3,087 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-noXv-n2.stru) output, and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-noXv-n2-FST.tsv) summary from STACKS.
 
 
-##Step 7: plink filters and statistics for STACKS and ipyRAD outputs
-We obtained plink input files from STACKS (in populations)for the matrices to be used for downstream analyses.
+
+
+##Step 7: plink filters for STACKS and ipyRAD outputs
+We obtained plink input files from STACKS (in populations) for the matrices to be used for downstream analyses.
 
 For ***Pseudacris regilla*** we used:
 
@@ -613,7 +613,7 @@ Then, we use this new file to generate some stats:
 	They are simple lists of SNP IDs, which can then be used as argument for --extract or --exclude commands in plink.
 
 
-Results from first filters are:
+Results from PLINK filters are:
 
 ***Pseudacris regilla:***
 
@@ -641,6 +641,9 @@ Results from first filters are:
 
 
 #downstream analyses
-###1. adegenet
-The [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia.R) used is still in progress, but in general we estimate Fst, Heterozygosity, PCA, DAPC, neighbor-joining tree, compoplot, SPCA, and other population measure using various packages. 
+###a. population stats
+The [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia.R) used is still in progress, but in general we estimate Fst, Heterozygosity, PCA, DAPC, neighbor-joining tree, compoplot, SPCA, and other population measures using various packages. 
 
+###b. landscape analyses
+
+###c. phylogenomics
