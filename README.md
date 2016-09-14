@@ -621,7 +621,7 @@ Results from PLINK filters are:
 
 2. STACKS-refmap, bwa n=0.08: filtered 51/132 individuals and 34/100 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Pr-n08.stru) 66 SNPs.
 
-3. STACKS-denovo, n=2: 
+3. STACKS-denovo, n=2: filtered 26/132 individuals and 691/1995 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Pr-denovo.stru) 1304 SNPs. 
 
 4. ipyRAD: 
 
