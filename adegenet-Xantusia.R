@@ -40,17 +40,25 @@ class(X)
 dim(X)
 X[1:5,1:5]
 pca1<-dudi.pca(X,cent=FALSE,scale=FALSE,scannf=FALSE,nf=3)
-s.class(pca1$li,pop(myFile))
+s.class(pca1$li,pop(myFile), col=myCol)
 add.scatter.eig(pca1$eig[1:20], 3,1,2)
 ####to plot PCs 1 and 3 
 s.class(pca1$li,pop(myFile),xax=2,yax=3,sub="PCA 2-3",csub=2)
-Fst(as.loci(myFile))
+
 ###to plot with funky colors
-s.class(pca1$li,pop(myFile),xax=1,yax=2,col=funky(15),axesell=FALSE,
+s.class(pca1$li,pop(myFile),xax=1,yax=2,col=myCol,axesell=FALSE,
 		cstar=0,cpoint=3,grid=FALSE)
 ###############
-myCol <-c("orange2","darkgreen","black", "darkblue", "red", "gray")
+myCol <-c("orange2","darkorange","darkgreen", "green2", "darkred", "red2")
 plot(pca1$li, col=myCol, cex=3)
+
+
+
+##########################################
+###         Per locus Fst values       ###
+##########################################
+
+Fst(as.loci(myFile))
 
 
 ##########################################
@@ -88,11 +96,21 @@ tiplabels(pch=20,col=myCol,cex=4)
 grp<-find.clusters(X,max.n.clust=40)
 names(grp)
 grp$size
-table(pop(myFile),grp$grp)
+table(pop(),grp$grp)
+
+###dapc by cluster
 dapc1<-dapc(X,grp$grp)
 dapc1
-scatter(dapc1)
-summary(dapc1)
+
+
+###dapc by original pop
+dapc2<-dapc(X,myFile$pop)
+dapc2
+
+
+scatter(dapc2)
+summary(dapc2)
+
 set.seed=(4)
 contrib<-loadingplot(dapc1$var.contr,axis=2,thres=.07,lab.jitter=1)
 
@@ -100,7 +118,7 @@ contrib<-loadingplot(dapc1$var.contr,axis=2,thres=.07,lab.jitter=1)
 ###  COMPOPLOT   ###
 ####################
 
-compoplot(dapc1,posi="bottomright",lab="",
+compoplot(dapc2,posi="bottomright",lab="",
 			ncol=1,xlab="individuals")
 
 
@@ -108,4 +126,86 @@ compoplot(dapc1,posi="bottomright",lab="",
 ###################################################
 ###  SPATIAL ANALYSIS OF PRINCIPAL COMPONENTS   ###
 ###################################################
+
+
+
+
+
+###################################################
+###          PCADAPT OUTLIER LOCI TEST          ###
+###################################################
+library(pcadapt)
+###input file formats supported are vcf, ped, lfmm, pcadapt
+library(qvalue)
+
+
+path_to_file<-"./path/file.ped"
+myData<-read.pcadapt(path_to_file,type="ped")
+print(myData)
+
+##1.perform PCA with large number of PCs (>20)
+X<-pcadapt(myData,K=20,transpose=TRUE)
+
+
+plot(X,option="screeplot")
+
+plot(X,option="scores",pop=poplist)
+
+plot(X,option="scores",i=3,j=4,pop=poplist)
+
+X<-pcadapt(myData,K=2)
+summary(X)
+
+qval<-qvalue(X$pvalues)$qvalues
+alpha<-0.1
+outliers<-which(qval<alpha)
+print(outliers)
+
+##which PCs are most correlated to the outliers?
+snp_pc<-get.pc(X,outliers)
+head(snp_pc)
+
+
+###################################################
+###       POPGENREPORT - POPULATION STATS       ###
+###################################################
+##popgenreport tutorial general code
+
+
+library(PopGenReport)
+require(PopGenReport)
+
+
+
+myFile <- read.genetable("./Xr.stru", sep=" ")
+head(platy)
+
+platy.gen <- read.genetable(paste(.libPaths()[1], "/PopGenReport/extdata/platypus1c.csv", sep=""), ind=1, pop=2, lat=3, long=4, other.min=5, other.max=6, oneColPerAll=FALSE, sep="/", ploidy=2)
+platy.gen #to check the formatted genind data
+
+##genetic data for each individual is stored within the tab slot
+myFile@tab
+pop(myFile)
+str(myFile@other)
+myFileout1<-popgenreport(myFile, mk.counts=TRUE, mk.pdf=FALSE, foldername="test1")
+myFileout1
+summary(myFileout1)
+barplot(myFileout1$counts@nallelesbypop)
+
+complete.test1<-popgenreport(myFile, mk.complete=TRUE, mk.Rcode=TRUE, mk.pdf=FALSE)
+summary(complete.test1)
+complete.test1
+complete.test1$fst ##fst and fis per locus and per population pair
+complete.test1$allel.rich
+complete.test1$counts
+complete.test1$allele.dist ##list of private alleles per population and frequencies
+
+barplot(complete.test1$fst)
+plot(complete.test1$FSTbyloci, complete.test1$pop)
+scatter(complete.test1$fst$FSTbyloci)
+
+###if you install LaTeX then you can do mk.pdf=TRUE, otherwise it will fail
+##platy.out1 <- popgenreport(platy.gen, mk.counts=TRUE, mk.pdf=FALSE, foldername='platy')
+##summary(platy.out1)
+##barplot(platy.out1$count$nallelesbypop)
 
