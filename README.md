@@ -644,6 +644,13 @@ Results from PLINK filters are:
 ###a. population stats
 The [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia.R) used is still in progress, but in general we estimate Fst, Heterozygosity, PCA, DAPC, neighbor-joining tree, compoplot, SPCA, and other population measures using various packages. 
 
+
+results for popgenreport the first try are in my local computer here:
+
+	/var/folders/mh/020ql_p15_1b0t044yc5b_gw0000gn/T/RtmpwDi4bt/results
+
+
+
 ###b. landscape analyses
 
 ###c. phylogenomics

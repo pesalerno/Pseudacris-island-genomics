@@ -101,7 +101,7 @@ table(pop(),grp$grp)
 ###dapc by cluster
 dapc1<-dapc(X,grp$grp)
 dapc1
-summary(dapc1)
+
 
 ###dapc by original pop
 dapc2<-dapc(X,myFile$pop)
@@ -177,16 +177,23 @@ require(PopGenReport)
 
 
 
+myFile <- read.genetable("./Xr.stru", sep=" ")
+head(platy)
+
+platy.gen <- read.genetable(paste(.libPaths()[1], "/PopGenReport/extdata/platypus1c.csv", sep=""), ind=1, pop=2, lat=3, long=4, other.min=5, other.max=6, oneColPerAll=FALSE, sep="/", ploidy=2)
+platy.gen #to check the formatted genind data
 
 ##genetic data for each individual is stored within the tab slot
 myFile@tab
 pop(myFile)
 str(myFile@other)
-
+myFileout1<-popgenreport(myFile, mk.counts=TRUE, mk.pdf=FALSE, foldername="test1")
+myFileout1
+summary(myFileout1)
+barplot(myFileout1$counts@nallelesbypop)
 
 complete.test1<-popgenreport(myFile, mk.complete=TRUE, mk.Rcode=TRUE, mk.pdf=FALSE)
 summary(complete.test1)
-barplot(complete.test1$counts@nallelesbypop)
 complete.test1
 complete.test1$fst ##fst and fis per locus and per population pair
 complete.test1$allel.rich
