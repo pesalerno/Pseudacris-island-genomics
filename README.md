@@ -267,7 +267,7 @@ The steps to generating the input reads for ref_map in STACKS is:
 2. Align sequences to index
 3. Transform align to sam input format
 
-
+######THERE WAS AN ERROR IN THIS PIPELINE SO FROM HERE DOWN THIS IS INCORRECT
 
 ->Before anything, we need to transform the /loci output from pyrad into .fasta for generating the reference genome. Becca Tarvin helped me creating this program in python to transform the files:
 
@@ -416,31 +416,7 @@ We ran populations for all eight ref_map.pl analyses using this general code:
 	populations -P ./Xr-refmap-n08-m5/ -M ./popmap_Xari.txt -b 4 -t 16 -r 0.4 -p 5 -m 5 -k \
 	--plink --phylip --vcf --genepop --structure --fasta --fstats --write_random_snp 
  
-The results obtained for each analysis are:
-
-#####a. *Pseudacris regilla*:
-
-a.1. ***n 0.04, m=3:*** 1044 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m3.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m3.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m3-FST.tsv).
-
-a.2. ***n 0.04, m=5:*** 557 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m5.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m5.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n04-m5-FST.tsv).
-
-a.3. ***n 0.08, m=3:*** 817 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m3.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m3.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m3-FST.tsv).
-
-a.4. ***n 0.08, m=5:*** 445 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m5.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m5.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Pseudacris/Pr-n08-m5-FST.tsv).
-
-#####b. *Xantusia riversiana*:
-
-a.1. ***n 0.04, m=3:*** 441 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m3.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m3.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m3-FST.tsv).
-
-a.2. ***n 0.04, m=5:*** 180 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n04-m5.log). No loci resulted from running populations (none passed filters).
-
-a.3. ***n 0.08, m=3:*** 441 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m3.log), [Structure output](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m3.stru) and [populations Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m3-FST.tsv).
-
-a.4. ***n 0.08, m=5:*** 180 loci; see full outputs for [ref_map.log](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/ref-map-results/Xantusia/Xr-n08-m5.log). No loci resulted from running populations (none passed filters).
-
-
- 
-
+#####NO RESULTS FOR THIS SECTION YET
  
 
 
@@ -522,135 +498,19 @@ To see full resuts of the consensus sequences, see [attached](https://github.com
 
 ////
 
-==>pyRAD still not finished.... about to install ipyRAD on cluster
-
 ////
 
 ////
 
 ##Step 6: *de novo* genotyping in STACKS
  
-We performed **denovo_map.pl** using the following general code: 
-
-	mkdir denovo-1
-	denovo_map.pl -m 3 -M 2 -n 1 -T 16 -b 1 -t -S -o ./denovo-1/ \
-	-s ./Pr_SCA_29-4.fq.gz \
-
-And ran the program **populations** using the following general code:
-
-	populations -b 1 -P ./denovo-1/PARALELL-populations-p7-r5 -M ./popmap-Pseu-b.txt  -t 36 -p 6 -r 0.5 --fstats --write_random_snp --structure --genepop --vcf
-	
-The results for each time populations was run is: 
-
-####*1. Pseudacris regilla*
-
-a. n=1, p7r5: 2,589 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p7r5-FST.tsv) summary from STACKS.
-
-c. n=1, p6r5:  8,942 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-p6r5.FST.tsv) summary from STACKS.
-
-d. n=2, p6r5: 1,995 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Pseudacris/denovo-n2-p6r5-FST.tsv) summary from STACKS.
-
-####*2. Xantusia riversiana/vigilis*
-
-a. n=1, p7r5: 1,039 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p7r5-FST.tsv) summary from STACKS.
-
-c. n=1, p6r5:  7,461 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-p6r5-FST.tsv) summary from STACKS.
-
-d. n=2, p6r5: 5,566 SNPs, [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/Xr-Xv-Fst.tsv) summary,  and [logfile](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/Xr-Xv-denovo.log) from STACKS.
+For general pipeline and workflow for denovo genotyping and post-genotyping SNP matrix filtering see [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/CI-popgen-methods.md). 
 
 
-####*3. Xantusia riversiana* (no *X. vigilis*)
-
-a. n=1, p6r5:  7,461 SNPs,[structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo_noXv-p6r5.stru) output from STACKS.
-
-b. n=2, p6r5: 3,087 SNPs, [structure](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-noXv-n2.stru) output, and [Fst](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Stacks-denovo-results/Xantusia/denovo-noXv-n2-FST.tsv) summary from STACKS.
-
-
-
-
-##Step 7: plink filters for STACKS and ipyRAD outputs
-We obtained plink input files from STACKS (in populations) for the matrices to be used for downstream analyses.
-
-For ***Pseudacris regilla*** we used:
-
-1. denovo, p=7, r=0.5, n=2
-2. ref_map, n=0.04, m=3
-3. ref_map, n=0.08, m=3
-
-For ***Xantusia riversiana*** we used:
-
-1. denovo with *X. vigilis*, p=6, r=0.5
-2. denovo without *X. vigilis*, p=6, r=0.5
-
-Plink was installed on local computer. The commands used for plink were the same for all files:
-
-First, we make a new file with filtered SNPs based on MAF < 0.01 and individuals with more than 50% missing genotypes:  
-
-	./plink --ped filename.plink.ped --map filename.plink.map --maf 0.01 --mind 0.5 --recode --out filename.filtered 
-	
-	
-	##if you want a list of the SNPs that were excluded and a list of the individuals that were excluded, run this instead:
-	
-	./plink --ped filename.plink.ped --map filename.plink.map --maf 0.01 --mind 0.5 --write-snplist
-
-
-Then, we use this new file to generate some stats:
-
-	./plink --ped filename.filtered.plink.ped --map filename.filtered.plink.map --missing --freq --hardy --het --fisher --out "outputfilename"
-
-
-	
-	###other plink commands maybe to use###
-	
-	#######Linkage disequilibrium pruning#########
-
-	plink --file data --indep-pairwise 50 5 0.5 
-	
-	###this creates files:
-	>plink.prune.in
-	>plink.prune.out
-
-	They are simple lists of SNP IDs, which can then be used as argument for --extract or --exclude commands in plink.
-
-
-Results from PLINK filters are:
-
-***Pseudacris regilla:***
-
-1. STACKS-refmap, bwa n=0.04: filtered 31/132 individuals and 29/99 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Pr-n04.stru) 70 SNPs.
-
-2. STACKS-refmap, bwa n=0.08: filtered 51/132 individuals and 34/100 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Pr-n08.stru) 66 SNPs.
-
-3. STACKS-denovo, n=2: filtered 26/132 individuals and 691/1995 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Pr-denovo.stru) 1304 SNPs. 
-
-4. ipyRAD: 
-
-
-***Xantusia:***
-
-1. STACKS-denovo, with *X. vigilis*, n=2: filtered 54/141 individuals, 3419/4694 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Xr-Xv.stru) 1275 SNPs 
-
-2. STACKS-denovo, without viligis, n=2: filtered 18/119 individuals, 1927/3087 SNPs. [Final file:](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/PLINK/Xr.stru) 1160 SNPs. 
-
-3. ipyRAD with *X. vigilis*: 
-
-4. ipyRAD without vigilis:
-
-
-==> I converted these files from **.ped** format to **.stru** format for use in adegenet and structure using the program PGDSpider. 
 
 
 #downstream analyses
-###a. population stats
+###a. population stats and structure
 The [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia.R) used is still in progress, but in general we estimate Fst, Heterozygosity, PCA, DAPC, neighbor-joining tree, compoplot, SPCA, and other population measures using various packages. 
 
 
-results for popgenreport the first try are in my local computer here:
-
-	/var/folders/mh/020ql_p15_1b0t044yc5b_gw0000gn/T/RtmpwDi4bt/results
-
-
-
-###b. landscape analyses
-
-###c. phylogenomics

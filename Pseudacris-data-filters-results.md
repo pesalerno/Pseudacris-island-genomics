@@ -1,6 +1,6 @@
-Pseudacris output from populations with no filters, then plink filters in order
+*Pseudacris* output from populations with -p 1 -r 0.5, then plink filters in order
 
-1. filter loci with less than 60% sequenced
+1. filter loci with less than 65% sequenced
 
 		Options in effect:
 		--ped Pr.all.short-z.ped

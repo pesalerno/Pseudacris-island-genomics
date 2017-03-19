@@ -1,4 +1,4 @@
-output from populations with no filters, then plink filters in order
+*Xantusia* output from **populations** with -p 1 -r 0.5, then plink filters in order:
 
 1. filter loci with less than 60% sequenced
 

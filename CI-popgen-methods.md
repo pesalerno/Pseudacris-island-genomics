@@ -27,7 +27,7 @@ The second level/type of filter was essentially to keep all SNPs present in at l
 
 I used the STRUCTURE output format from ***populations*** and transformed it to .ped in PGDSpider (the .ped output from Stacks does not save the ind. names!!)
 
-
+See here for details of every filtering step and outputs/stats for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pseudacris-data-filters-results.md) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xantusia-data-filters-results.md).
 
 
 ***NOTE***: OUTLIER Xr_SNI_03 in Xantusia NOT a result of missing data, since it's present after these stringent filters. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned in the DAPC.... 
