@@ -511,6 +511,5 @@ For general pipeline and workflow for denovo genotyping and post-genotyping SNP 
 
 #downstream analyses
 ###a. population stats and structure
-The [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia.R) used is still in progress, but in general we estimate Fst, Heterozygosity, PCA, DAPC, neighbor-joining tree, compoplot, SPCA, and other population measures using various packages. 
-
+We used [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia-NEW.R) with several packages to estimate/evaluate patterns of population structure and to estimate population-levels statistics. 
 
