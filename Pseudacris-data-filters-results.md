@@ -52,3 +52,7 @@
 		0 SNPs failed missingness test ( GENO > 0.5 )
 		68 SNPs failed frequency test ( MAF < 0.02 )
 		After frequency and genotyping pruning, there are 1688 SNPs
+		
+Final proportion of missing data in matrix:
+
+	Total genotyping rate in remaining individuals is 0.817583
