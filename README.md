@@ -203,7 +203,7 @@ Here, we used two "levels" of filters as output matrices to import into plink. T
 
 	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 --write_random_snp --structure --plink --vcf --genepop --fstats
 
-This keeps a single (random) SNP per read that is present in at least one population at a rate of 50% or higher. After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](). After picking the optimal filters for each dataset, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pseudacris-data-filters-results.md) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xantusia-data-filters-results.md).
+This keeps a single (random) SNP per read that is present in at least one population at a rate of 50% or higher. After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
 
 
 ***NOTE***: OUTLIER Xr_SNI_03 in Xantusia NOT a result of missing data, since it's present after these stringent filters. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned in the DAPC.... 
@@ -216,3 +216,16 @@ This keeps a single (random) SNP per read that is present in at least one popula
 ###a. population stats and structure
 We used [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia-NEW.R) with several packages to estimate/evaluate patterns of population structure and to estimate population-levels statistics. 
 
+For obtaining Pi (nucleotide diversity) estimates, I re-ran ***populations*** in stacks using a whitelist of the loci that remain post-filtering in ***plink***, as such:
+
+######First generate whitelist using find and replace commands using grep in TextWrangler: 
+
+
+	find: 		\_\d\d\n
+	replace:	\n 
+which fixes input files for SNP names. 
+
+######Then, re-run populations using the whitelist to obtain per-population pi stats: 
+
+	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 -W whitelist-SNPs --write_random_snp --structure --plink --vcf --genepop --fstats
+	

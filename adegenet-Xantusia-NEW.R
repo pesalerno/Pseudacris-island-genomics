@@ -7,8 +7,15 @@ library("hierfstat")
 
 
 
-myFile <- import2genind("Xr-03-18.stru") ##1118 SNPs and 91 inds (After oulier removed)
+myFile <- import2genind("Xr-03-22-2c-b.stru") ##1118 SNPs and 91 inds (After oulier removed)
 myFile
+
+
+####by island####
+myFile <- import2genind("Xr-03-22-2c-SBI.stru") ##1118 SNPs and 15 inds (After oulier removed)
+myFile <- import2genind("Xr-03-22-2c-SCL.stru") ##1118 SNPs and 35 inds (After oulier removed)
+myFile <- import2genind("Xr-03-22-2c-SNI.stru") ##1118 SNPs and 36 inds (After oulier removed)
+myFile <- import2genind("Xr-03-22-2c-MNLND.stru") ##1118 SNPs and 5 inds (After oulier removed)
 
 
 
@@ -40,6 +47,7 @@ names(myFile)
 X <- scaleGen(myFile, NA.method="mean")
 X[1:5,1:5]
 
+help('scaleGen')
 
 pca1<-dudi.pca(X,cent=FALSE,scale=FALSE,scannf=FALSE,nf=3)
 
@@ -85,7 +93,7 @@ tiplabels(pch=20,col=myCol,cex=2)
 ########################################################
 ###  DISCRIMINANT ANALYSIS OF PRINCIPAL COMPONENTS   ###
 ########################################################
-grp<-find.clusters(X,max.n.clust=40)
+grp<-find.clusters(X,max.n.clust=10)
 ###keep 20 PCs
 ###keep 3 clusters (original pops)
 names(grp)
@@ -136,34 +144,34 @@ compoplot(dapc2,posi="bottomright",lab="",
 
 library(hierfstat)
 ####load dataset with struture-informed populations
-myFile2 <- import2genind("Xr-03-18-b.stru") ##1118 SNPs and 91 inds (After oulier removed)
+myFile2 <- import2genind("Xr-03-22-2c-b.stru") ##1118 SNPs and 91 inds (After oulier removed)
 
-basicstat<-basic.stats(myFile2, diploid=TRUE)
+basicstat<-basic.stats(myFile, diploid=TRUE)
 basicstat
 Hobs<-basicstat$Ho
 Hobs
-write(Hobs, file="Pr-Hobs.txt", ncol=4)
+write(Hobs, file="Xr-Hobs-03-22.txt", ncol=7)
 
 Hexp<-basicstat$Hs
 Hexp
-write(Hexp, file="Pr-Hexpect.txt", ncol=4)
+write(Hexp, file="Xr-Hexp-03-22.txt", ncol=7)
 
 Fis<-basicstat$Fis
 Fis
-write(Fis, file="Pr-Fis.txt", ncol=4)
+write(Fis, file="Xr-Fis-03-22.txt", ncol=7)
 
 bartlett.test(list(basicstat$Hs, basicstat $Ho)) ##this gives you a statistical
 ##measure of whether observed and expected heterozygosity are different
 
 
 library(diveRsity)
-divBasic(infile="Xr-Xv.genepop.txt", outfile="XrXv-diversity", gp=2, bootstraps=NULL, HWEexact=FALSE)
+divBasic(infile="Xr-03-22-2c-b.genepop.txt", outfile="Xr-03-22-diversity", gp=2, bootstraps=NULL, HWEexact=FALSE)
 
 ##########################################
 ###  PAIRWISE Fst WITH BOOTSTRAPPING   ###
 ##########################################
 
-pairwise.fst(myFile2)
+pairwise.fst(myFile)
 ##replicate(10,pairwise.fst(myFile,pop=sample(pop(myFile))))
 ##nuc.div(myFile2)
 
