@@ -1,8 +1,7 @@
 # ***Pseudacris/Xantusia***-island-genomics
-Following workflow is for processing raw data from several RADseq libraries from species *Pseudacris regilla* and *Xantusia riversiana*. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads were used for generating "cleaner reads" with higher coverage and filtered by PCR duplicates. 
+Following workflow is for processing raw data from several RADseq libraries from species *Pseudacris regilla* and *Xantusia riversiana*. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads were used for generating "cleaner reads" with higher coverage and filtered by PCR duplicates. The rest of the libraries were single read, so they were genotyped using denovo_map.pl together with the PCR-duplicate filtered reads. Following is a step-by-step of the workflow, from raw data to many of the final analyses. All of this workflow is intellectual property and **copyright of Patricia E. Salerno**, and is freely available for usage upon citation. 
 
-
-The rest of the libraries were single read, so they were genotyped using denovo_map.pl together with the PCR-duplicate filtered reads. Following is a step-by-step of the workflow, from raw data to many of the final analyses. 
+- -> not yet published
 
 
 
@@ -28,11 +27,11 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where ***Xantusia*** and ***Pseudacris*** were mixed together - library #1994)
 
 
-##Step 2: CLEAN and prepare paired-end libraries for denovo_map.pl
+##Step 2: prepare paired-end libraries for denovo_map.pl
 
 
 
-####2.1. Purge PCR duplicates of PE reads
+####2.1. purge PCR duplicates of PE reads
 
 
 I ran the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized.
@@ -111,7 +110,7 @@ Then I used the following for loop script from Deren Eaton (within folder with s
 
 Then I transferred only the *assembled* to the ***'/edits/'*** folder.
 
-####2.3. Estimating coverage of high-depth libraries using pyrad
+####2.3. estimate coverage of high-depth libraries using pyrad
 
 *Within-sample clustering* in pyrad (step 3)
 
@@ -151,7 +150,9 @@ Pr_SRI_04-PE	|	121641	|	9.903	|	12.471	|	47253	|	17.998	|	16.814
 Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
 
 
-######Before moving on to denovo_map.pl, merge fasta files for library duplicates
+###Step 3: prepare single-end libraries for denovo_map.pl
+
+######merge fasta files for library duplicates
 
 After being renamed, move all files back to the SR-denovo-prelim folder and there I merge the fasta files. I merge following these guidelines (from this [source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
 
@@ -168,24 +169,34 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 The duplicated files were sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files were sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
 
 ------------------------------------
-######4.1.3. How many reads on average for each species?? 
+######estimate reads per individual/species 
 
 
 We counted reads for each individual using the unzipped files and with the following script:
 
 	echo -e 'SAMPLE_ID_FULL\tNUM_READS'
-	for file in ~/path/to/denovo-map/*.fq ##edit your path!!
+	for file in ~/path/to/denovo-map/*.fq 
 	do
 	echo -n $(basename $file .fq)$'\t'
 	cat $file | grep '^@.*' | wc -l
 	done
+
+######estimate coverage per individual
+
+
+For estimating coverage per individual for SE reads, pyrad was called as follows:
+
+	pyrad -p Pr-params-d.txt -s 3
+
+
+The full output for the within-sample clustering can be found here for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Xantusia/s3.clusters.txt) and for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Pseudacris/s3.clusters.txt).
 
 
 #Step 6: *de novo* genotyping in STACKS
  
 
 
-The following is the workflow/code for the denovo_map pipeline for generating a SNP matrix in .stru and genepop file formats for downstream analyses. This was done after several permutations of parameters -m -M and -n and picked based on stability of loci retrieved and population Fsts (both outputs in stacks).
+The following is the workflow/code for the denovo_map pipeline. After trying several permutations of parameters -m (values 2,3,4)-M (2,3,4)and -n (2,3,4)we picked the most seemingly stable combination of parameters based on number of loci retrieved and population Fsts (both outputs in stacks).
 
 
 ####Final Code used for ***denovo_map.pl*** in Stacks:
@@ -199,14 +210,14 @@ Here, we selected a conservative combination of parameters, and used the same fo
 
 ####Code used for ***populations*** in Stacks: 
 
-Here, we used two "levels" of filters as output matrices to import into plink. The first with stringent filters:
+Here, we used low stringency of filters to output mostly .ped and .map files for input into **plink**:
 
 	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 --write_random_snp --structure --plink --vcf --genepop --fstats
 
 This keeps a single (random) SNP per read that is present in at least one population at a rate of 50% or higher. After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
 
 
-***NOTE***: OUTLIER Xr_SNI_03 in Xantusia NOT a result of missing data, since it's present after these stringent filters. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned in the DAPC.... 
+***NOTE***: We found an outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did nit seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned in the DAPC.
 
 
 
@@ -223,7 +234,7 @@ For obtaining Pi (nucleotide diversity) estimates, I re-ran ***populations*** in
 
 	find: 		\_\d\d\n
 	replace:	\n 
-which fixes input files for SNP names. 
+which fixes input files for SNP names, since they can't contain SNP position (55609_56), the regular Stacks output format, but only the actual SNP ID (55609). 
 
 ######Then, re-run populations using the whitelist to obtain per-population pi stats: 
 
