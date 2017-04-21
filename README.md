@@ -199,13 +199,15 @@ The full output for the within-sample clustering can be found here for [*Xantusi
 The following is the workflow/code for the denovo_map pipeline. After trying several permutations of parameters -m (values 2,3,4)-M (2,3,4)and -n (2,3,4)we picked the most seemingly stable combination of parameters based on number of loci retrieved and population Fsts (both outputs in stacks).
 
 
-####Final Code used for ***denovo_map.pl*** in Stacks:
+####Final code used for ***denovo_map.pl*** in Stacks:
 
 Here, we selected a conservative combination of parameters, and used the same for both datasets. 
 
 	
 	denovo_map.pl -m 3 -M 2 -n 2 -T 16 -b 1 -t -S -o ./denovo/ -s ./
 
+
+The logfiles for the final denovo analyses can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_denovo.log) and [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr_denovo.log).
 
 
 ####Code used for ***populations*** in Stacks: 
@@ -214,13 +216,18 @@ Here, we used low stringency of filters to output mostly .ped and .map files for
 
 	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 --write_random_snp --structure --plink --vcf --genepop --fstats
 
-This keeps a single (random) SNP per read that is present in at least one population at a rate of 50% or higher. After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
+This keeps a single (random) SNP per read that is present in at least one population at a rate of 50% or higher. The results from populations can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_populations.log) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr_populations.log).
+
+
+####Filtering in plink
+After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
 
 
 ***NOTE***: We found an outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did nit seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned in the DAPC.
 
 
 
+#####The final SNP matrices used for downstream analyses can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr-03-22-6c.stru) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr-03-22-2c.stru).
 
 
 #downstream analyses
@@ -240,3 +247,6 @@ which fixes input files for SNP names, since they can't contain SNP position (55
 
 	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 -W whitelist-SNPs --write_random_snp --structure --plink --vcf --genepop --fstats
 	
+###b. outlier loci
+
+We ran the program PCAdapt in R to find outlier loci based on a multivariate approach, using the following [code](). 
