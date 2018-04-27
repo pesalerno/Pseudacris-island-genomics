@@ -1,13 +1,12 @@
 # ***Pseudacris/Xantusia***-island-genomics
 Following workflow is for processing raw data from several RADseq libraries from species *Pseudacris regilla* and *Xantusia riversiana*. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads were used for generating "cleaner reads" with higher coverage and filtered by PCR duplicates. The rest of the libraries were single read, so they were genotyped using denovo_map.pl together with the PCR-duplicate filtered reads. Following is a step-by-step of the workflow, from raw data to many of the final analyses. All of this workflow is intellectual property and **copyright of Patricia E. Salerno**, and is freely available for usage upon citation. 
 
-- -> not yet published
+-* -> In Review - Journal of Biogeography*
 
 
 
 ##Step 1: de-multiplexing
 
-######1.1. De-multiplex each library individually
 De-multiplexing was done with program [process_radtags](http://creskolab.uoregon.edu/stacks/comp/process_radtags.php) individually for each library within its directory, and renamed with sample names within Stacks ([here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/barcodes-1933.txt) is an example barcodes file). 
 
 - Commands for process_radtags for the two Paired-end libraries were:
@@ -21,10 +20,6 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 		-o ./processed-1994/ -e sbfI -c -q -r -D
 	(example for library #1994 for shared *Xantusia* and *Pseudacris*)
 
-
-######1.3. Merge all libraries into single directory
-
-Copy all renamed libraries for all individuals into their "species" directories (up to this point we had one library where ***Xantusia*** and ***Pseudacris*** were mixed together - library #1994)
 
 
 ##Step 2: prepare paired-end libraries for denovo_map.pl
@@ -154,7 +149,7 @@ Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
 
 ######merge fasta files for library duplicates
 
-After being renamed, move all files back to the SR-denovo-prelim folder and there I merge the fasta files. I merge following these guidelines (from this [source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
+Some libraries were re-sequenced, so after being renamed the fasta files were merged. ([source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
 
 *To merge several files use the SHELL, go to your folder where the files are and use the cat command. E.g. to merge seqfile001.fasta, seqfile002.fasta and seqfile003.fasta type*
 
@@ -166,7 +161,7 @@ After being renamed, move all files back to the SR-denovo-prelim folder and ther
 	cat *.fasta > seqcombined.fasta
 
 
-The duplicated files were sorted into a separate folder before merging, just to keep track of what's being merged. Then the post-merged files were sorted back into the general directory containing all sequences. Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals we now have 132 files for denovo_map input. 
+Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals now had 132 files for denovo_map input. 
 
 ------------------------------------
 ######estimate reads per individual/species 
@@ -223,7 +218,7 @@ This keeps a single (random) SNP per read that is present in at least one popula
 After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
 
 
-***NOTE***: We found an outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did nit seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned in the DAPC.
+***NOTE***: We found an outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did not seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned in the DAPC.
 
 
 
@@ -236,17 +231,13 @@ We used [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/ma
 
 For obtaining Pi (nucleotide diversity) estimates, I re-ran ***populations*** in stacks using a whitelist of the loci that remain post-filtering in ***plink***, as such:
 
-######First generate whitelist using find and replace commands using grep in TextWrangler: 
+######First generated whitelist using find and replace commands using grep in TextWrangler: 
 
 
 	find: 		\_\d\d\n
 	replace:	\n 
 which fixes input files for SNP names, since they can't contain SNP position (55609_56), the regular Stacks output format, but only the actual SNP ID (55609). 
 
-######Then, re-run populations using the whitelist to obtain per-population pi stats: 
+######Then, re-ran populations using the whitelist to obtain per-population pi stats: 
 
 	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 -W whitelist-SNPs --write_random_snp --structure --plink --vcf --genepop --fstats
-	
-###b. outlier loci
-
-We ran the program PCAdapt in R to find outlier loci based on a multivariate approach, using the following [code](). 
