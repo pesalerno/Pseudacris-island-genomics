@@ -227,35 +227,45 @@ We first filtered for missing loci using the code:
 	plink --file Pr-03-22 --geno 0.35 --recode --out Pr-03-22-6a --noweb
 for *Pseudacris*,which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6a.log) in 129426 SNPs failing the missingness test, and in a total of 2693 SNPs after frequency and genotyping pruning.For *Xantusia*, we used:
 
-	plink --file Xr-03-22-NEW --geno 0.35 --recode --out Xr-test-6a --noweb
+	plink --file Xr-03-22-NEW --geno 0.4 --recode --out Xr-test-2a --noweb
 	
-which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-6a.log) in 82422 SNPs failing the missingness test, leaving 1023 SNPs after frequency and genotyping pruning. Second, we filtered by individuals with >50% missing data, using the code: 
+which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-2a.log)in 80300 SNPs failed missingness test ( GENO > 0.4 ) leaving 3145 SNPs after genotyping pruning. Second, we filtered by individuals with >50% missing data, using the code: 
  	 
  	plink --file Pr-03-22-6a --mind 0.5 --recode --out Pr-03-22-6b --noweb
  
  for *Pseudacris*, which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6b.log) in 30 of 132 individuals removed for low genotyping, and for *Xantusia* we used:
  
- 	plink --file Xr-test-6a --mind 0.5 --recode --out Xr-test-6b --noweb
+ 	plink --file Xr-test-2a --mind 0.5 --recode --out Xr-test-2b --noweb
  
- which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-6b.log) in 39 of 141 individuals removed for low genotyping. Third, we eliminated loci with minor allele frequency < 0.02, using the code
+ which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-2b.log)in 49 of 141 individuals removed for low genotyping. Third, we eliminated loci with minor allele frequency < 0.02, using the code
  
  	plink --file Pr-03-22-6b --maf 0.02 --recode --out Pr-03-22-6c --noweb
  
- for *Pseudacris*, which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c.log) in 1543 SNPs failing frequency test ( MAF < 0.02 ), and retaining a final 1150 SNPs. The [final Pseudacris matrix](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22.stru) had a total genotyping rate in remaining individuals of 0.816871. For Xantusia, the code used was: 
+ for *Pseudacris*, which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c.log) in 1543 SNPs failing frequency test ( MAF < 0.02 ), and retaining a final 1150 SNPs. The [final *Pseudacris* matrix](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22.stru) had a total genotyping rate in remaining individuals of 0.816871. For Xantusia, the code used was: 
  
  	plink --file Xr-test-6b --maf 0.02 --recode --out Xr-test-6c --noweb 
  
- which resulted in 
+ which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-2c.log) in 2027 SNPs failing the frequency test and a final 1118 SNPs. The [final *Xantusia* matrix](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-03-22-2c-b.stru) had a total genotyping rate in remaining individuals of 0.815812. 
  
- This same filtering scheme was done for each island individually for both datasets. 
+ This same filtering scheme was done for each island individually for each taxon. The resulting final matrices can be found here: 
+ 
+ *Pseudacris*: 
+ - [Mainland only](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c-MNLND.stru)
+ - [Santa Rosa Island](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c-SRI.stru)
+ - [Santa Cruz Island](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c-SCI.stru)
+ - [Santa Catalina Island](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c-SCA.stru)
+ - [Santarosae paleoisland](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c-ROSAE.stru)
+ 
+ *Xantusia*:
+ - [X. vigilis](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-03-22-2c-MNLND.stru) (mainland congener)
+ - [Santa Barbara Island](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-03-22-2c-SBI.stru)
+ - [San Clemente Island](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-03-22-2c-SCL.stru)
+ - [San Nicolas Island](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-03-22-2c-SNI.stru)
 	
-	
-
-***NOTE***: We found an outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did not seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned to San Nicolas in the DAPC.
 
 
+***NOTE***: We found an odd outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did not seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned to San Nicolas in the DAPC.
 
-**The final SNP matrices used for downstream analyses can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr-03-22-6c.stru) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr-03-22-2c.stru).**
 
 
 downstream analyses
