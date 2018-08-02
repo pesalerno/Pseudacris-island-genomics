@@ -1,12 +1,13 @@
-# ***Pseudacris/Xantusia***-island-genomics
-Following workflow is for processing raw data from several RADseq libraries from species *Pseudacris regilla* and *Xantusia riversiana*. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage and single-end. The higher coverage reads were used for generating "cleaner reads" with higher coverage and filtered by PCR duplicates. The rest of the libraries were single read, so they were genotyped using denovo_map.pl together with the PCR-duplicate filtered reads. Following is a step-by-step of the workflow, from raw data to many of the final analyses. All of this workflow is intellectual property and **copyright of Patricia E. Salerno**, and is freely available for usage upon citation. 
+***Pseudacris/Xantusia***-island-genomics
+=====
+Following workflow is for processing raw data from several RADseq libraries from species *Pseudacris regilla* and *Xantusia riversiana*. Two "sets" of libraries were made, one with higher depth of coverage and paired-end reads, and another with lower coverage single-end longer reads. The higher coverage reads were used for generating "cleaner reads" with higher coverage and filtered by PCR duplicates. The rest of the libraries were single read, so they were genotyped using denovo_map.pl together with the PCR-duplicate filtered reads. Following is a step-by-step of the workflow, from raw data to many of the final analyses. All of this workflow is intellectual property and **copyright of Patricia E. Salerno**, and is freely available for usage upon citation. 
 
--* -> In Review - Journal of Biogeography*
+*--> In Review - Journal of Biogeography*
 
 
 
-##Step 1: de-multiplexing
-
+Step 1: de-multiplexing
+----
 De-multiplexing was done with program [process_radtags](http://creskolab.uoregon.edu/stacks/comp/process_radtags.php) individually for each library within its directory, and renamed with sample names within Stacks ([here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/barcodes-1933.txt) is an example barcodes file). 
 
 - Commands for process_radtags for the two Paired-end libraries were:
@@ -26,7 +27,7 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 
 
 
-####2.1. purge PCR duplicates of PE reads
+####2.1. purge PCR duplicates from PE reads
 
 
 I ran the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized.
@@ -63,10 +64,10 @@ Xv_JTS_04	|	3,754,638	|	2,124,663	|	43	|
 
 
 
-####2.2. Merge matching PE reads
+2.2. Merge matching PE reads
+-----
 
-
-Because in RADseq reads for the same loci can be of different lengths, and most will be overlapping segments (as in, R1 and R2 will overlap) then we will merge the reads following flow-cell information so that they are processed together when making the stacks (greatly reduces computational time, and also prevents a messy analysis). We have to merge the reads with the program [PEAR](https://github.com/xflouris/PEAR).
+Because in traditional RADseq, sequencing reads that belong to the same loci can be of different lengths, and many will have overlapping segments in the paired reads (as in, R1 and R2 will overlap) then we will merge the reads using flow-cell information so that they are processed together when making the stacks (greatly reduces computational time, and also prevents a messy analysis). We have to merge the reads with the program [PEAR](https://sco.h-its.org/exelixis/web/software/pear/).
 
 =>The first thing we have to do is unzip the reads if they are gzipped
 
@@ -105,7 +106,8 @@ Then I used the following for loop script from Deren Eaton (within folder with s
 
 Then I transferred only the *assembled* to the ***'/edits/'*** folder.
 
-####2.3. estimate coverage of high-depth libraries using pyrad
+2.3. estimate coverage of high-depth libraries using pyrad
+---
 
 *Within-sample clustering* in pyrad (step 3)
 
@@ -145,9 +147,10 @@ Pr_SRI_04-PE	|	121641	|	9.903	|	12.471	|	47253	|	17.998	|	16.814
 Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
 
 
-###Step 3: prepare single-end libraries for denovo_map.pl
+Step 3: prepare single-end libraries for denovo_map.pl
+---
 
-######merge fasta files for library duplicates
+**First, merge fasta files for library duplicates**
 
 Some libraries were re-sequenced, so after being renamed the fasta files were merged. ([source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
 
@@ -164,7 +167,7 @@ Some libraries were re-sequenced, so after being renamed the fasta files were me
 Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals now had 132 files for denovo_map input. 
 
 ------------------------------------
-######estimate reads per individual/species 
+**Then, estimate reads per individual/species**
 
 
 We counted reads for each individual using the unzipped files and with the following script:
@@ -176,7 +179,7 @@ We counted reads for each individual using the unzipped files and with the follo
 	cat $file | grep '^@.*' | wc -l
 	done
 
-######estimate coverage per individual
+**Estimate coverage per individual**
 
 
 For estimating coverage per individual for SE reads, pyrad was called as follows:
@@ -187,14 +190,15 @@ For estimating coverage per individual for SE reads, pyrad was called as follows
 The full output for the within-sample clustering can be found here for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Xantusia/s3.clusters.txt) and for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Pseudacris/s3.clusters.txt).
 
 
-#Step 6: *de novo* genotyping in STACKS
+Step 6: *de novo* genotyping in STACKS
+---
  
 
 
 The following is the workflow/code for the denovo_map pipeline. After trying several permutations of parameters -m (values 2,3,4)-M (2,3,4)and -n (2,3,4)we picked the most seemingly stable combination of parameters based on number of loci retrieved and population Fsts (both outputs in stacks).
 
 
-####Final code used for ***denovo_map.pl*** in Stacks:
+**Final code used for *denovo_map.pl* in Stacks:**
 
 Here, we selected a conservative combination of parameters, and used the same for both datasets. 
 
@@ -205,39 +209,44 @@ Here, we selected a conservative combination of parameters, and used the same fo
 The logfiles for the final denovo analyses can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_denovo.log) and [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr_denovo.log).
 
 
-####Code used for ***populations*** in Stacks: 
+**Code used for *populations* in Stacks:**
 
 Here, we used low stringency of filters to output mostly .ped and .map files for input into **plink**:
 
 	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 --write_random_snp --structure --plink --vcf --genepop --fstats
 
-This keeps a single (random) SNP per read that is present in at least one population at a rate of 50% or higher. The results from populations can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_populations.log) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr_populations.log).
+This keeps a single (random) SNP per read that is present in at least one population at a rate of 50% or higher. The logfiles from the populations runs can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_populations.log) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr_populations.log).
 
 
-####Filtering in plink
-After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
+**Filtering in plink**
+
+After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, for retention of the most amount of individuals and loci per island, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
 
 
-***NOTE***: We found an outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did not seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned in the DAPC.
+***NOTE***: We found an outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did not seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned to San Nicolas in the DAPC.
 
 
 
-#####The final SNP matrices used for downstream analyses can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr-03-22-6c.stru) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr-03-22-2c.stru).
+**The final SNP matrices used for downstream analyses can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr-03-22-6c.stru) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr-03-22-2c.stru).**
 
 
-#downstream analyses
-###a. population stats and structure
-We used [R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia-NEW.R) with several packages to estimate/evaluate patterns of population structure and to estimate population-levels statistics. 
+downstream analyses
+===
+
+a. population stats and structure
+---
+
+We used [this R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia-NEW.R) that uses several packages to estimate/evaluate patterns of population structure and to estimate population-levels statistics. 
 
 For obtaining Pi (nucleotide diversity) estimates, I re-ran ***populations*** in stacks using a whitelist of the loci that remain post-filtering in ***plink***, as such:
 
-######First generated whitelist using find and replace commands using grep in TextWrangler: 
+**First I generated whitelist using find and replace commands with grep in TextWrangler:**
 
 
 	find: 		\_\d\d\n
 	replace:	\n 
 which fixes input files for SNP names, since they can't contain SNP position (55609_56), the regular Stacks output format, but only the actual SNP ID (55609). 
 
-######Then, re-ran populations using the whitelist to obtain per-population pi stats: 
+**Then, I re-ran populations using the whitelist to obtain per-population pi stats:** 
 
 	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 -W whitelist-SNPs --write_random_snp --structure --plink --vcf --genepop --fstats
