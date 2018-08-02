@@ -1,0 +1,45 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ Xr-test-6b.log ]
+Analysis started: Wed Mar 22 20:16:15 2017
+
+Options in effect:
+	--file Xr-test-6a
+	--mind 0.5
+	--recode
+	--out Xr-test-6b
+	--noweb
+
+1023 (of 1023) markers to be included from [ Xr-test-6a.map ]
+Warning, found 141 individuals with ambiguous sex codes
+Writing list of these individuals to [ Xr-test-6b.nosex ]
+141 individuals read from [ Xr-test-6a.ped ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 141 missing
+0 males, 0 females, and 141 of unspecified sex
+Before frequency and genotyping pruning, there are 1023 SNPs
+141 founders and 0 non-founders found
+Writing list of removed individuals to [ Xr-test-6b.irem ]
+39 of 141 individuals removed for low genotyping ( MIND > 0.5 )
+Total genotyping rate in remaining individuals is 0.808071
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 1023 SNPs
+After filtering, 0 cases, 0 controls and 102 missing
+After filtering, 0 males, 0 females, and 102 of unspecified sex
+Writing recoded ped file to [ Xr-test-6b.ped ] 
+Writing new map file to [ Xr-test-6b.map ] 
+
+Analysis finished: Wed Mar 22 20:16:15 2017
+
