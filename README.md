@@ -222,6 +222,34 @@ This keeps a single (random) SNP per read that is present in at least one popula
 
 After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, for retention of the most amount of individuals and loci per island, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
 
+We first filtered for missing loci using the code: 
+
+	plink --file Pr-03-22 --geno 0.35 --recode --out Pr-03-22-6a --noweb
+for *Pseudacris*,which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6a.log) in 129426 SNPs failing the missingness test, and in a total of 2693 SNPs after frequency and genotyping pruning.For *Xantusia*, we used:
+
+	plink --file Xr-03-22-NEW --geno 0.35 --recode --out Xr-test-6a --noweb
+	
+which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-6a.log) in 82422 SNPs failing the missingness test, leaving 1023 SNPs after frequency and genotyping pruning. Second, we filtered by individuals with >50% missing data, using the code: 
+ 	 
+ 	plink --file Pr-03-22-6a --mind 0.5 --recode --out Pr-03-22-6b --noweb
+ 
+ for *Pseudacris*, which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6b.log) in 30 of 132 individuals removed for low genotyping, and for *Xantusia* we used:
+ 
+ 	plink --file Xr-test-6a --mind 0.5 --recode --out Xr-test-6b --noweb
+ 
+ which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-6b.log) in 39 of 141 individuals removed for low genotyping. Third, we eliminated loci with minor allele frequency < 0.02, using the code
+ 
+ 	plink --file Pr-03-22-6b --maf 0.02 --recode --out Pr-03-22-6c --noweb
+ 
+ for *Pseudacris*, which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c.log) in 1543 SNPs failing frequency test ( MAF < 0.02 ), and retaining a final 1150 SNPs. The [final Pseudacris matrix](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22.stru) had a total genotyping rate in remaining individuals of 0.816871. For Xantusia, the code used was: 
+ 
+ 	plink --file Xr-test-6b --maf 0.02 --recode --out Xr-test-6c --noweb 
+ 
+ which resulted in 
+ 
+ This same filtering scheme was done for each island individually for both datasets. 
+	
+	
 
 ***NOTE***: We found an outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did not seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It seems likely that it's contamination, since in the PCA it seems closer to Santa Barbara, but it's always correctly assigned to San Nicolas in the DAPC.
 
