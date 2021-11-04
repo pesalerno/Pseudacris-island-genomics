@@ -204,11 +204,11 @@ x | 7 | 10 | 11 |
 
 --------------
 
-> ***Xantusia*** **parameter decisions**: Based on the above parameter permutations and corresponding results ([See here](link.com)), we chose to keep two stacks runs for downstream filters and analyses: `Xa357` and `Xa567`. 
+> ***Xantusia*** **parameter decisions**: Based on the above parameter permutations and corresponding results ([See here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/XANTUSIA_Param_tests_Graphs.pdf)), we chose to keep two stacks runs for downstream filters and analyses: `Xa357` and `Xa567`. 
 > 
 > -------------------------------
 > 
-> ***Pseudacris*** **parameter decisions**: Based on the above parameter permutations and corresponding results ([See here](link.com)), we chose to keep two stacks runs for downstream filters and analyses: `Pr323` and `Pr345`. 
+> ***Pseudacris*** **parameter decisions**: Based on the above parameter permutations and corresponding results ([See here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/PSEUDACRIS_Param_tests_Graphs.pdf)), we chose to keep two stacks runs for downstream filters and analyses: `Pr323` and `Pr345`. 
 
 
 ## SNP matrix filtering
