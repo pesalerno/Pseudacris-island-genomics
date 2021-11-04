@@ -204,11 +204,31 @@ x | 7 | 10 | 11 |
 
 --------------
 
+
+
 > ***Xantusia*** **parameter decisions**: Based on the above parameter permutations and corresponding results ([See here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/XANTUSIA_Param_tests_Graphs.pdf)), we chose to keep two stacks runs for downstream filters and analyses: `Xa357` and `Xa567`. 
 > 
 > -------------------------------
 > 
 > ***Pseudacris*** **parameter decisions**: Based on the above parameter permutations and corresponding results ([See here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/PSEUDACRIS_Param_tests_Graphs.pdf)), we chose to keep two stacks runs for downstream filters and analyses: `Pr323` and `Pr345`. 
+
+--------------
+
+**CODE FOR `DENOVO_MAP` RUNS**
+
+The general code used in `denovo_map.pl` (executed within an `.sh` file) was: 
+
+
+	denovo_map.pl -M 3 -n 2 -o ./denovo-test --popmap ./popmap-Pr.txt \
+		--samples ./raw
+
+--------------
+
+exporting the initial SNP matrices
+---------
+
+ADD code for initial populations runs.
+
 
 
 ## SNP matrix filtering
