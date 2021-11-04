@@ -23,17 +23,17 @@ De-multiplexing was done with program [process_radtags](http://creskolab.uoregon
 
 
 
-##Step 2: prepare paired-end libraries for denovo_map.pl
+Step 2: prepare paired-end libraries for denovo_map.pl
+----
 
 
-
-####2.1. purge PCR duplicates from PE reads
+**2.1. Purge PCR duplicates from PE reads**
 
 
 I ran the open source perl script [purge_PCR_duplicates.pl](https://github.com/claudiuskerth/scripts_for_RAD/blob/master/purge_PCR_duplicates.pl) by Claudius Kerth. It needs the perl module [Parallel::ForkManager](http://search.cpan.org/~dlux/Parallel-ForkManager-0.7.5/ForkManager.pm) since it is set up for running parallelized.
 
 For the program to run, files need to be unzipped (.fq) and end with either
-\"fq_1\" for the SE file or \"fq_2\" for the PE file. Example: XXX.fq_1 and XXX.fq_2. Use rename script to rename all files to add -1 termination.
+`fq_1` for the SE file or `fq_2` for the PE file. Example: `XXX.fq_1` and `XXX.fq_2`. Used `rename` script to rename all files to add `-1` or `-2` termination.
 
 For usage, I typed:
 
@@ -45,22 +45,22 @@ The reads per individual pre and post purging of PCR duplicates, and the percent
 
 Individual | initial reads | porst-purge reads | percent purged |
 ------------ | ------------- | ------------ | ------------- | 
-Pr_SCI_03	|	6,703,487	|	1,871,919	|	72	|
-Pr_SCI_04	|	2,159,994	|	589,841	|	73	|
-Pr_SCI_05	|	2,960,879	|	818,600	|	72	|
-Pr_SCI_06	|	4,413,774	|	1,193,235	|	73	|
-Pr_SRI_02	|	7,572,368	|	2,094,594	|	72	|
-Pr_SRI_03	|	1,298,586	|	353,847	|	73	|
-Pr_SRI_04	|	2,636,033	|	720,639	|	73	|
-Pr_SRI_05	|	2,145,094	|	591,698	|	72	|
-Xr_SBI_03	|	1,727,677	|	987,327	|	43	|
-Xr_SBI_04	|	2,582,799	|	1,475,626	|	43	|
-Xr_SCL_27	|	1,368,256	|	769,389	|	44	|
-Xr_SCL_28	|	1,646,492	|	922,189	|	44	|
-Xr_SNI_27	|	1,109,304	|	632,239	|	43	|
-Xr_SNI_28	|	3,094,797	|	1,766,134	|	43	|
-Xv_JTS_03	|	1,650,289	|	938,941	|	43	|
-Xv_JTS_04	|	3,754,638	|	2,124,663	|	43	|
+Pr-SCI-03	|	6,703,487	|	1,871,919	|	72	|
+Pr-SCI-04	|	2,159,994	|	589,841	|	73	|
+Pr-SCI-05	|	2,960,879	|	818,600	|	72	|
+Pr-SCI-06	|	4,413,774	|	1,193,235	|	73	|
+Pr-SRI-02	|	7,572,368	|	2,094,594	|	72	|
+Pr-SRI-03	|	1,298,586	|	353,847	|	73	|
+Pr-SRI-04	|	2,636,033	|	720,639	|	73	|
+Pr-SRI-05	|	2,145,094	|	591,698	|	72	|
+Xr-SBI-03	|	1,727,677	|	987,327	|	43	|
+Xr-SBI-04	|	2,582,799	|	1,475,626	|	43	|
+Xr-SCL-27	|	1,368,256	|	769,389	|	44	|
+Xr-SCL-28	|	1,646,492	|	922,189	|	44	|
+Xr-SNI-27	|	1,109,304	|	632,239	|	43	|
+Xr-SNI-28	|	3,094,797	|	1,766,134	|	43	|
+Xv-JTS-03	|	1,650,289	|	938,941	|	43	|
+Xv-JTS-04	|	3,754,638	|	2,124,663	|	43	|
 
 
 
@@ -106,51 +106,11 @@ Then I used the following for loop script from Deren Eaton (within folder with s
 
 Then I transferred only the *assembled* to the ***'/edits/'*** folder.
 
-2.3. estimate coverage of high-depth libraries using pyrad
----
-
-*Within-sample clustering* in pyrad (step 3)
-
-I started the pyrad pipeline on step#3, making sure that line # 11 (data type) is set to ***merged***:
-
-	merged       ## 11. Datatype: rad,gbs,pairgbs,pairddrad,(others:see docs)(all)
-
-
-
-See [*Pseudacris* parameters](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-params-PE.txt) and [*Xantusia* parameters](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-params-PE.txt) file for the rest of the specifications of parameter files for the paired end  contigs. 
-
-pyrad was called as follows:
-
-	pyrad -p Pr-params-d.txt -s 3
-
-
-The full output for the within-sample clustering can be found here for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-within-clusters-s3.txt) and for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-within-clusters-s3.txt). The summary of coverage per loci within sample is:
-
-
-taxa	|	total	|	mean-depth	|	std-dev	|	total_d>9	|	mean_d>9	|	std-dev_d>9
------------------ | ------------- | ------------ |------------ | ------------- |------------ | ------------- |
-Xr_SBI_03-PE	|	417666	|	1.499	|	1.38	|	1394	|	14.249	|	8.826
-Xr_SBI_04-PE	|	581256	|	1.555	|	1.734	|	4692	|	13.598	|	8.596
-Xr_SCL_27-PE	|	112121	|	3.059	|	3.52	|	4680	|	13.343	|	9.422
-Xr_SCL_28-PE	|	108005	|	3.682	|	4.244	|	9479	|	13.951	|	6.378
-Xr_SNI_27-PE	|	274638	|	1.463	|	1.168	|	439	|	15.59	|	9.477
-Xr_SNI_28-PE	|	599975	|	1.689	|	2.169	|	9527	|	13.911	|	7.323
-Xv_JTS_03-PE	|	303511	|	1.791	|	2.087	|	3701	|	13.357	|	8.52
-Xv_JTS_04-PE	|	174084	|	4.967	|	6.667	|	29066	|	16.529	|	8.921
-Pr_SCI_03-PE	|	193208	|	13.856	|	18.895	|	99915	|	22.382	|	23.092
-Pr_SCI_04-PE	|	109581	|	9.339	|	12.522	|	39358	|	17.557	|	17.87
-Pr_SCI_05-PE	|	130115	|	10.226	|	13.523	|	51999	|	18.417	|	18.323
-Pr_SCI_06-PE	|	163965	|	11.35	|	16.678	|	72843	|	19.553	|	22.283
-Pr_SRI_02-PE	|	193637	|	15.231	|	21.232	|	106953	|	23.762	|	25.451
-Pr_SRI_03-PE	|	76988	|	8.387	|	10.075	|	24117	|	16.538	|	14.595
-Pr_SRI_04-PE	|	121641	|	9.903	|	12.471	|	47253	|	17.998	|	16.814
-Pr_SRI_05-PE	|	107048	|	9.322	|	13.387	|	38560	|	17.459	|	19.553
-
 
 Step 3: prepare single-end libraries for denovo_map.pl
 ---
 
-**First, merge fasta files for library duplicates**
+**First, we merged fasta files for library duplicates**
 
 Some libraries were re-sequenced, so after being renamed the fasta files were merged. ([source](http://www.researchgate.net/post/How_do_I_merge_several_multisequence-fasta_files_to_create_one_tree_for_subsequent_Unifrac_analysis)):
 
@@ -167,7 +127,7 @@ Some libraries were re-sequenced, so after being renamed the fasta files were me
 Total number of files before merging duplicates from different ***Xantusia*** library preps was 187, and after merging duplicate individuals we now have 142 files for denovo_map input. Total number of files before merging duplicates from different ***Pseudacris*** library preps was 180, and after merging duplicate individuals now had 132 files for denovo_map input. 
 
 ------------------------------------
-**Then, estimate reads per individual/species**
+**Then, we estimated reads per individual/species**
 
 
 We counted reads for each individual using the unzipped files and with the following script:
@@ -179,73 +139,182 @@ We counted reads for each individual using the unzipped files and with the follo
 	cat $file | grep '^@.*' | wc -l
 	done
 
-**Estimate coverage per individual**
-
-
-For estimating coverage per individual for SE reads, pyrad was called as follows:
-
-	pyrad -p Pr-params-d.txt -s 3
-
-
-The full output for the within-sample clustering can be found here for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Xantusia/s3.clusters.txt) and for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pyrad-denovo-ALL/Pseudacris/s3.clusters.txt).
-
+The total of reads per individual can be found [here](). 
 
 Step 6: *de novo* genotyping in STACKS
 ---
  
 
 
-The following is the workflow/code for the denovo_map pipeline. After trying several permutations of parameters -m (values 2,3,4)-M (2,3,4)and -n (2,3,4)we picked the most seemingly stable combination of parameters based on number of loci retrieved and population Fsts (both outputs in stacks).
+We performed various permutations of key parameters based on the supposed quality of data and divergence among individuals in each dataset, in order to assess which combination of parameters most likely reduces the chances of over- or under-merging loci.
 
 
-**Final code used for *denovo_map.pl* in Stacks:**
+**1.Permutations for *Pseudacris***
 
-Here, we selected a conservative combination of parameters, and used the same for both datasets. 
+Permutations | -m | -M | -n | 
+------------ | ------------- | ------------ | ------------ |
+a | 3 | 2 | 2 | 
+b | 5 | 2 | 2 | 
+c | 7 | 2 | 2 | 
+d | 3 | 2 | 3 | 
+e | 5 | 2 | 3 | 
+f | 7 | 2 | 3 |
+g | 3 | 4 | 4 | 
+h | 5 | 4 | 4 | 
+i | 7 | 4 | 4 |
+j | 3 | 4 | 5 | 
+k | 5 | 4 | 5 | 
+l | 7 | 4 | 5 |
+m | 3 | 6 | 6 | 
+n | 5 | 6 | 6 | 
+o | 7 | 6 | 6 |
+p | 3 | 6 | 7 | 
+q | 5 | 6 | 7 | 
+r | 7 | 6 | 7 |
+
+**1.Permutations for *Xantusia***
+
+Permutations | -m | -M | -n | 
+------------ | ------------- | ------------ | ------------ |
+a | 3 | 4 | 4 | 
+b | 5 | 4 | 4 | 
+c | 7 | 4 | 4 | 
+d | 3 | 4 | 5 | 
+e | 5 | 4 | 5 | 
+f | 7 | 4 | 5 |
+g | 3 | 6 | 6 | 
+h | 5 | 6 | 6 | 
+i | 7 | 6 | 6 |
+j | 3 | 6 | 7 | 
+k | 5 | 6 | 7 | 
+l | 7 | 6 | 7 |
+m | 3 | 8 | 8 | 
+n | 5 | 8 | 8 | 
+o | 7 | 8 | 8 |
+p | 3 | 8 | 9 | 
+q | 5 | 8 | 9 | 
+r | 7 | 8 | 9 |
+s | 3 | 10 | 10 | 
+t | 5 | 10 | 10 | 
+u | 7 | 10 | 10 |
+v | 3 | 10 | 11 | 
+w | 5 | 10 | 11 | 
+x | 7 | 10 | 11 |
+
+
+--------------
+
+> ***Xantusia*** **parameter decisions**: Based on the above parameter permutations and corresponding results ([See here](link.com)), we chose to keep two stacks runs for downstream filters and analyses: `Xa357` and `Xa567`. 
+> 
+> -------------------------------
+> 
+> ***Pseudacris*** **parameter decisions**: Based on the above parameter permutations and corresponding results ([See here](link.com)), we chose to keep two stacks runs for downstream filters and analyses: `Pr323` and `Pr345`. 
+
+
+## SNP matrix filtering
+
+**1.Filtering loci with too much missing data:**
+
+		/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xa367.snps.vcf --max-missing 0.75 --recode --out Xa367-b
+
+> For `Xa357`: After filtering, kept 16123 out of a possible 76247 Sites
+> 
+> For `Xa567`: After filtering, kept 7234 out of a possible 63102 Sites
+
+
+**2.Filtering by minor allele frequency**
+
+		/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xa367-b.recode.vcf --maf 0.02 --recode --out Xa367-c
+	
+> For `Xa357`: After filtering, kept 5084 out of a possible 16123 Sites
+> 
+> For `Xa567`: After filtering, kept 2440 out of a possible 7234 Sites
+
+**3.Filtering by position:** We saw the number of times base #85-96 were found in a given SNP list using the following code: 
+
+		cat loci-rows.txt | awk '/_90/ {count++} END {print count}'
+
+
+> We decided to not eliminate any of the loci towards end of sequence due to a lack of incremental SNPs (potential error) towards end of sequence. 
+
+
+
+**4.Filtering by individuals with too much missing data** (using `plink` and CEDIA cluster)
+
+First, we exported the VCF matrix as a `.ped` file: 
+
+	/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xa367-c.recode.vcf --plink --out Xa365-c
+	
+Then we estimated individuals that had more than 50% missing data using the CEDIA cluster:
+
+	/home/patricia.salerno/programs/plink --file Xa365-c --mind 0.5 --recode --out Xa365-d.ped  --noweb
+
+> The list of removed individuals can be seen [here](link). 
+
+Re-filtering in **populations** with a whitelist of loci and individuals that passed filters
+------
+	
+For downstream analyses, we used the final list of retained individuals and loci for each matrix as a `whitelist` in the program `populations` to ibtain final matrices and also basi population stats. The whitelist requires a file that only has the locis ID and excludes the SNP position ID. Thus, only the first string before the underscore needs to be kept. The whitelist file format is ordered as a simple text file containing one catalog locus per line: 
+
+		3
+		7
+		521
+		11
+		46
+
+We used the ***.map*** output from the last ***plink*** filter in Text Wrangler, and generated the populations whitelist using find and replace arguments using **grep**:
+
+
+	search for \d\t(\d*)_\d*\t\d\t\d*$
+	replace with \1
+
+Based the **.irem** file obtained in *plink* we removed from the popmap (to use in populations input) the individuals that did not pass the 50% missing data filter. Now we can run populations again using the whitelist of loci and the updated popmap file for loci and individuals to retain based on the plink filters. 
+
+	populations -b 1 -P ./ -M ./popmap.txt  -p 1 -r 0.5 -W Pr-whitelist --write_random_snp --structure --plink --vcf --genepop --fstats --phylip
 
 	
-	denovo_map.pl -m 3 -M 2 -n 2 -T 16 -b 1 -t -S -o ./denovo/ -s ./
 
 
-The logfiles for the final denovo analyses can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_denovo.log) and [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr_denovo.log).
 
 
-**Code used for *populations* in Stacks:**
-
-Here, we used low stringency of filters to output mostly .ped and .map files for input into **plink**:
-
-	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 --write_random_snp --structure --plink --vcf --genepop --fstats
-
-This keeps a single (random) SNP per read that is present in at least one population at a rate of 50% or higher. The logfiles from the populations runs can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_populations.log) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xr_populations.log).
 
 
-**Filtering in plink**
 
-After this minimal filtering in populations, we filtered a few different ways in ***plink***, and the results of the permutations can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/APPENDICES_CI-popgen_Draft1.pdf). After picking the optimal filters for each dataset, for retention of the most amount of individuals and loci per island, the final results of these data filters and outputs/stats can be found here for [*Pseudacris*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/pseudacris-data-filters-results.pdf) and for [*Xantusia*](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/xantusia-data-filters-results.pdf).
 
-We first filtered for missing loci using the code: 
 
-	plink --file Pr-03-22 --geno 0.35 --recode --out Pr-03-22-6a --noweb
-for *Pseudacris*,which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6a.log) in 129426 SNPs failing the missingness test, and in a total of 2693 SNPs after frequency and genotyping pruning.For *Xantusia*, we used:
 
-	plink --file Xr-03-22-NEW --geno 0.4 --recode --out Xr-test-2a --noweb
-	
-which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-2a.log)in 80300 SNPs failed missingness test ( GENO > 0.4 ) leaving 3145 SNPs after genotyping pruning. Second, we filtered by individuals with >50% missing data, using the code: 
- 	 
- 	plink --file Pr-03-22-6a --mind 0.5 --recode --out Pr-03-22-6b --noweb
+
+
+
+
+
+
+------------------
+
+
+------------------
+
+
+-------------------
+
+
+---------------------
+#
+
+ #
  
- for *Pseudacris*, which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6b.log) in 30 of 132 individuals removed for low genotyping, and for *Xantusia* we used:
+#
+
+#
+
+#
+
+#
+
+#
+
  
- 	plink --file Xr-test-2a --mind 0.5 --recode --out Xr-test-2b --noweb
  
- which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-2b.log)in 49 of 141 individuals removed for low genotyping. Third, we eliminated loci with minor allele frequency < 0.02, using the code
- 
- 	plink --file Pr-03-22-6b --maf 0.02 --recode --out Pr-03-22-6c --noweb
- 
- for *Pseudacris*, which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22-6c.log) in 1543 SNPs failing frequency test ( MAF < 0.02 ), and retaining a final 1150 SNPs. The [final *Pseudacris* matrix](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr-03-22.stru) had a total genotyping rate in remaining individuals of 0.816871. For Xantusia, the code used was: 
- 
- 	plink --file Xr-test-6b --maf 0.02 --recode --out Xr-test-6c --noweb 
- 
- which [resulted](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-test-2c.log) in 2027 SNPs failing the frequency test and a final 1118 SNPs. The [final *Xantusia* matrix](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-03-22-2c-b.stru) had a total genotyping rate in remaining individuals of 0.815812. 
  
  This same filtering scheme was done for each island individually for each taxon. The resulting final matrices can be found here: 
  
