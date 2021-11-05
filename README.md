@@ -223,12 +223,25 @@ The general code used in `denovo_map.pl` (executed within an `.sh` file) was:
 		--samples ./raw
 
 --------------
+> the **COVERAGE RESULTS** for the final `denovo_map` runs can be found here: 
+> 
+> - [`Xa367`]()
+> 
+> - [`Xa567`]()
+> 
+> - [`Pr323`]()
+> 
+> - [`Pr345`]()
 
 exporting the initial SNP matrices
 ---------
 
-ADD code for initial populations runs.
+We expoted the SNP matrix with minimal filter and arguments in order to obtain a .vcf file to filter in `vcftools` and `plink`. 
 
+
+	mkdir pops-final-Xa567
+
+	populations -P ./denovo-Xa567 --popmap ./popmap-Xa.txt -O ./pops-final-Xa567/ --write_random_snp -r 0.1 -t 8 --vcf --plink --structure
 
 
 ## SNP matrix filtering
