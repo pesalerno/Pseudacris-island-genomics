@@ -1,0 +1,20 @@
+cat Xa367-d.ped.irem
+Xr_SCL_35-5	Xr_SCL_35-5
+Xv_JTS_10-2	Xv_JTS_10-2
+Xv_JTS_19-2	Xv_JTS_19-2
+Xv_JTS_20-2	Xv_JTS_20-2
+Xv_JTS_22-2	Xv_JTS_22-2
+Xv_JTS_26-2	Xv_JTS_26-2
+
+
+
+cat Xa565-d.ped.irem
+Xr_SCL_35-5	Xr_SCL_35-5
+Xv_JTS_10-2	Xv_JTS_10-2
+Xv_JTS_19-2	Xv_JTS_19-2
+Xv_JTS_20-2	Xv_JTS_20-2
+Xv_JTS_22-2	Xv_JTS_22-2
+Xv_JTS_26-2	Xv_JTS_26-2
+
+
+
