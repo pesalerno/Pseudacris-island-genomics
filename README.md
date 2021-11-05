@@ -290,6 +290,7 @@ Then we estimated individuals that had more than 50% missing data using the CEDI
 	/home/patricia.salerno/programs/plink --file Xa365-c --mind 0.5 --recode --out Xa365-d.ped  --noweb
 
 > *Xantusia*: The list of removed individuals can be seen [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xantusia-removed-inds.txt). 
+> 
 > *Pseudacris*: The list of removed individuals can be seen [here](link).
 
 
@@ -379,23 +380,3 @@ Based the **.irem** file obtained in *plink* we removed from the popmap (to use 
 
 
 
-downstream analyses
-===
-
-a. population stats and structure
----
-
-We used [this R code](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/adegenet-Xantusia-NEW.R) that uses several packages to estimate/evaluate patterns of population structure and to estimate population-levels statistics. 
-
-For obtaining Pi (nucleotide diversity) estimates, I re-ran ***populations*** in stacks using a whitelist of the loci that remain post-filtering in ***plink***, as such:
-
-**First I generated whitelist using find and replace commands with grep in TextWrangler:**
-
-
-	find: 		\_\d\d\n
-	replace:	\n 
-which fixes input files for SNP names, since they can't contain SNP position (55609_56), the regular Stacks output format, but only the actual SNP ID (55609). 
-
-**Then, I re-ran populations using the whitelist to obtain per-population pi stats:** 
-
-	populations -b 1 -P ./input-sequences -M ./popmap-Pseu.txt -t 36 -p 1 -r 0.5 -W whitelist-SNPs --write_random_snp --structure --plink --vcf --genepop --fstats
