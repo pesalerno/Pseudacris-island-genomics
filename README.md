@@ -225,13 +225,13 @@ The general code used in `denovo_map.pl` (executed within an `.sh` file) was:
 --------------
 > the **COVERAGE RESULTS** for the final `denovo_map` runs can be found here: 
 > 
-> - [`Xa367`]()
+> - [`Xa367`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa_367_COVERAGE.txt)
 > 
-> - [`Xa567`]()
+> - [`Xa567`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa_567-COVERAGE.txt)
 > 
-> - [`Pr323`]()
+> - [`Pr323`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_323_COVERAGE.txt)
 > 
-> - [`Pr345`]()
+> - [`Pr345`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_345_COVERAGE.txt)
 
 exporting the initial SNP matrices
 ---------
@@ -250,25 +250,32 @@ We expoted the SNP matrix with minimal filter and arguments in order to obtain a
 
 		/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xa367.snps.vcf --max-missing 0.75 --recode --out Xa367-b
 
-> For `Xa357`: After filtering, kept 16123 out of a possible 76247 Sites
+> `Xa357`: After filtering, kept 16123 out of a possible 76247 Sites
 > 
-> For `Xa567`: After filtering, kept 7234 out of a possible 63102 Sites
-
+> `Xa567`: After filtering, kept 7234 out of a possible 63102 Sites
+>
+> `Pr323`: After filtering, kept X out of a possible X Sites
+> 
+> `Pr345`: After filtering, kept X out of a possible X Sites
 
 **2.Filtering by minor allele frequency**
 
 		/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xa367-b.recode.vcf --maf 0.02 --recode --out Xa367-c
 	
-> For `Xa357`: After filtering, kept 5084 out of a possible 16123 Sites
+> `Xa357`: After filtering, kept 5084 out of a possible 16123 Sites
 > 
-> For `Xa567`: After filtering, kept 2440 out of a possible 7234 Sites
+> `Xa567`: After filtering, kept 2440 out of a possible 7234 Sites
+>
+> `Pr323`: After filtering, kept X out of a possible X Sites
+> 
+> `Pr345`: After filtering, kept X out of a possible X Sites
 
 **3.Filtering by position:** We saw the number of times base #85-96 were found in a given SNP list using the following code: 
 
 		cat loci-rows.txt | awk '/_90/ {count++} END {print count}'
 
 
-> We decided to not eliminate any of the loci towards end of sequence due to a lack of incremental SNPs (potential error) towards end of sequence. 
+> *Xantusia*: We decided to not eliminate any of the loci towards end of sequence due to a lack of incremental SNPs (potential error) towards end of sequence. 
 
 
 
@@ -282,7 +289,9 @@ Then we estimated individuals that had more than 50% missing data using the CEDI
 
 	/home/patricia.salerno/programs/plink --file Xa365-c --mind 0.5 --recode --out Xa365-d.ped  --noweb
 
-> The list of removed individuals can be seen [here](link). 
+> *Xantusia*: The list of removed individuals can be seen [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xantusia-removed-inds.txt). 
+> *Pseudacris*: The list of removed individuals can be seen [here](link).
+
 
 Re-filtering in **populations** with a whitelist of loci and individuals that passed filters
 ------
