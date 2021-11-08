@@ -225,13 +225,13 @@ The general code used in `denovo_map.pl` (executed within an `.sh` file) was:
 --------------
 > the **COVERAGE RESULTS** for the final `denovo_map` runs can be found here: 
 > 
-> - [`Xa367`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa_367_COVERAGE.txt)
+> - [`Xa367`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa-367_coverage_B.txt)
 > 
-> - [`Xa567`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa_567-COVERAGE.txt)
+> - [`Xa567`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa-567_coverage_B.txt)
 > 
-> - [`Pr323`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_323_COVERAGE.txt)
+> - [`Pr323`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr-323_coverage_B.txt)
 > 
-> - [`Pr345`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr_345_COVERAGE.txt)
+> - [`Pr345`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Pr-345_coverage_B.txt)
 
 exporting the initial SNP matrices
 ---------
@@ -318,8 +318,13 @@ Based the **.irem** file obtained in *plink* we removed from the popmap (to use 
 	
 
 
-
-
+>--------------
+>
+> ***Xantusia*** whitelist loci for [`Xa357`]() and [`Xa567`](). . 
+> 
+> ***Pseudacris*** whitelist can be found [`Pr323`]() and [`Pr345`](). 
+> 
+> ---------------
 
 
 
