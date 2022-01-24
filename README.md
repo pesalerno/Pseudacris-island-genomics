@@ -236,93 +236,119 @@ The general code used in `denovo_map.pl` (executed within an `.sh` file) was:
 exporting the initial SNP matrices
 ---------
 
-We expoted the SNP matrix with minimal filter and arguments in order to obtain a .vcf file to filter in `vcftools` and `plink`. 
+We exported the SNP matrix with minimal filter and arguments in order to obtain a `.vcf` file to process in `vcftools` and filter in `plink`. 
 
-
-	mkdir pops-final-Xa567
 
 	populations -P ./denovo-Xa567 --popmap ./popmap-Xa.txt -O ./pops-final-Xa567/ --write_random_snp -r 0.1 -t 8 --vcf --plink --structure
 
 
+When then transformed the `.vcf` files into `.ped` and `.map` files using `vcftools` and the following code: 
+
+	/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xr367-populations.snps.vcf --plink --out new-Xr367
+	
+
 ## SNP matrix filtering
+
+Using the CEDIA server, we filtered the matrices in three general steps, in order to find the whitelist of loci and individuals that were retained after filters. We initially permuted the filters in order to see the ideal stringency for retaining the most amount of individuals and loci. 
 
 **1.Filtering loci with too much missing data:**
 
-		/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xa367.snps.vcf --max-missing 0.75 --recode --out Xa367-b
+		/home/patricia.salerno/programs/plink --file new_Pr323.plink --geno 0.3 --recode --out new_Pr323-b --noweb
 
-> `Xa357`: After filtering, kept 16123 out of a possible 76247 Sites
+> `Xa367`: Filtered sites that were present in less than 80% inds. 
 > 
-> `Xa567`: After filtering, kept 7234 out of a possible 63102 Sites
+> 		After filtering, kept 2002 out of a possible 70607 Sites
+> 
+> `Xa567`: Filtered sites that were present in less than 70% inds. 
+> 
+> 		After filtering, kept 4591 out of a possible 56310 Sites
 >
-> `Pr323`: After filtering, kept X out of a possible X Sites
+> `Pr323`: Filtered sites that were present in less than 70% inds. 
 > 
-> `Pr345`: After filtering, kept X out of a possible X Sites
+> 		After filtering, kept 8676 out of a possible 147330 Sites
+> 
+> `Pr345`: Filtered sites that were present in less than 70% inds. 
+> 
+> 		After filtering, kept 6615 out of a possible 131659 Sites
 
-**2.Filtering by minor allele frequency**
 
-		/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xa367-b.recode.vcf --maf 0.02 --recode --out Xa367-c
+**2.Filtering by individuals with too much missing data**. For all analyses we filtered out individuals that had more than 50% missing data. 
+
+	/home/patricia.salerno/programs/plink --file new_Pr323-b --mind 0.5 --recode --out new_Pr323-c --noweb
+
+> *Xantusia*: The list of removed individuals can be seen here for [Xr367](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/new-Xr367-c.irem) and [Xr567](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/new_new_Xr-567-c.irem). 
+> 
+> *Pseudacris*: The list of removed individuals can be seen here for [Pr323](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/new_Pr323-c.irem) and [Pr345](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/NEWPr-345-c.irem).
+
+
+**3.Filtering by minor allele frequency**
+
+		/home/patricia.salerno/programs/plink --file new_Pr323-b --maf 0.02 --recode --out new_Pr323-d --noweb
 	
-> `Xa357`: After filtering, kept 5084 out of a possible 16123 Sites
+> `Xa357`: Due to low number of alleles, we used maf <0.01
+> 		
+> 		After frequency and genotyping pruning, there are 1111 SNPs
 > 
-> `Xa567`: After filtering, kept 2440 out of a possible 7234 Sites
+> `Xa567`: used maf < 0.02
+> 
+> 		After frequency and genotyping pruning, there are 1473 SNPs
 >
-> `Pr323`: After filtering, kept X out of a possible X Sites
+> `Pr323`: used maf < 0.02
 > 
-> `Pr345`: After filtering, kept X out of a possible X Sites
+> 		After frequency and genotyping pruning, there are 4417 SNPs
+> 
+> `Pr345`: used maf < 0.02
+> 
+> 		After frequency and genotyping pruning, there are 3251 SNPs
 
-**3.Filtering by position:** We saw the number of times base #85-96 were found in a given SNP list using the following code: 
+
+We obtained the list of loci retained, to be used as the `whitelist` for the FINAL `populations` runs, using plink: 
+
+	/home/patricia.salerno/programs/plink --file new_new_Xr-567-d --write-snplist --noweb
+
+
+**4.Filtering by position:** We saw the number of times base #85-96 were found in a given SNP list using the following code: 
 
 		cat loci-rows.txt | awk '/_90/ {count++} END {print count}'
 
 
-> *Xantusia*: We decided to not eliminate any of the loci towards end of sequence due to a lack of incremental SNPs (potential error) towards end of sequence. 
+>  We decided to not eliminate any of the loci towards end of sequence in either dataset due to a lack of incremental SNPs (potential error) towards end of sequence. 
 
 
 
-**4.Filtering by individuals with too much missing data** (using `plink` and CEDIA cluster)
-
-First, we exported the VCF matrix as a `.ped` file: 
-
-	/Users/patriciasalerno/bash-programs/vcftools_0.1.13/bin/vcftools --vcf Xa367-c.recode.vcf --plink --out Xa365-c
-	
-Then we estimated individuals that had more than 50% missing data using the CEDIA cluster:
-
-	/home/patricia.salerno/programs/plink --file Xa365-c --mind 0.5 --recode --out Xa365-d.ped  --noweb
-
-> *Xantusia*: The list of removed individuals can be seen [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xantusia-removed-inds.txt). 
-> 
-> *Pseudacris*: The list of removed individuals can be seen [here](link).
 
 
 Re-filtering in **populations** with a whitelist of loci and individuals that passed filters
 ------
 	
-For downstream analyses, we used the final list of retained individuals and loci for each matrix as a `whitelist` in the program `populations` to ibtain final matrices and also basi population stats. The whitelist requires a file that only has the locis ID and excludes the SNP position ID. Thus, only the first string before the underscore needs to be kept. The whitelist file format is ordered as a simple text file containing one catalog locus per line: 
+For downstream analyses, we used the final list of retained individuals and loci for each matrix as a `whitelist` in the program `populations` to obtain final matrices and also basic population stats. The whitelist requires a file that has the locus ID on the left column and the SNP position on the right. For example:
 
-		3
-		7
-		521
-		11
-		46
+	2070	6
+	4893	6
+	6115	6
+	9158	6
+	19214	6
+	19427	6
+	20960	6
+	27494	6
+	28614	6
 
-We used the ***.map*** output from the last ***plink*** filter in Text Wrangler, and generated the populations whitelist using find and replace arguments using **grep**:
 
 
-	search for \d\t(\d*)_\d*\t\d\t\d*$
-	replace with \1
+Based the **.irem** file obtained in *plink* we removed from the popmap (to use in populations input) the individuals that did not pass the 50% missing data filter. 
 
-Based the **.irem** file obtained in *plink* we removed from the popmap (to use in populations input) the individuals that did not pass the 50% missing data filter. Now we can run populations again using the whitelist of loci and the updated popmap file for loci and individuals to retain based on the plink filters. 
+Finally, we ran populations again using the `whitelist` of loci and the updated popmap file for loci and individuals to retain based on the plink filters. 
 
-	populations -b 1 -P ./ -M ./popmap.txt  -p 1 -r 0.5 -W Pr-whitelist --write_random_snp --structure --plink --vcf --genepop --fstats --phylip
+	populations -b 1 -P ./ -M ./popmap.txt  -p 1 -r 0.5 -W Pr-whitelist --structure --plink --vcf --genepop --fstats
 
 	
 
 
 >--------------
 >
-> ***Xantusia*** whitelist loci for [`Xa357`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa367-whitelist-loci) and [`Xa567`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa567-whiltelist-loci). 
+> ***Xantusia*** whitelist loci can be found here for [`Xa357`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/whitelist_Xr-367) and [`Xa567`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/whitelist_Xr-567). 
 > 
-> ***Pseudacris*** whitelist can be found [`Pr323`]() and [`Pr345`](). 
+> ***Pseudacris*** whitelist can be found here for [`Pr323`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/whitelist-Pr-323) and [`Pr345`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/whitelist-Pr345). 
 > 
 > ---------------
 
