@@ -320,7 +320,7 @@ Based the **.irem** file obtained in *plink* we removed from the popmap (to use 
 
 >--------------
 >
-> ***Xantusia*** whitelist loci for [`Xa357`]() and [`Xa567`](). . 
+> ***Xantusia*** whitelist loci for [`Xa357`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa367-whitelist-loci) and [`Xa567`](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/denovo_results/Xa567-whiltelist-loci). 
 > 
 > ***Pseudacris*** whitelist can be found [`Pr323`]() and [`Pr345`](). 
 > 
