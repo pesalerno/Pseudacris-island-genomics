@@ -315,6 +315,16 @@ We obtained the list of loci retained, to be used as the `whitelist` for the FIN
 >  We decided to not eliminate any of the loci towards end of sequence in either dataset due to a lack of incremental SNPs (potential error) towards end of sequence. 
 
 
+> **FINAL MATRICES:** Based on the above permutations of filters (locus missingness, individual missingness, minor allele frequency), and with he intention of keeping as many islands and individuals as possible, we kept the following matrices for downstream analyses: 
+> 
+> 	- [Pr345](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Pr345.gen): maf 0.02, max_missing 0.7, mind 0.5; XXX SNPs, XX inds
+> 
+> 	- [Xr567-islands](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-noSNI03-islands.gen): x, x, x, XXX SNPs, XX inds
+> 
+> 	- [Xr567-allpops](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/Xr-noSNI03-allpops.gen): x, x, x, XXX SNPs, XX inds
+
+	
+>***NOTE***: We found an odd outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did not seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. It also had outlier heterozygosity estimates (as estimated using --het in `plink`), suggesting that it was likely the result of laboratory contamination.
 
 
 
@@ -339,10 +349,8 @@ Based the **.irem** file obtained in *plink* we removed from the popmap (to use 
 
 Finally, we ran populations again using the `whitelist` of loci and the updated popmap file for loci and individuals to retain based on the plink filters. 
 
-	populations -b 1 -P ./ -M ./popmap.txt  -p 1 -r 0.5 -W Pr-whitelist --structure --plink --vcf --genepop --fstats
+	populations -b 1 -P ./ -M ./popmap.txt  -p 1 -r 0.5 -W Pr-whitelist --structure --plink --vcf --genepop --fstats --treemix 
 
-	
->***NOTE***: We found an odd outlier, Xr_SNI_03 in the *Xantusia* dataset that, after many iterations between downstream analyses and filters, the individual did not seem to fall as outlier as a result of missing data, so we attributed lab contamination to it. IT also had outlier heterozygosity estimates, suggesting that it was likely the result of laboratory contamination.
 
 
 >--------------
@@ -354,81 +362,6 @@ Finally, we ran populations again using the `whitelist` of loci and the updated 
 > ---------------
 
 
-LD filter using `plink!` and a custom script
------
-
-Using the `.vcf` output from `populations`, we first transform the `.vcf` matrix to  `.ped` using `vcftools` on the local computer: 
-
-	vcftools --vcf path/to/file.vcf --plink --out filename
-
-Then, using the **CEDIA HPC server** we ran `plink` to obtain `--r2`, or an estimate of linkage based on allele frequencies across the population. 
-
-	./home/patricia.salerno/programs/plink --file outputpopulations_c --r2 --out outputpopulations --noweb
-
-Finally, using the list of loci generated in `plink`, we ran the following custom script to prune the matrix of loci that were in high linkage (equal to or above 0.8): 
-
-	# -*- coding: utf-8 -*-
-	"""
-	Created on Tue Sep 20 11:47:51 2022
-	@author: alexs
-	"""
-
-	import pandas as pd
-	import re
-	import sys
-	import os
-
-	def filter_linked_snp(filename,output_path = './no_linked_SNPs'):
-    '''This function will return a dataframe with no linked SNP. Requieres a file file that contains 
-    the linkage level between two SNPs and R2 values. 
-    
-    Input data must be in the next format, separator must be spaces:
-     CHR_A         BP_A      SNP_A  CHR_B         BP_B      SNP_B           R2 
-     0            7   975199:6      0            8    78320:7     0.344341 
-     0            7   975199:6      0            8   650402:7     0.725188 
-    
-    
-    The function return the non duplicate rows where R2>=0.8 of the first SNP column, that must be the third column
-    
-    '''
-    filename_1 = filename.split('/')
-    filename_1 = filename_1[-1] 
-    
-    link_data = pd.read_csv(filename, sep = r'\s+', engine = 'python')
-    no_link_data = link_data[link_data['R2']>= 0.8]
-    sorted_no_link = no_link_data.sort_values('SNP_A')
-    no_duplica_data = sorted_no_link.iloc[:,:3].drop_duplicates()
-    
-    final_serie = no_duplica_data.iloc[:,2].drop_duplicates()
-    
-    
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
-    print('Data was filtered and file was generated at:' + output_path)
-    
-    outputname = output_path + '/' + filename_1
-    final_serie.to_csv(outputname, index = False)
-    
-    return final_serie
-
-
-	usage = '''fltlknSNP.py linked_R2_file outputdir'''
-	if __name__== '__main__':
-    linked_data = sys.argv[1]
-    outputdir = sys.argv[2]
-    
-    filter_linked_snp(linked_data, outputdir)
-
-	else:
-    print(usage)
- 
- 
-> Note: the above code first finds rows in which pairs of loci have an r2 value equal to or above 0.8, then proceeds to generate a blacklist file of loci on the righthandside column (pruning duplicates). 
-
-
-The loci blacklist generated by the custom script is then executed in `plink!` to remove those loci (***or should/could this be done by alex, to remove unnecesary steps?***) 
-
-	./plink --file outputpopulations_c --exclude blacklist_ld.txt --recode --out outputpopulations_d --noweb
 
  
 Estimating individual heterozygosities using `plink`
@@ -445,13 +378,6 @@ After this, we generated a distribution graph using ggplot2 in R and using the f
 	insert ggplot code here
 
 
-Estimating phylogenetic reconstructions using `RAxMLng`
------
-
-To obtain SNP phylogenies with bootstraps for *Pseudacris* and *Xantusia*:
-
-	./raxml-ng --all --msa Stef-NEW-c.phylip.txt --model GTR+G --tree pars {10} --bs-trees 500
-
 
 
 Estimating admixed trees using `TreeMix`
@@ -464,5 +390,5 @@ We used TreeMix using x y z parameters... etc.
 
 Estimating population structure using `adegenet`
 ----
-Say stuff here, then add R code below (or in link to separate file). 
+We used `adegenet` in `R` to estimate population structure with the use of PCA and DAPC functions. The code used for this section can be found [here](https://github.com/pesalerno/Pseudacris-island-genomics/blob/master/CIpopgen_adegenet-final-code.R).
 
