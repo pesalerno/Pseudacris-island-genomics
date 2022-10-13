@@ -370,9 +370,13 @@ Estimating individual heterozygosities using `plink`
 After filtering the matrix for linked loci, we estimated the individual heterozygosities using the `--het` flag in `plink`: 
 
 	/home/patricia.salerno/programs/plink --file final-Pr345 --het --out Pr345-het --noweb
+
+We obtained most of the heterozygosity measures directly from the `populations` output after post-filtering whitelist was generated. Additionally, we estimated allelic richness using the package `hierfstat` in `R` and with the followin code: 
+
+	rich <-allelic.richness(myFile)$Ar
+	  apply(rich, MARGIN = 2, FUN = mean)
 	
-	
-After this, we generated a distribution graph using ggplot2 in R and using the following code: 
+After this, we generated a distribution graph of individual heterozygosities as well as other Het measures using the package `ggplot2` in `R` and using the following code: 
 
 	```R 
 	insert ggplot code here
