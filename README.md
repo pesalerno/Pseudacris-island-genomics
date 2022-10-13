@@ -383,10 +383,25 @@ After this, we generated a distribution graph using ggplot2 in R and using the f
 Estimating admixed trees using `TreeMix`
 ------
 
-We used TreeMix using x y z parameters... etc. 
+We ran `TreeMix` sequentially from zero to five migration edges using the following code: 
 
-	treemix insert code here
+	
+	./treemix -i Xr-567.treemix.gz -root main -m 4 -o Xr-run-m4
 
+> **RESULTS:** For *Pseudacris*, we found that only one migration edge was inferred: 
+> 
+> 		Starting ln(likelihood) with 0 migration events: 55.144 
+>		Exiting ln(likelihood) with 1 migration events: 55.1457 
+>
+>For *Xantusia*, using all populations (ncluding mainland), we found only one migration edge was inferred: 
+>
+>		Starting ln(likelihood) with 0 migration events: 53.4023 
+>		Exiting ln(likelihood) with 1 migration events: 53.7564 
+>
+>Using only island populations for *Xantusia* no migration edges were inferred: 
+>
+>		Starting ln(likelihood) with 0 migration events: 29.3551 
+>		Exiting ln(likelihood) with 0 migration events: 29.3551 
 
 Estimating population structure using `adegenet`
 ----
