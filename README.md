@@ -364,7 +364,7 @@ Finally, we ran populations again using the `whitelist` of loci and the updated 
 
 
  
-Estimating individual heterozygosities using `plink`
+Estimating individual heterozygosities using `plink` and `R`
 ------
 
 After filtering the matrix for linked loci, we estimated the individual heterozygosities using the `--het` flag in `plink`: 
@@ -376,6 +376,20 @@ We obtained most of the heterozygosity measures directly from the `populations` 
 	rich <-allelic.richness(myFile)$Ar
 	  apply(rich, MARGIN = 2, FUN = mean)
 	
+We also estimated individual heterozygosities using the package `popgenstuff` in R:
+
+
+
+	library(devtools)
+	install_github("gbradburd/popgenstuff")
+	library(popgenstuff)
+	vcf2R(Pr-345_7pops.vcf, readDepth = FALSE, outPath = NULL)
+
+	gt<-vcf2R("Xr-5pops.vcf", readDepth = FALSE, minPropIndivsScoredin = 0.1)
+
+	XrHet <-calcHet(gt, nLoci=NULL)
+	write.csv(XrHet, file="Xr_Het.csv")
+
 After this, we generated a distribution graph of individual heterozygosities as well as other Het measures using the package `ggplot2` in `R` and using the following code: 
 
 	```R 
